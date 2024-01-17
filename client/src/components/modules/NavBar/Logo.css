@@ -1,0 +1,41 @@
+.LogoText {
+  color: var(--black);
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.Logo-container {
+  font-size: 36px; /* Adjust the size as needed */
+  font-weight: bold; /* Make the text bold */
+  display: flex;
+  align-items: center; /* Align text and bars vertically */
+}
+
+.LogoBar1 {
+  width: 3px; /* Width of the bars */
+  height: 23px; /* Height of the bars */
+  background-color: black; /* Color of the bars */
+  margin-left: 2px; /* Space between text and bars */
+  border-radius: 10px;
+  /* Add more bars as needed, adjust margin and positioning */
+}
+
+.LogoBar2 {
+  width: 3px; /* Width of the bars */
+  height: 20px; /* Height of the bars */
+  background-color: black; /* Color of the bars */
+  margin-left: 2px; /* Space between text and bars */
+  border-radius: 10px;
+  vertical-align: 7%;
+  /* Add more bars as needed, adjust margin and positioning */
+}
+
+.LogoBar3 {
+  width: 3px; /* Width of the bars */
+  height: 12px; /* Height of the bars */
+  background-color: black; /* Color of the bars */
+  margin-left: 2px; /* Space between text and bars */
+  border-radius: 10px;
+  vertical-align: 22%;
+  /* Add more bars as needed, adjust margin and positioning */
+}

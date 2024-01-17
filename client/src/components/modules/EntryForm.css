@@ -1,0 +1,131 @@
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: white;
+  width: 25vw;
+  height: 60vh;
+  max-height: 500px;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.signup-input-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-signup {
+  color: black;
+  display: flex;
+  font-size: 30px;
+  padding-bottom: 5%;
+  text-align: center;
+  justify-content: center;
+}
+
+.text-input {
+  color: grey;
+  font-size: 15px;
+}
+
+.signup-input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  display: flex;
+  border-bottom: 2px solid grey; /* Example color and thickness */
+  box-sizing: border-box; /* Include padding and border in the element's width */
+  width: 100%; /* Makes form elements take full width of the container */
+  margin-bottom: 10px; /* Adds space between the form elements */
+  font-size: large;
+  padding: 3% 0;
+  outline: none; /* Remove the default focus highlight */
+}
+
+.signup-input:focus-within {
+  border-bottom: 2px solid var(--primary); /* Border color when the input is focused */
+}
+
+.password-input {
+  flex-grow: 1; /* If using flexbox, allows input to take available space */
+  border: none;
+  font-size: large;
+  outline: none;
+  padding-right: 5px; /* Enough padding to not overlap the icon inside */
+  /* Other input styles */
+}
+
+.toggle-password-icon {
+  align-items: right;
+  cursor: pointer;
+  width: 20px; /* Adjust the icon size */
+  height: 20px; /* Adjust the icon size */
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+/* Hide the default checkbox */
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f0f0f0;
+  margin: 0;
+  font-size: 19px; /* To control the size of the checkbox */
+  width: 1em; /* Same as font-size */
+  height: 1em; /* Same as font-size */
+  border: 1px solid #ccc;
+  border-radius: 0.25em;
+  transform: translateY(-0.075em); /* Adjust vertical alignment */
+}
+
+/* Style for when the checkbox is checked */
+.custom-checkbox:hover {
+  background-color: #ffbeb8;
+  border-color: #ffbeb8;
+}
+
+.custom-checkbox:checked {
+  background-color: var(--primary);
+  border-color: #ff6a5c;
+}
+
+/* Style for the label */
+.checkbox-container label {
+  color: grey;
+  margin-left: 0.5em;
+  font-size: 12px;
+}
+
+.signup-button {
+  background-color: #ff6a5c; /* Use the color picker to get the exact color code from the image */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px; /* Adjust as needed to match the image */
+  font-size: 1em; /* Adjust as needed */
+  cursor: pointer;
+  outline: none;
+  border: 2px solid #ff6a5c;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Updated transition */
+  z-index: 3;
+}
+
+.signup-button:hover {
+  background-color: white; /* Change background to white */
+  color: #ff6a5c; /* Change text color to the original button color */
+}
+
+.google-signup {
+  color: black;
+  display: flex;
+  font-size: 30px;
+  padding-top: 3%;
+  text-align: center;
+  justify-content: center;
+}

@@ -15,15 +15,17 @@
 */
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 :root {
-  --primary: #396dff;
-  --primary--dim: #6987db;
+  --primary: #ff4b26e3;
+  --primary--light1: #ff6343;
+  --primary--light2: #ff9c88;
   --darkgrey: #d4d4d4;
   --medgrey: #e0e0e0;
   --grey: #f7f7f7;
   --white: #fff;
+  --black: #000;
 
   --xs: 4px;
   --s: 8px;
@@ -34,8 +36,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
 }
 
 form {

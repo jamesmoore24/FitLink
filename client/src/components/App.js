@@ -4,7 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 import NotFound from "./pages/NotFound.js";
-import Skeleton from "./pages/Skeleton.js";
+import SignUp from "./pages/SignUp.js";
+import Login from "./pages/Login.js";
 
 import "../utilities.css";
 
@@ -47,11 +48,24 @@ const App = () => {
       <Route
         path="/"
         element={
-          <Skeleton
+          <SignUp
             path="/"
             handleLogin={handleLogin}
             handleLogout={handleLogout}
             userId={userId}
+            formType={"Sign-up"}
+          />
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <Login
+            path="/login"
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
+            userId={userId}
+            formType={"Login"}
           />
         }
       />

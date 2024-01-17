@@ -1,0 +1,25 @@
+.NavBar-container {
+  padding: var(--l) var(--l);
+  background-color: var(--white);
+  display: flex;
+  justify-content: space-between;
+}
+
+.NavBar-linkContainer {
+  margin-left: var(--l);
+}
+
+.NavBar-link,
+.NavBar-link:visited {
+  color: var(--white);
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+.NavBar-link:hover {
+  opacity: 0.8;
+}
+
+.NavBar-link + .NavBar-link {
+  margin-left: var(--m);
+}
