@@ -1,0 +1,61 @@
+.tab-container {
+  width: 40%;
+  height: 10vh;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-square-container {
+  width: 90px;
+  height: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.icon-container {
+  width: 90px;
+  height: 50%;
+  border-radius: 20px;
+}
+
+.bottom-border {
+  width: 100%;
+  height: 0; /* Initial height is zero */
+  border-bottom: 3px solid white; /* Initial color (white) */
+  transition: height 0.5s, border-color 0.5s; /* Transition for height and border-color */
+}
+
+.icon-container:hover .bottom-border {
+  height: 3px; /* Height of the expanded border */
+  border-color: var(--primary); /* Color when expanded (orange) */
+}
+
+.icon-imageContainer {
+  width: 28px;
+  height: 28px;
+  padding-bottom: 5px;
+}
+
+.label-container {
+  font-size: 10px;
+  width: 100%;
+  border-radius: 20px;
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  color: black;
+  background-color: var(--grey);
+  opacity: 0;
+  transition: opacity 0.5s; /* Add a transition for opacity */
+}
+
+.icon-container:hover + .label-container {
+  opacity: 1; /* Set opacity to 1 when .icon-container is hovered */
+}
+
+.no-underline {
+  text-decoration: none; /* Remove underline */
+  /* Additional styling if needed */
+}

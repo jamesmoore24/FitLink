@@ -1,22 +1,8 @@
-.login-button {
-  background-color: #ff6a5c; /* Use the color picker to get the exact color code from the image */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px; /* Adjust as needed to match the image */
-  font-size: 1em; /* Adjust as needed */
-  cursor: pointer;
-  outline: none;
-  border: 2px solid #ff6a5c;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Updated transition */
-  z-index: 3;
-}
-
-.login-button:hover {
-  background-color: white; /* Change background to white */
-  color: #ff6a5c; /* Change text color to the original button color */
-}
-
-.login-button:visited {
-  text-decoration: none;
+.loginButton-container {
+  height: 10vh;
+  width: 15vw;
+  padding-right: 3vh;
+  display: flex;
+  align-items: center; /* Align text and bars vertically */
+  justify-content: right;
 }

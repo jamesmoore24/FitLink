@@ -5,6 +5,9 @@
 }
 
 .Logo-container {
+  height: 10vh;
+  width: 15vw;
+  padding-left: 3vh;
   font-size: 36px; /* Adjust the size as needed */
   font-weight: bold; /* Make the text bold */
   display: flex;

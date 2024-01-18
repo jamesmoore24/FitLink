@@ -4,12 +4,3 @@
   height: 100vh; /* This ensures that the container fits the full viewport height */
   width: 100vw; /* This ensures that the container fits the full viewport width */
 }
-
-.background-container {
-  display: flex;
-  width: 100vw;
-  padding-top: 96px;
-  height: 100vh;
-  justify-content: center;
-  background-color: var(--medgrey);
-}

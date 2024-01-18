@@ -4,15 +4,17 @@ import { Link } from "react-router-dom";
 import "./NavBar.css";
 import Logo from "./Logo";
 import LoginButton from "./LoginButton";
+import TabBar from "./TabBar";
 
 /**
  * The navigation bar at the top of all pages. Takes no props.
  */
-const NavBar = () => {
+const NavBar = ({ userId, handleLogin, handleLogout }) => {
   return (
     <div className="NavBar-container">
       <Logo />
-      <LoginButton />
+      {userId && <TabBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />}
+      <LoginButton handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
     </div>
   );
 };

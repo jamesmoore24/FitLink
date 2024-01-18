@@ -8,12 +8,12 @@ import "./Logo.css";
  */
 const Logo = () => {
   return (
-    <Link to="/">
+    <div className="Logo-container">
       <div className="LogoText u-inlineBlock">FitLink</div>
       <div className="LogoBar1 u-inlineBlock" />
       <div className="LogoBar2 u-inlineBlock" />
       <div className="LogoBar3 u-inlineBlock" />
-    </Link>
+    </div>
   );
 };
 

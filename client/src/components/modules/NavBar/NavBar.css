@@ -1,25 +1,9 @@
 .NavBar-container {
-  padding: var(--l) var(--l);
+  width: 100vw;
+  height: 10vh;
   background-color: var(--white);
   display: flex;
   justify-content: space-between;
-}
-
-.NavBar-linkContainer {
-  margin-left: var(--l);
-}
-
-.NavBar-link,
-.NavBar-link:visited {
-  color: var(--white);
-  opacity: 0.6;
-  text-decoration: none;
-}
-
-.NavBar-link:hover {
-  opacity: 0.8;
-}
-
-.NavBar-link + .NavBar-link {
-  margin-left: var(--m);
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

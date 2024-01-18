@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import jwt_decode from "jwt-decode";
 
+import NavBar from "./modules/NavBar/NavBar.js";
 import NotFound from "./pages/NotFound.js";
-import SignUp from "./pages/SignUp.js";
-import Login from "./pages/Login.js";
+import Landing from "./pages/Landing.js";
+import Feed from "./pages/Feed.js";
+import Workout from "./pages/Workout.js";
+import Profile from "./pages/Profile.js";
 
 import "../utilities.css";
+import "./App.css";
 
 import { socket } from "../client-socket.js";
 
@@ -18,6 +22,7 @@ import { get, post } from "../utilities";
  */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
+  const navigate = useNavigate();
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -29,6 +34,7 @@ const App = () => {
   }, []);
 
   const handleLogin = (credentialResponse) => {
+    navigate("/feed");
     const userToken = credentialResponse.credential;
     const decodedCredential = jwt_decode(userToken);
     console.log(`Logged in as ${decodedCredential.name}`);
@@ -39,38 +45,22 @@ const App = () => {
   };
 
   const handleLogout = () => {
+    navigate("/");
     setUserId(undefined);
     post("/api/logout");
   };
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <SignUp
-            path="/"
-            handleLogin={handleLogin}
-            handleLogout={handleLogout}
-            userId={userId}
-            formType={"Sign-up"}
-          />
-        }
-      />
-      <Route
-        path="/login"
-        element={
-          <Login
-            path="/login"
-            handleLogin={handleLogin}
-            handleLogout={handleLogout}
-            userId={userId}
-            formType={"Login"}
-          />
-        }
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+      <Routes>
+        <Route path="/" element={<Landing userId={userId} />} />
+        <Route path="/feed" element={<Feed userId={userId} />} />
+        <Route path="/workout" element={<Workout userId={userId} />} />
+        <Route path="/profile/:userId" element={<Profile userId={userId} />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 };
 
