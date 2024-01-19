@@ -1,10 +1,4 @@
 /* Fill me in :) */
-.login-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* This ensures that the container fits the full viewport height */
-  width: 100vw; /* This ensures that the container fits the full viewport width */
-}
 
 .overlay-container {
   display: flex;
@@ -15,10 +9,20 @@
   justify-content: space-around; /* This will distribute space above and below the items equally */
   align-items: center;
   position: absolute; /* Positioning over the video */
+}
 
-  color: white;
-  text-align: left; /* Aligns the text to the left */
-  font-size: 50px;
+/* Styling for fly-in components */
+
+@keyframes fly-in {
+  to {
+    left: 0; /* Move to the original position */
+    opacity: 1; /* Fade in */
+  }
+}
+
+.laptop-example-container {
+  height: 350px;
+  width: 600px;
 }
 
 .text-container {
@@ -28,17 +32,54 @@
   font-weight: 300;
   width: 40vw;
   z-index: 2; /* To ensure text appears above the video */
+}
+
+.text-container-glass {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 70vh;
+  width: 40vw;
+  z-index: 2;
+}
+
+.text-fly-container-1 {
+  position: relative;
+  left: -100%;
+  opacity: 0; /* Start with 0 opacity */
+  animation: fly-in 1s ease forwards; /* Apply the animation */
+  transition: opacity 1s ease; /* Apply the fade-in transition */
+  color: white;
   /* Add additional styling for your text here */
 }
+
+.text-fly-container-2 {
+  position: relative;
+  left: -100%;
+  opacity: 0; /* Start with 0 opacity */
+  animation: fly-in 1.5s ease forwards; /* Apply the animation */
+  transition: opacity 1.5s ease; /* Apply the fade-in transition */
+  /* Add additional styling for your text here */
+}
+
+/* Styling for rotating word box */
 
 .word-rotator {
   display: flex;
   position: relative;
   overflow: hidden;
-  font-size: 70px;
+  font-size: 100px;
   font-weight: 900;
   height: 1.5em; /* Set the height to the height of one line of text */
   width: 50vw; /* Make sure the container takes the full width */
+  left: -100%; /* Start off-screen to the left */
+  opacity: 0; /* Start with 0 opacity */
+  animation: fly-in 1.25s ease forwards; /* Apply the animation */
+  transition: opacity 1.25s ease; /* Apply the fade-in transition */
+  color: white;
 }
 
 .rotating-word {

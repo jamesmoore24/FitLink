@@ -1,5 +1,5 @@
 .LogoText {
-  color: var(--black);
+  color: black;
   font-size: 30px;
   font-weight: 500;
 }
@@ -12,6 +12,7 @@
   font-weight: bold; /* Make the text bold */
   display: flex;
   align-items: center; /* Align text and bars vertically */
+  color: black;
 }
 
 .LogoBar1 {

@@ -52,14 +52,17 @@ const App = () => {
 
   return (
     <>
-      <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-      <Routes>
-        <Route path="/" element={<Landing userId={userId} />} />
-        <Route path="/feed" element={<Feed userId={userId} />} />
-        <Route path="/workout" element={<Workout userId={userId} />} />
-        <Route path="/profile/:userId" element={<Profile userId={userId} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <div className="app-container">
+        <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+
+        <Routes>
+          <Route path="/" element={<Landing userId={userId} />} />
+          <Route path="/feed" element={<Feed userId={userId} />} />
+          <Route path="/workout" element={<Workout userId={userId} />} />
+          <Route path="/profile/:userId" element={<Profile userId={userId} />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </>
   );
 };

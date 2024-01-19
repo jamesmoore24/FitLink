@@ -1,7 +1,3 @@
 .app-container {
-  width: 100vw;
-  height: 85vh;
-  padding: var(--m) var(--m);
-  margin: auto;
-  border: 2px red solid;
+  background-color: var(--grey);
 }

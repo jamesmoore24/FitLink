@@ -3,6 +3,7 @@ import { redirect } from "react-router-dom";
 
 import "../../utilities.css";
 import "./Landing.css";
+import LaptopImage from "../../public/laptop-example.png";
 
 import VideoPlayer from "../modules/SignUp/Video";
 
@@ -17,13 +18,13 @@ const Landing = (props) => {
 
   const words = [
     "working-out",
-    "bench-pressing",
-    "biking",
-    "squatting",
+    "benching",
+    "running",
     "connecting",
     "deadlifting",
-    "running",
-    "tracking exercises",
+    "biking",
+    "squatting",
+    "exercising",
     "lunging",
     "powerlifting",
     "rowing",
@@ -43,7 +44,7 @@ const Landing = (props) => {
       <VideoPlayer />
       <div className="overlay-container">
         <div className="text-container">
-          <h2 className="text-container">The future of </h2>
+          <div className="text-fly-container-1">The future of</div>
           <div className="word-rotator">
             {words.map((word, index) => (
               <span
@@ -54,9 +55,15 @@ const Landing = (props) => {
               </span>
             ))}
           </div>
-          <h1 className="text-container">is finally here.</h1>
+          <div className="text-fly-container-2">is finally here.</div>
         </div>
-        <div className="text-container">Placeholder for laptop image demo</div>
+        <div className="text-container-glass">
+          <img src={LaptopImage} className="laptop-example-container" />
+          <h3>
+            FitLink makes it easy to track workouts, connect with other gymgoers and achieve your
+            personal fitness goals in a fun and intuitive way.{" "}
+          </h3>
+        </div>
       </div>
     </>
   );

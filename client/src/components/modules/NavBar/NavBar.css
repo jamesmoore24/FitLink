@@ -1,9 +1,16 @@
 .NavBar-container {
   width: 100vw;
   height: 10vh;
-  background-color: var(--white);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
+
+/* back ground effect 
+
+background: linear-gradient(135deg, rgba(225, 255, 255, 0.1), rgba(225, 255, 255, 0));
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1); */
