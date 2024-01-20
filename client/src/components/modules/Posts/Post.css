@@ -1,0 +1,40 @@
+.post-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  height: 60vh;
+  width: 50vw;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.post-exercise-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 30vh;
+  overflow: auto;
+  white-space: nowrap;
+  position: relative;
+}
+
+.post-fistbump-container {
+  display: flex;
+  align-items: center;
+  height: 5vh;
+}
+
+.post-fistbumpImage {
+  height: 20px;
+  width: 20px;
+  margin-right: 8px;
+}
+
+.post-commentSection {
+  flex: display;
+  max-height: 20vh;
+  flex-direction: column;
+  overflow: auto;
+  white-space: nowrap;
+}

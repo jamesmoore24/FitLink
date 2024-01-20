@@ -1,6 +1,32 @@
-.login-container {
+.feed-background-container {
+  position: fixed;
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+  top: 10vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 90vh;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.feed-endPosts {
+  color: var(--darkgrey);
+}
+/* 
+.feed-container {
+  width: 60%;
+  height: 100%;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  height: 100vh; /* This ensures that the container fits the full viewport height */
-  width: 100vw; /* This ensures that the container fits the full viewport width */
-}
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  white-space: nowrap;
+  border: 2px red solid;
+} */
