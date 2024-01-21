@@ -16,15 +16,8 @@ import "./Feed.css";
 const Feed = (props) => {
   const [workouts, setWorkouts] = useState([]);
 
-  const workout = {
-    creator_id: props.userId,
-    creator_name: "Jimmy",
-    starred: true,
-    likes: 3,
-  };
-
   useEffect(() => {
-    get("/api/workouts", workout).then((workoutObjs) => {
+    get("/api/workouts").then((workoutObjs) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
       setWorkouts(reversedWorkoutObjs);
     });

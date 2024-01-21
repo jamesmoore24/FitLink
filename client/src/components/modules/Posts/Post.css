@@ -29,6 +29,15 @@
   height: 20px;
   width: 20px;
   margin-right: 8px;
+  transition: transform 0.3s;
+}
+
+.post-fistbumpImage:hover {
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+.post-fistbumpImage:active {
+  transform: scale(0.9); /* Scale down on click */
 }
 
 .post-commentSection {

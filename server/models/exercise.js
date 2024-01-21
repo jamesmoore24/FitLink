@@ -8,6 +8,7 @@ const ExerciseSchema = new mongoose.Schema({
     {
       reps: Number,
       weight: Number,
+      rpe: Number,
     },
   ],
 });
