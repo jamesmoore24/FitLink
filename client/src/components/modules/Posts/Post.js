@@ -32,9 +32,11 @@ const Post = (props) => {
 
   const addNewComment = (commentObj) => {
     console.log("Posting a comment");
-    post("/api/comment", { parent: props.postId, content: commentText }).then((comment) => {
-      setComments(comments.concat([comment]));
-    });
+    if (commentText.length > 0) {
+      post("/api/comment", { parent: props.postId, content: commentText }).then((comment) => {
+        setComments(comments.concat([comment]));
+      });
+    }
     setCommentText("");
   };
 

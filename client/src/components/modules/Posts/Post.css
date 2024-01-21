@@ -34,6 +34,7 @@
 
 .post-fistbumpImage:hover {
   transform: scale(1.1); /* Scale up on hover */
+  cursor: pointer;
 }
 
 .post-fistbumpImage:active {
@@ -82,12 +83,13 @@
   border: 2px var(--primary) solid;
   border-radius: 20px;
   transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+  transform: scale(1.1);
 }
 
 .post-addCommentPost:hover {
   background-color: white; /* New background color on hover */
+  cursor: pointer;
   color: var(--primary);
-  transform: scale(1.1); /* Scale up on hover */
 }
 
 .post-addCommentPost:active {
