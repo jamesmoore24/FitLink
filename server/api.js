@@ -14,6 +14,7 @@ const User = require("./models/user");
 const Comment = require("./models/comment");
 const Exercise = require("./models/exercise");
 const Workout = require("./models/workout");
+const Like = require("./models/like");
 
 // import authentication library
 const auth = require("./auth");
@@ -77,11 +78,23 @@ router.get("/comments", (req, res) => {
 });
 
 router.post("/like", (req, res) => {
-  Workout.findById(req.body.postId).then((workout) => {
-    workout.likes = workout.likes + req.body.like;
-    workout.save();
-    /* workout.likes = workout.likes + req.query.like;
-    workout.save(); */
+  if (req.body.isLiked) {
+    const like = new Like({
+      userId: req.user._id,
+      postId: req.body.postId,
+    });
+    like.save().then((like) => console.log("like saved"));
+  } else {
+    Like.deleteOne({
+      userId: req.user._id,
+      postId: req.body.postId,
+    }).then(() => console.log("like deleted"));
+  }
+});
+
+router.get("/like", (req, res) => {
+  Like.find({ userId: req.query.userId, postId: req.query.postId }).then((like) => {
+    res.send(like);
   });
 });
 

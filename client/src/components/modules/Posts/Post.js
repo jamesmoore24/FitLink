@@ -23,7 +23,7 @@ import FistFilled from "../../../public/fist_filled.png";
 const Post = (props) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState(""); // Step 1: State variable for input value
-  const [isLiked, setIsLiked] = useState(-1);
+  const [isLiked, setIsLiked] = useState(false);
 
   const handleChange = (e) => {
     // Step 2: Update state with input value
@@ -39,16 +39,26 @@ const Post = (props) => {
   };
 
   const toggleLike = () => {
-    setIsLiked(-1 * isLiked);
-    console.log(props.postId);
-    post("/api/like/", { postId: props.postId, like: isLiked }).then((like) => {
-      console.log("Liked");
+    setIsLiked(!isLiked);
+    post("/api/like/", { postId: props.postId, isLiked: !isLiked }).then((like) => {
+      console.log("Like API hit");
     });
   };
 
   useEffect(() => {
     get("/api/comments/", { parent: props.postId }).then((comments) => {
       setComments(comments);
+    });
+  }, []);
+
+  useEffect(() => {
+    get("/api/like/", { userId: props.userId, postId: props.postId }).then((likeVal) => {
+      //if an object is returned then we know that we have a like on a post
+      if (likeVal.length) {
+        setIsLiked(true);
+      } else {
+        setIsLiked(false);
+      }
     });
   }, []);
 
@@ -64,8 +74,8 @@ const Post = (props) => {
       </div>
 
       <div className="post-fistbump-container" onClick={toggleLike}>
-        <img src={isLiked === 1 ? FistFilled : Fist} className="post-fistbumpImage" />
-        <p>{isLiked === 1 ? props.likes + 1 : props.likes} fistbumps!</p>
+        <img src={isLiked ? FistFilled : Fist} className="post-fistbumpImage" />
+        <p>{isLiked ? props.likes + 1 : props.likes} fistbumps!</p>
       </div>
 
       <div className="post-commentSectionIndicator">Comments</div>
