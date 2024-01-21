@@ -12,12 +12,19 @@ import Fist from "../../../public/fist.png";
 import FistFilled from "../../../public/fist_filled.png";
 
 /**
- * The navigation bar at the top of all pages. Takes no props.
+ * Page component to display when at the "/chat" route
+ *
+ * Proptypes
+ * @param {string} creator_id id of current logged in user
+ * @param {string} creator_name
+ * @param {Date} timestamp
+ * @param {boolean} starred
+ * @param {number} likes
  */
-const Post = ({ userId, handleLogin, handleLogout }) => {
+const Post = (props) => {
   return (
     <div className="post-container">
-      <PostTop />
+      <PostTop creator_name={props.creator_name} timestamp={props.timestamp} />
 
       <div className="post-exercise-container">
         <ExerciseSection />
@@ -27,7 +34,7 @@ const Post = ({ userId, handleLogin, handleLogout }) => {
 
       <div className="post-fistbump-container">
         <img src={Fist} className="post-fistbumpImage" />
-        <p>Leave a fistbump!</p>
+        <p>{`${props.likes}`}</p>
       </div>
 
       <div className="post-commentSection">

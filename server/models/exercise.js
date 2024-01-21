@@ -4,7 +4,12 @@ const mongoose = require("mongoose");
 const ExerciseSchema = new mongoose.Schema({
   type: String,
   parent: String, //what workout it is underneath
-  sets: String[{ reps: Number, weight: Number }],
+  sets: [
+    {
+      reps: Number,
+      weight: Number,
+    },
+  ],
 });
 
 // compile model from schema

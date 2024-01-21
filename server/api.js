@@ -11,6 +11,9 @@ const express = require("express");
 
 // import models so we can interact with the database
 const User = require("./models/user");
+const Comment = require("./models/comment");
+const Exercise = require("./models/exercise");
+const Workout = require("./models/workout");
 
 // import authentication library
 const auth = require("./auth");
@@ -42,6 +45,20 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+
+router.post("/workout", auth.ensureLoggedIn, (req, res) => {
+  const newWorkout = new Workout({
+    creator_id: "TEST",
+    creator_name: "TEST",
+  });
+  newWorkout.save().then((workout) => {
+    res.send(workout);
+  });
+});
+
+router.get("/workouts", auth.ensureLoggedIn, (req, res) => {
+  Workout.find({}).then((workouts) => res.send(workouts));
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

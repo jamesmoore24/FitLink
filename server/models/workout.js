@@ -5,8 +5,8 @@ const WorkoutSchema = new mongoose.Schema({
   creator_id: String,
   creator_name: String,
   timestamp: { type: Date, default: Date.now },
-  starred: Boolean,
-  likes: Number,
+  starred: { type: Boolean, default: false },
+  likes: { type: Number, default: 0 },
 });
 
 // compile model from schema
