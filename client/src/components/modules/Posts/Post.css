@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   margin: 10px;
-  height: 60vh;
+  height: 75vh;
   width: 50vw;
   border-radius: 20px;
   padding: 10px;
@@ -37,4 +37,50 @@
   flex-direction: column;
   overflow: auto;
   white-space: nowrap;
+}
+
+.post-commentSectionIndicator {
+  height: 3vh;
+  font-size: 15px;
+  color: grey;
+}
+
+.post-addCommentBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  height: 5vh;
+  width: 100%;
+  border-radius: 20px;
+  border: 2px var(--primary) solid;
+}
+
+.post-addCommentInput {
+  height: 90%;
+  width: 90%;
+  margin-left: 3px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+}
+
+.post-addCommentPost {
+  height: 100%;
+  width: 9%;
+  background-color: var(--primary);
+  color: white;
+  border: 2px var(--primary) solid;
+  border-radius: 20px;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+}
+
+.post-addCommentPost:hover {
+  background-color: white; /* New background color on hover */
+  color: var(--primary);
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+post-addCommentPost:active {
+  transform: scale(0.9); /* Scale down on click */
 }

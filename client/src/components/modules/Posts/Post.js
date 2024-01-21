@@ -37,10 +37,16 @@ const Post = (props) => {
         <p>{`${props.likes}`}</p>
       </div>
 
+      <div className="post-commentSectionIndicator">Comments</div>
       <div className="post-commentSection">
         <Comment />
         <Comment />
         <Comment />
+      </div>
+
+      <div className="post-addCommentBox">
+        <input className="post-addCommentInput" placeholder="Leave a comment..." />
+        <button className="post-addCommentPost">Post</button>
       </div>
     </div>
   );
