@@ -5,9 +5,13 @@ import "./Comment.css";
 import ProfilePicture from "../../../public/example_profile.jpg";
 
 /**
- * The navigation bar at the top of all pages. Takes no props.
+ * Proptypes
+ * @param {string} creator_id
+ * @param {string} creator_name
+ * @param {string} parent
+ * @param {string} params
  */
-const Comment = ({ userId, handleLogin, handleLogout }) => {
+const Comment = (props) => {
   //need to use map or something to render all of the squares
 
   //should make an api call here to grab the information for the certain exercises for the specific post
@@ -16,8 +20,8 @@ const Comment = ({ userId, handleLogin, handleLogout }) => {
     <div className="comment-container">
       <img className="comment-profilePicture-container" src={ProfilePicture} />
       <div className="comment-nameAndComment-container">
-        <div className="comment-name">Helo</div>
-        <div className="comment-comment">This is a good workout lol</div>
+        <div className="comment-name">{props.creator_name}</div>
+        <div className="comment-comment">{props.content}</div>
       </div>
     </div>
   );

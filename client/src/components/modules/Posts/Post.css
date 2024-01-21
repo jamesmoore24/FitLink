@@ -67,7 +67,7 @@
 
 .post-addCommentPost {
   height: 100%;
-  width: 9%;
+  width: 10%;
   background-color: var(--primary);
   color: white;
   border: 2px var(--primary) solid;
@@ -81,6 +81,6 @@
   transform: scale(1.1); /* Scale up on hover */
 }
 
-post-addCommentPost:active {
+.post-addCommentPost:active {
   transform: scale(0.9); /* Scale down on click */
 }
