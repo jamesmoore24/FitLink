@@ -1,16 +1,16 @@
 .comment-container {
+  margin-bottom: 10px;
   display: flex;
   align-items: start;
   border-radius: 20px;
-  margin: 5px;
   width: auto;
   height: auto;
 }
 
 .comment-profilePicture-container {
-  padding: 10px;
   height: 2em;
   width: 2em;
+  padding-right: 5px;
 }
 
 .comment-profilePicture {
@@ -36,6 +36,7 @@
 }
 
 .comment-name {
+  font-size: 0.9em;
   font-weight: 700;
   height: auto;
   width: 100%;
@@ -43,6 +44,7 @@
 
 .comment-comment {
   height: auto;
+  font-size: 0.8em;
   width: 100%;
   overflow-wrap: auto;
 }
