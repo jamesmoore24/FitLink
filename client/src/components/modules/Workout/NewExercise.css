@@ -1,13 +1,27 @@
 .newExercise-container {
   display: flex;
   flex-direction: column;
-  margin: 10px;
-  height: 80vh;
-  width: 40vw;
+  margin: 1em;
+  height: 90%;
+  width: 50%;
   border-radius: 20px;
   padding: 10px;
   background-color: white;
-  border: 2px red solid;
+  border: 2px green solid;
+}
+
+@media only screen and (max-aspect-ratio: 9/8) {
+  .newExercise-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+    height: 50%;
+    width: 90%;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: white;
+    border: 2px green solid;
+  }
 }
 
 .newExercise-search-container {

@@ -11,6 +11,8 @@
   width: 100%;
   height: calc(100vh - 3em);
   overflow: auto;
+  background-color: var(--grey);
+  z-index: -1;
 }
 
 .feed-endPosts {

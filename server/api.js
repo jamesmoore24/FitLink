@@ -48,10 +48,18 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-router.post("/workout", auth.ensureLoggedIn, (req, res) => {
+router.get("/current-workout", (req, res) => {
+  Workout.find({ creator_id: req.user._id }).then((workout) => {
+    console.log(`WORKOUT FOUND ${workout}`);
+    res.send(workout);
+  });
+});
+
+router.post("/workout", (req, res) => {
   const newWorkout = new Workout({
     creator_id: req.user._id,
     creator_name: req.user.name,
+    current: true,
   });
   newWorkout.save().then((workout) => {
     res.send(workout);
@@ -60,6 +68,26 @@ router.post("/workout", auth.ensureLoggedIn, (req, res) => {
 
 router.get("/workouts", (req, res) => {
   Workout.find({}).then((workouts) => res.send(workouts));
+});
+
+router.get("/exercises", (req, res) => {
+  Exercise.find({ parent: req.query.parent }).then((exercises) => res.send(exercises));
+});
+
+router.post("/exercise/create", (req, res) => {
+  const newExercise = new Exercise({
+    parent: req.body.workoutId,
+  });
+  newExercise.save().then((exercise) => {
+    console.log("Exercise created");
+    res.send(exercise);
+  });
+});
+
+router.post("/exercise/delete", (req, res) => {
+  Exercise.deleteOne({ _id: req.body.exerciseId }).then((exercise) => {
+    console.log("Deleted the exercise");
+  });
 });
 
 router.post("/comment", (req, res) => {

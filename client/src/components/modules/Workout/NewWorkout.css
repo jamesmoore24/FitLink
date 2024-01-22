@@ -1,11 +1,48 @@
 .newWorkout-container {
   display: flex;
   flex-direction: column;
-  margin: 10px;
-  height: 80vh;
-  width: 40vw;
+  justify-content: center;
+  align-items: center;
+  margin: 1em;
+  max-height: 90%;
+  width: 50%;
   border-radius: 20px;
   padding: 10px;
   background-color: white;
   border: 2px green solid;
+}
+
+@media only screen and (max-aspect-ratio: 9/8) {
+  .newWorkout-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+    max-height: 50%;
+    width: 90%;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: white;
+    border: 2px green solid;
+  }
+}
+
+.newWorkout-newExercise {
+  height: 3em;
+  width: 90%;
+  background-color: var(--primary);
+  color: white;
+  border: 2px var(--primary) solid;
+  border-radius: 20px;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+  transform: scale(1.1);
+}
+
+.newWorkout-newExercise:hover {
+  background-color: white; /* New background color on hover */
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.newWorkout-newExercise:active {
+  transform: scale(0.9); /* Scale down on click */
 }

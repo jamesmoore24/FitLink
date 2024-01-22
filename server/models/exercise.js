@@ -1,16 +1,19 @@
 const mongoose = require("mongoose");
 
 //define a message schema for the database
+const setSchema = new mongoose.Schema({
+  reps: Number,
+  weight: Number,
+  rpe: Number,
+});
+
 const ExerciseSchema = new mongoose.Schema({
-  type: String,
+  name: { type: String, default: "" },
   parent: String, //what workout it is underneath
-  sets: [
-    {
-      reps: Number,
-      weight: Number,
-      rpe: Number,
-    },
-  ],
+  sets: {
+    type: [setSchema],
+    default: [],
+  },
 });
 
 // compile model from schema
