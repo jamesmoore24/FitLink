@@ -1,16 +1,22 @@
 import React from "react";
 
 import "./PostTop.css";
+import { post } from "../../../utilities";
 
 import ProfilePicture from "../../../public/example_profile.jpg";
 import Medal from "../../../public/gold-medal.png";
+import Star from "../../../public/star.png";
+import StarFilled from "../../../public/star_filled.png";
 
 /**
  * Page component to display when at the "/chat" route
  *
  * Proptypes
  * @param {string} creator_name
+ * @param {string} postId
  * @param {Date} timestamp
+ * @param {Boolean} isStarred
+ * @param {(PostObject) => {}} setIsStarred
  */
 const PostTop = (props) => {
   const date = new Date(props.timestamp);
@@ -23,6 +29,14 @@ const PostTop = (props) => {
 
   // Format the time into a string with AM/PM
   const formattedTime = `${formattedHours}:${minutes < 10 ? "0" : ""}${minutes}${period}`;
+
+  const toggleStar = () => {
+    console.log("TOGGLING");
+    props.setIsStarred(!props.isStarred);
+    post("/api/star/", { postId: props.postId, isStarred: !props.isStarred }).then((star) => {
+      console.log("Star API hit");
+    });
+  };
 
   return (
     <div className="postTop-container">
@@ -39,7 +53,11 @@ const PostTop = (props) => {
         </div>
       </div>
       <div className="postTop-personalBest-container">
-        <img className="postTop-personalBestMedal" src={Medal} />
+        <img
+          className="postTop-star"
+          src={props.isStarred ? StarFilled : Star}
+          onClick={toggleStar}
+        />
         <div className="postTop-personalBestText">3 Personal Bests</div>
       </div>
     </div>

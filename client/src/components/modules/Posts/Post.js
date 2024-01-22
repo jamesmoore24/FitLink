@@ -24,6 +24,7 @@ const Post = (props) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState(""); // Step 1: State variable for input value
   const [isLiked, setIsLiked] = useState(false);
+  const [isStarred, setIsStarred] = useState(false);
 
   const handleChange = (e) => {
     // Step 2: Update state with input value
@@ -48,12 +49,6 @@ const Post = (props) => {
   };
 
   useEffect(() => {
-    get("/api/comments/", { parent: props.postId }).then((comments) => {
-      setComments(comments);
-    });
-  }, []);
-
-  useEffect(() => {
     get("/api/like/", { userId: props.userId, postId: props.postId }).then((likeVal) => {
       //if an object is returned then we know that we have a like on a post
       if (likeVal.length) {
@@ -62,11 +57,31 @@ const Post = (props) => {
         setIsLiked(false);
       }
     });
+
+    get("/api/star/", { userId: props.userId, postId: props.postId }).then((starVal) => {
+      //if an object is returned then we know that we have a like on a post
+      console.log(starVal.length);
+      if (starVal.length) {
+        setIsStarred(true);
+      } else {
+        setIsStarred(false);
+      }
+    });
+
+    get("/api/comments/", { parent: props.postId }).then((comments) => {
+      setComments(comments);
+    });
   }, []);
 
   return (
     <div className="post-container">
-      <PostTop creator_name={props.creator_name} timestamp={props.timestamp} />
+      <PostTop
+        creator_name={props.creator_name}
+        postId={props.postId}
+        timestamp={props.timestamp}
+        isStarred={isStarred}
+        setIsStarred={setIsStarred}
+      />
 
       <div className="post-exercise-container">
         <ExerciseSection />

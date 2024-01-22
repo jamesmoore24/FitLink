@@ -15,6 +15,7 @@ const Comment = require("./models/comment");
 const Exercise = require("./models/exercise");
 const Workout = require("./models/workout");
 const Like = require("./models/like");
+const Star = require("./models/star");
 
 // import authentication library
 const auth = require("./auth");
@@ -95,6 +96,27 @@ router.post("/like", (req, res) => {
 router.get("/like", (req, res) => {
   Like.find({ userId: req.query.userId, postId: req.query.postId }).then((like) => {
     res.send(like);
+  });
+});
+
+router.post("/star", (req, res) => {
+  if (req.body.isStarred) {
+    const star = new Star({
+      userId: req.user._id,
+      postId: req.body.postId,
+    });
+    star.save().then((star) => console.log("Star saved"));
+  } else {
+    Star.deleteOne({
+      userId: req.user._id,
+      postId: req.body.postId,
+    }).then(() => console.log("Star deleted"));
+  }
+});
+
+router.get("/star", (req, res) => {
+  Star.find({ userId: req.query.userId, postId: req.query.postId }).then((star) => {
+    res.send(star);
   });
 });
 
