@@ -45,12 +45,7 @@ const Feed = (props) => {
   if (!props.userId) {
     return <div>Please sign in before viewing your homepage.</div>;
   }
-  return (
-    <div className="feed-background-container">
-      {workoutsList}
-      <div className="feed-endPosts">No more posts</div>
-    </div>
-  );
+  return <div className="feed-background-container">{workoutsList}</div>;
 };
 
 export default Feed;

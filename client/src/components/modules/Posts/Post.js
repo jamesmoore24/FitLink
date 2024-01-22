@@ -93,22 +93,30 @@ const Post = (props) => {
       <div className="post-fistbump-container" onClick={toggleLike}>
         <img src={isLiked ? FistFilled : Fist} className="post-fistbumpImage" />
         <div className="post-fistbump-text">
-          {isLiked ? props.likes + 1 : props.likes} fistbumps!
+          {isLiked
+            ? props.likes === 0
+              ? `${isLiked ? props.likes + 1 : props.likes} fistbump`
+              : `${isLiked ? props.likes + 1 : props.likes} fistbumps`
+            : "Leave a fistbump!"}
         </div>
       </div>
 
-      <div className="post-commentSectionIndicator">Comments</div>
-      <div className="post-commentSection">
-        {comments.map((comment) => (
-          <Comment
-            key={`SingleComment_${comment._id}`}
-            _id={comment._id}
-            creator_name={comment.creator_name}
-            creator_id={comment.creator_id}
-            content={comment.content}
-          />
-        ))}
+      <div className="post-commentSectionIndicator">
+        {comments.length > 0 ? "Comments" : "Be the first to add a comment!"}
       </div>
+      {comments.length > 0 && (
+        <div className="post-commentSection">
+          {comments.map((comment) => (
+            <Comment
+              key={`SingleComment_${comment._id}`}
+              _id={comment._id}
+              creator_name={comment.creator_name}
+              creator_id={comment.creator_id}
+              content={comment.content}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="post-addCommentBox">
         <input
