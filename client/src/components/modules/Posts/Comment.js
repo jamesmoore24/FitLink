@@ -18,7 +18,9 @@ const Comment = (props) => {
 
   return (
     <div className="comment-container">
-      <img className="comment-profilePicture-container" src={ProfilePicture} />
+      <div className="comment-profilePicture-container">
+        <img className="comment-profilePicture" src={ProfilePicture} />
+      </div>
       <div className="comment-nameAndComment-container">
         <div className="comment-name">{props.creator_name}</div>
         <div className="comment-comment">{props.content}</div>

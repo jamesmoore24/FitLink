@@ -1,0 +1,11 @@
+.newWorkout-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  height: 80vh;
+  width: 40vw;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: white;
+  border: 2px green solid;
+}

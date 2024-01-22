@@ -15,18 +15,16 @@ const ExerciseSection = ({ userId, handleLogin, handleLogout }) => {
   //should make an api call here to grab the information for the certain exercises for the specific post
 
   return (
-    <div className="exerciseSection-container">
-      <div className="exerciseSection-text-container">Bench Press</div>
-      <div className="exerciseSection-set-container">
-        <SetSquare />
-        <SetSquare />
-        <SetSquare />
-        <SetSquare />
-        <SetSquare />
-        <SetSquare />
-        <SetSquare />
+    <>
+      <div className="exerciseSection-container">
+        <div className="exerciseSection-text-container">Bench Press</div>
+        <div className="exerciseSection-set-container">
+          <SetSquare />
+          <SetSquare />
+          <SetSquare />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

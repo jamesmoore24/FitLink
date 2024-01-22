@@ -1,34 +1,34 @@
 .tab-container {
-  width: 30%;
-  height: 10vh;
+  display: flex;
+  width: 12em;
+  height: 3em;
   justify-content: space-between;
   align-items: center;
 }
 
 .icon-square-container {
   width: 90px;
-  height: 10vh;
+  height: 100%;
   display: flex;
-
+  flex-direction: column;
   align-items: center;
   justify-content: flex-end;
 }
 
 .icon-container {
-  width: 90px;
+  width: 3em;
   height: 50%;
-  border-radius: 20px;
 }
 
 .bottom-border {
   width: 100%;
   height: 0; /* Initial height is zero */
-  border-bottom: 3px solid white; /* Initial color (white) */
-  transition: height 0.5s, border-color 0.5s; /* Transition for height and border-color */
+  border-bottom: 0px solid white; /* Initial color (white) */
+  transition: border-bottom 0.3s, border-color 0.5s; /* Transition for height and border-color */
 }
 
 .icon-container:hover .bottom-border {
-  height: 3px; /* Height of the expanded border */
+  border-bottom: 3px solid var(--primary);
   border-color: var(--primary); /* Color when expanded (orange) */
 }
 

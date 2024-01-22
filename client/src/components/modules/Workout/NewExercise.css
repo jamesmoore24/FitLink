@@ -1,0 +1,40 @@
+.newExercise-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  height: 80vh;
+  width: 40vw;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: white;
+  border: 2px red solid;
+}
+
+.newExercise-search-container {
+  display: flex;
+  align-items: center;
+  background-color: var(--grey);
+  height: 5%;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+}
+
+.newExercise-search-container:hover,
+.newExercise-search-container:focus-within {
+  background-color: var(--medgrey);
+}
+
+.newExercise-search-image {
+  height: 100%;
+}
+
+.newExercise-exerciseInput {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  font-size: 20px;
+  height: 100%;
+}

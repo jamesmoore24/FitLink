@@ -77,7 +77,9 @@ const Post = (props) => {
 
       <div className="post-fistbump-container" onClick={toggleLike}>
         <img src={isLiked ? FistFilled : Fist} className="post-fistbumpImage" />
-        <p>{isLiked ? props.likes + 1 : props.likes} fistbumps!</p>
+        <div className="post-fistbump-text">
+          {isLiked ? props.likes + 1 : props.likes} fistbumps!
+        </div>
       </div>
 
       <div className="post-commentSectionIndicator">Comments</div>

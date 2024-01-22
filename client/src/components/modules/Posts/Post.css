@@ -1,8 +1,8 @@
 .post-container {
   display: flex;
   flex-direction: column;
-  margin: 10px;
-  height: 75vh;
+  margin: 20px;
+  height: auto;
   width: 50vw;
   border-radius: 20px;
   padding: 10px;
@@ -13,16 +13,19 @@
 .post-exercise-container {
   display: flex;
   flex-direction: column;
-  max-height: 30vh;
+  padding: 10px;
+  background-color: var(--grey);
+  border-radius: 20px;
+  max-height: 8em;
   overflow: auto;
-  white-space: nowrap;
   position: relative;
 }
 
 .post-fistbump-container {
   display: flex;
   align-items: center;
-  height: 5vh;
+  padding: 5px;
+  height: 2em;
 }
 
 .post-fistbumpImage {
@@ -30,6 +33,10 @@
   width: 20px;
   margin-right: 8px;
   transition: transform 0.3s;
+}
+
+.post-fistbump-text {
+  font-size: var(--m);
 }
 
 .post-fistbumpImage:hover {
@@ -42,11 +49,12 @@
 }
 
 .post-commentSection {
-  flex: display;
-  max-height: 20vh;
+  display: flex;
+  max-height: 8em;
+  background-color: var(--grey);
+  border-radius: 20px;
   flex-direction: column;
   overflow: auto;
-  white-space: nowrap;
 }
 
 .post-commentSectionIndicator {
@@ -60,7 +68,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-  height: 5vh;
+  height: 1.5em;
   width: 100%;
   border-radius: 20px;
   border: 2px var(--primary) solid;
@@ -69,7 +77,7 @@
 .post-addCommentInput {
   height: 90%;
   width: 90%;
-  margin-left: 3px;
+  margin-left: 10px;
   outline: none;
   border: none;
   border-radius: 20px;

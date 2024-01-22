@@ -1,7 +1,10 @@
 import React from "react";
 
+import NewWorkout from "../modules/Workout/NewWorkout";
+import NewExercise from "../modules/Workout/NewExercise";
+
 import "../../utilities.css";
-import "./Feed.css";
+import "./Workout.css";
 
 /**
  * Page component to display when at the "/workout" route
@@ -13,7 +16,11 @@ const Workout = (props) => {
   if (!props.userId) {
     return <div>Please sign in before creating a new workout.</div>;
   }
-  return <div>Workout</div>;
+  return (
+    <div className="workout-background-container">
+      <NewWorkout />
+    </div>
+  );
 };
 
 export default Workout;

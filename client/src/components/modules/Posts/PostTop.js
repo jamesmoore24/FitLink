@@ -25,9 +25,12 @@ const PostTop = (props) => {
   const formattedTime = `${formattedHours}:${minutes < 10 ? "0" : ""}${minutes}${period}`;
 
   return (
-    <div className="postTop-profileAndPersonalBest-container">
+    <div className="postTop-container">
       <div className="postTop-profilePictureAndDescription">
-        <img className="postTop-profilePicture-container" src={ProfilePicture}></img>
+        <div className="postTop-profilePicture-container">
+          <img className="postTop-profilePicture" src={ProfilePicture} />
+        </div>
+
         <div className="postTop-profileNameFollowTime-container">
           <div className="postTop-profileName">{props.creator_name}</div>
           <div className="postTop-profileDescription">
