@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./SetSquare.css";
 
 /**
- * The navigation bar at the top of all pages. Takes no props.
+ * @param {number} setIndex
+ * @param {string} reps
+ * @param {string} weight
+ * @param {string} rpe
+ * @param {() => {}} setSetNumber
+ * @param {() => {}} deleteSet
+ * @param {string} viewStyle //either "create" or "view"
  */
-const SetSquare = ({ userId, handleLogin, handleLogout }) => {
-  //need to use map or something to render all of the squares
-
-  //should make an api call here to grab the information for the certain exercises for the specific post
-
+const SetSquare = (props) => {
+  const [isHovered, setIsHovered] = useState(false);
+  //TO DO IMPLEMENT THE SHADING BASED ON RPE
   return (
-    <div className="setSquare-container">
-      <div className="setSquare-text-top">5</div>
-      <div className="setSquare-text">135</div>
+    <div
+      className={
+        props.viewStyle === "create" ? "setSquare-container-create" : "setSquare-container"
+      }
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => {
+        props.setSetNumber(props.setIndex);
+        console.log("CLICKED");
+      }}
+    >
+      <div className="setSquare-text-top">{props.reps}</div>
+      <div className="setSquare-text">{props.weight}</div>
     </div>
   );
 };

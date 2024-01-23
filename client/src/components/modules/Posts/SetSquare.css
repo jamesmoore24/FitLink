@@ -1,5 +1,7 @@
+/* FOR VIEWING */
 .setSquare-container {
   display: flex;
+  position: relative;
   flex-shrink: 0;
   flex-direction: column;
   justify-content: center;
@@ -26,6 +28,51 @@
   font-size: var(--m);
   align-items: center;
   border-top: 1px black solid;
+}
+
+/* FOR SET CREATION */
+.setSquare-container-create {
+  display: flex;
+  flex-shrink: 0;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 5px;
+  width: 3em;
+  height: 3em;
+  background-color: var(--primary);
+  border: 2px var(--primary) solid;
+  border-radius: 20px;
+  transition: 0.3s transform, 0.3s background-color;
+  z-index: 2;
+}
+
+.setSquare-text-top-create {
+  color: white;
+  justify-content: center;
+  display: flex;
+  font-size: var(--m);
+  align-items: center;
+  border-bottom: 1px black solid;
+}
+
+.setSquare-text-create {
+  color: white;
+  justify-content: center;
+  display: flex;
+  font-size: var(--m);
+  align-items: center;
+  border-top: 1px black solid;
+}
+
+.setSquare-container-create:hover {
+  background-color: white; /* New background color on hover */
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.setSquare-container-create:active {
+  transform: scale(0.97); /* Scale down on click */
 }
 
 @media only screen and (max-aspect-ratio: 9/8) {
@@ -56,5 +103,44 @@
     font-size: var(--xl);
     align-items: center;
     border-top: 1px black solid;
+  }
+
+  .setSquare-container-create {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 5px;
+    width: 5em;
+    height: 5em;
+    background-color: var(--primary);
+    border-radius: 20px;
+  }
+  .setSquare-text-top-create {
+    color: black;
+    justify-content: center;
+    display: flex;
+    font-size: var(--xl);
+    align-items: center;
+    border-bottom: 1px black solid;
+  }
+
+  .setSquare-text-create {
+    color: black;
+    justify-content: center;
+    display: flex;
+    font-size: var(--xl);
+    align-items: center;
+    border-top: 1px black solid;
+  }
+
+  .setSquare-container-create:hover {
+    background-color: white; /* New background color on hover */
+    cursor: pointer;
+    color: var(--primary);
+  }
+
+  .setSquare-container-create:active {
+    transform: scale(0.97); /* Scale down on click */
   }
 }

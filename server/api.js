@@ -48,17 +48,19 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-router.get("/current-workout", (req, res) => {
-  Workout.find({ creator_id: req.query.userId, current: true }).then((workout) => {
+router.get("/workout", (req, res) => {
+  console.log(req.query);
+  Workout.find({ creator_id: req.query.userId, current: req.query.current }).then((workout) => {
     res.send(workout);
   });
 });
 
 router.post("/workout", (req, res) => {
+  console.log(req.body);
   const newWorkout = new Workout({
     creator_id: req.user._id,
     creator_name: req.user.name,
-    current: req.query.current,
+    current: req.body.current,
   });
   newWorkout.save().then((workout) => {
     res.send(workout);
@@ -71,6 +73,10 @@ router.get("/workouts", (req, res) => {
 
 router.get("/exercises", (req, res) => {
   Exercise.find({ parent: req.query.parent }).then((exercises) => res.send(exercises));
+});
+
+router.get("/exercise", (req, res) => {
+  Exercise.findById(req.query.id).then((exercise) => res.send(exercise));
 });
 
 router.post("/exercise/create", (req, res) => {
@@ -89,7 +95,7 @@ router.post("/exercise/delete", (req, res) => {
   });
 });
 
-router.post("/exercise/change-type", (req, res) => {
+router.post("/exercise/update", (req, res) => {
   Exercise.findById(req.body.id).then((exercise) => {
     exercise.name = req.body.name;
     exercise.save().then(() => console.log("SHould have changed"));

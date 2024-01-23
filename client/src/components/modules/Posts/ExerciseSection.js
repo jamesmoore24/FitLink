@@ -12,12 +12,15 @@ import SetSquare from "./SetSquare";
  * Page component to display when at the "/chat" route
  *
  * Proptypes
- * @param {string} exerciseId
  * @param {number} index
- * @param {string} selectedExercise
- * @param {() => {}} setSelectedExercise
- * @param {string} viewingStyle //either "create" or "feed"
+ * @param {string} exerciseId
  * @param {string} exerciseName
+ * @param {string} exerciseSets
+ * @param {string} selectedExerciseId
+ * @param {() => {}} setSelectedExerciseId
+ * @param {() => {}} updateExercise
+ * @param {() => {}} deleteExercise
+ * @param {string} viewingStyle //either "create" or "feed"
  *
  */
 const ExerciseSection = (props) => {
@@ -29,13 +32,13 @@ const ExerciseSection = (props) => {
       <div
         className={
           props.viewingStyle === "create"
-            ? props.selectedExercise === props.exerciseId
+            ? props.selectedExerciseId === props.exerciseId
               ? "exerciseSection-selected-container"
               : "exerciseSection-container"
             : "exerciseSection-container"
         }
         onClick={() => {
-          props.setSelectedExercise(props.exerciseId);
+          props.setSelectedExerciseId(props.exerciseId);
         }}
       >
         {props.viewingStyle === "create" && (
@@ -43,7 +46,7 @@ const ExerciseSection = (props) => {
             src={trashCanSrc}
             className="exerciseSection-trashCan"
             onMouseEnter={() => {
-              console.log(props.selectedExercise);
+              console.log(props.selectedExerciseId);
               setTrashCanSrc(TrashCanHalfFilled);
             }}
             onMouseLeave={() => setTrashCanSrc(TrashCan)}

@@ -13,12 +13,12 @@ import "./NewWorkout.css";
 const NewWorkout = (props) => {
   const [currentWorkoutId, setCurrentWorkoutId] = useState(undefined);
   const [exercises, setExercises] = useState([]);
-  const [selectedExercise, setSelectedExercise] = useState(undefined);
-
-  const [exerciseName, setExerciseName] = useState("");
+  const [selectedExerciseId, setSelectedExerciseId] = useState(undefined);
 
   useEffect(() => {
-    get("/api/current-workout", { userId: props.userId }).then((workout) => {
+    //get the current workout
+    get("/api/workout", { userId: props.userId, current: true }).then((workout) => {
+      //if there isn't a current workout then create one
       let workoutId;
       if (workout.length == 0) {
         post("/api/workout", { current: true }).then((workout) => {
@@ -37,6 +37,7 @@ const NewWorkout = (props) => {
   }, []);
 
   const createExercise = () => {
+    console.log(currentWorkoutId);
     post("/api/exercise/create", { workoutId: currentWorkoutId }).then((exercise) => {
       setExercises(exercises.concat([exercise]));
     });
@@ -45,8 +46,14 @@ const NewWorkout = (props) => {
   const deleteExercise = (exerciseId) => {
     post("/api/exercise/delete", { exerciseId: exerciseId }).then(() => {
       setExercises(exercises.filter((exercise) => exercise._id !== exerciseId));
-      setSelectedExercise(undefined);
+      setSelectedExerciseId(undefined);
     });
+  };
+
+  const updateExercise = (exerciseId) => {
+    //post request with params that update the exercise object for selected exercise
+    //change the exercise list to include the new exercise returned by the post request
+    //hopefully on setExercise() call it rerenders the list with updated information about the exerciseObj
   };
 
   return (
@@ -62,12 +69,12 @@ const NewWorkout = (props) => {
                 key={exercise._id}
                 index={ix}
                 exerciseId={exercise._id}
-                selectedExercise={selectedExercise}
-                setSelectedExercise={setSelectedExercise}
+                exerciseName={exercise.name}
+                exerciseSets={exercise.sets}
+                selectedExerciseId={selectedExerciseId}
+                setSelectedExerciseId={setSelectedExerciseId}
                 deleteExercise={deleteExercise}
                 viewingStyle={"create"}
-                exerciseName={exerciseName}
-                setExerciseName={setExerciseName}
               />
             ))
           )}
@@ -77,11 +84,7 @@ const NewWorkout = (props) => {
         </button>
         <button className="newWorkout-newExercise">Save Workout</button>
       </div>
-      <NewExercise
-        selectedExercise={selectedExercise}
-        exerciseName={exerciseName}
-        setExerciseName={setExerciseName}
-      />
+      <NewExercise selectedExerciseId={selectedExerciseId} updateExercise={updateExercise} />
     </>
   );
 };
