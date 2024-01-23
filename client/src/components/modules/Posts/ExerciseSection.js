@@ -18,11 +18,11 @@ import SetSquare from "./SetSquare";
  * @param {() => {}} setSelectedExercise
  * @param {string} viewingStyle //either "create" or "feed"
  * @param {string} exerciseName
+ *
  */
 const ExerciseSection = (props) => {
   //need to use map or something to render all of the squares
   const [trashCanSrc, setTrashCanSrc] = useState(TrashCan);
-  const [exerciseName, setExerciseName] = useState("");
 
   return (
     <>
@@ -54,7 +54,7 @@ const ExerciseSection = (props) => {
           />
         )}
         <div className="exerciseSection-text-container">
-          {props.index + 1}. {exerciseName}
+          {props.index + 1}. {props.exerciseName}
         </div>
         <div className="exerciseSection-set-container"></div>
       </div>

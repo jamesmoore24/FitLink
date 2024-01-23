@@ -13,13 +13,11 @@ import "./NewExercise.css";
  * @param {string} selectedExercise
  * @param {string} exerciseName
  * @param {() => {}} setExerciseName
+ * @param {string}
  */
 const NewExercise = (props) => {
-  const [reps, setReps] = useState("");
-  const [rpe, setRPE] = useState("");
-  const [setNumber, setSetNumber] = useState(1);
-
   useEffect(() => {
+    console.log("HERE");
     if (props.selectedExercise) {
       post("/api/exercise/change-type", {
         id: props.selectedExercise,
@@ -76,14 +74,6 @@ const NewExercise = (props) => {
       <div className="newExercise-previousSets-container">
         <div className="newExercise-previousSets-text">Previous sets:</div>
         <div className="newExercise-previousSets-sets">
-          <SetSquare />
-          <SetSquare />
-          <SetSquare />
-          <SetSquare />
-          <SetSquare />
-          <SetSquare />
-          <SetSquare />
-          <SetSquare />
           <SetSquare />
         </div>
       </div>

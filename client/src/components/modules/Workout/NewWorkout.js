@@ -14,7 +14,11 @@ const NewWorkout = (props) => {
   const [currentWorkoutId, setCurrentWorkoutId] = useState(undefined);
   const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState(undefined);
+
   const [exerciseName, setExerciseName] = useState("");
+  const [reps, setReps] = useState("");
+  const [rpe, setRPE] = useState("");
+  const [setNumber, setSetNumber] = useState(1);
 
   useEffect(() => {
     get("/api/current-workout", { userId: props.userId }).then((workout) => {

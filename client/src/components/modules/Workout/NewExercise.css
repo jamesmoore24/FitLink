@@ -4,8 +4,10 @@
   justify-content: space-around;
   align-items: center;
   margin: 1em;
+  padding: 0.5em;
   height: 90%;
-  width: 50%;
+  width: 50vw;
+  box-sizing: border-box;
   border-radius: 20px;
   padding: 10px;
   background-color: white;
@@ -103,6 +105,12 @@
   height: 10em;
   background-color: var(--grey);
   border-radius: 20px;
+  transition: background-color 0.3s;
+}
+
+.newExercise-setInfoIndividual-container:hover,
+.newExercise-setInfoIndividual-container:focus-within {
+  background-color: var(--medgrey);
 }
 
 .newExercise-setInfoIndividual-text {
@@ -157,7 +165,7 @@
 
 .newExercise-finishButton {
   height: 6em;
-  width: 48%;
+  width: 49%;
   font-size: var(--m);
   box-sizing: border-box;
   display: flex;
