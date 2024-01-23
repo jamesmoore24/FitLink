@@ -89,6 +89,20 @@ router.post("/exercise/delete", (req, res) => {
   });
 });
 
+router.post("/exercise/change-type", (req, res) => {
+  Exercise.findById(req.body.id).then((exercise) => {
+    exercise.name = req.body.name;
+    exercise.save().then(() => console.log("SHould have changed"));
+  });
+});
+
+router.get("/exercise/name", (req, res) => {
+  console.log(`HEREE RE ${req.query}`);
+  Exercise.findById(req.query.id).then((exercise) => {
+    res.send(exercise);
+  });
+});
+
 router.post("/comment", (req, res) => {
   const newComment = new Comment({
     creator_id: req.user._id,

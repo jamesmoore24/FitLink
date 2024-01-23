@@ -14,6 +14,7 @@ const NewWorkout = (props) => {
   const [currentWorkoutId, setCurrentWorkoutId] = useState(undefined);
   const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState(undefined);
+  const [exerciseName, setExerciseName] = useState("");
 
   useEffect(() => {
     get("/api/current-workout", { userId: props.userId }).then((workout) => {
@@ -43,28 +44,43 @@ const NewWorkout = (props) => {
   const deleteExercise = (exerciseId) => {
     post("/api/exercise/delete", { exerciseId: exerciseId }).then(() => {
       setExercises(exercises.filter((exercise) => exercise._id !== exerciseId));
+      setSelectedExercise(undefined);
     });
   };
 
   return (
     <>
       <div className="newWorkout-container">
-        {exercises.map((exercise, ix) => (
-          <ExerciseSection
-            key={exercise._id}
-            index={ix}
-            exerciseId={exercise._id}
-            selectedExercise={selectedExercise}
-            setSelectedExercise={setSelectedExercise}
-            deleteExercise={deleteExercise}
-            viewingStyle={"create"}
-          />
-        ))}
+        <div className="newWorkout-title">Exercises:</div>
+        <div className="newWorkout-exerciseBox">
+          {exercises.length === 0 ? (
+            <div className="newWorkout-reminderText">Start a new exercise!</div>
+          ) : (
+            exercises.map((exercise, ix) => (
+              <ExerciseSection
+                key={exercise._id}
+                index={ix}
+                exerciseId={exercise._id}
+                selectedExercise={selectedExercise}
+                setSelectedExercise={setSelectedExercise}
+                deleteExercise={deleteExercise}
+                viewingStyle={"create"}
+                exerciseName={exerciseName}
+                setExerciseName={setExerciseName}
+              />
+            ))
+          )}
+        </div>
         <button className="newWorkout-newExercise" onClick={createExercise}>
           New exercise
         </button>
+        <button className="newWorkout-newExercise">Save Workout</button>
       </div>
-      <NewExercise activeExercise={selectedExercise} />
+      <NewExercise
+        selectedExercise={selectedExercise}
+        exerciseName={exerciseName}
+        setExerciseName={setExerciseName}
+      />
     </>
   );
 };

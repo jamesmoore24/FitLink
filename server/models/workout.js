@@ -6,6 +6,7 @@ const WorkoutSchema = new mongoose.Schema({
   creator_name: String,
   timestamp: { type: Date, default: Date.now },
   posted: { type: Boolean, default: false },
+  likes: { type: Number, default: 0 },
   current: { type: Boolean, default: false },
 });
 

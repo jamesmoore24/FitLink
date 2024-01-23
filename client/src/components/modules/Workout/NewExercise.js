@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { get, post } from "../../../utilities";
+import SetSquare from "../Posts/SetSquare";
 
 import MagnifyingGlass from "../../../public/search.png";
 
@@ -9,24 +10,86 @@ import "./NewExercise.css";
  * Page component to display when at the "/chat" route
  *
  * Proptypes
- * @param {string} activeExercise id of current logged in user
+ * @param {string} selectedExercise
+ * @param {string} exerciseName
+ * @param {() => {}} setExerciseName
  */
 const NewExercise = (props) => {
-  const [exerciseInput, setExerciseInput] = useState("");
+  const [reps, setReps] = useState("");
+  const [rpe, setRPE] = useState("");
+  const [setNumber, setSetNumber] = useState(1);
 
-  if (!props.activeExercise) {
+  useEffect(() => {
+    if (props.selectedExercise) {
+      post("/api/exercise/change-type", {
+        id: props.selectedExercise,
+        name: props.exerciseName,
+      }).then(() => {
+        console.log("Changed type");
+      });
+    }
+  }, [props.exerciseName]);
+
+  if (!props.selectedExercise) {
     return <div className="newExercise-container">No exercise selected.</div>;
   }
   return (
     <div className="newExercise-container">
       <div className="newExercise-search-container">
-        <img src={MagnifyingGlass} className="newExercise-search-image" />
         <input
           className="newExercise-exerciseInput"
           placeholder="Add an exercise..."
-          value={exerciseInput}
-          onChange={(e) => setExerciseInput(e.target.value)}
+          value={props.exerciseInput}
+          onChange={(e) => props.setExerciseName(e.target.value)}
         />
+        <div className="newExercise-exerciseRecommendation">AI Search</div>
+      </div>
+      <div className="newExercise-setInfo-container">
+        <div className="newExercise-setInfoIndividual-container">
+          <div className="newExercise-setInfoIndividual-text">Reps</div>
+          <input
+            className="newExercise-setInfoIndividual-input"
+            placeholder="?"
+            value={reps}
+            onChange={(e) => setReps(e.target.value)}
+          />
+        </div>
+        <div className="newExercise-setInfoIndividual-container">
+          <div className="newExercise-setInfoIndividual-text">RPE</div>
+          <input
+            className="newExercise-setInfoIndividual-input"
+            placeholder="?"
+            value={rpe}
+            onChange={(e) => setRPE(e.target.value)}
+          />
+        </div>
+        <div className="newExercise-setInfoIndividual-container">
+          <div className="newExercise-setInfoIndividual-text">Set #</div>
+          <input
+            className="newExercise-setInfoIndividual-input"
+            placeholder="?"
+            value={setNumber}
+            onChange={(e) => setSetNumber(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="newExercise-previousSets-container">
+        <div className="newExercise-previousSets-text">Previous sets:</div>
+        <div className="newExercise-previousSets-sets">
+          <SetSquare />
+          <SetSquare />
+          <SetSquare />
+          <SetSquare />
+          <SetSquare />
+          <SetSquare />
+          <SetSquare />
+          <SetSquare />
+          <SetSquare />
+        </div>
+      </div>
+      <div className="newWorkout-finishButton-container">
+        <div className="newExercise-finishButton">Save Set</div>
+        <div className="newExercise-finishButton">Save Exercise</div>
       </div>
     </div>
   );

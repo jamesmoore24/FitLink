@@ -2,10 +2,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
   width: 100%;
+  box-sizing: border-box;
   height: 3em;
+  padding: 5px;
   margin: 5px;
   transition: 0.2s transform;
+}
+
+.exerciseSection-selected-container {
+  display: flex;
+  align-items: center;
+  width: 97%;
+  border-radius: 20px;
+  box-sizing: border-box;
+  height: 3em;
+  margin: 5px;
+  padding: 5px;
+  background-color: var(--darkgrey);
 }
 
 .exerciseSection-container:hover {
@@ -30,16 +45,6 @@
 
 .exerciseSection-trashCan:active {
   transform: scale(0.9); /* Scale down on click */
-}
-
-.exerciseSection-selected-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  border-radius: 20px;
-  height: 3em;
-  margin: 5px;
-  background-color: var(--darkgrey);
 }
 
 .exerciseSection-text-container {

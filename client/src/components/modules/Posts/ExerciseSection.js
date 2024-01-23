@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { get, post } from "../../../utilities";
 
 import "./ExerciseSection.css";
 
@@ -16,11 +17,12 @@ import SetSquare from "./SetSquare";
  * @param {string} selectedExercise
  * @param {() => {}} setSelectedExercise
  * @param {string} viewingStyle //either "create" or "feed"
+ * @param {string} exerciseName
  */
 const ExerciseSection = (props) => {
   //need to use map or something to render all of the squares
   const [trashCanSrc, setTrashCanSrc] = useState(TrashCan);
-  //should make an api call here to grab the information for the certain exercises for the specific post
+  const [exerciseName, setExerciseName] = useState("");
 
   return (
     <>
@@ -41,7 +43,7 @@ const ExerciseSection = (props) => {
             src={trashCanSrc}
             className="exerciseSection-trashCan"
             onMouseEnter={() => {
-              console.log("HELLO");
+              console.log(props.selectedExercise);
               setTrashCanSrc(TrashCanHalfFilled);
             }}
             onMouseLeave={() => setTrashCanSrc(TrashCan)}
@@ -51,14 +53,10 @@ const ExerciseSection = (props) => {
             }}
           />
         )}
-        <div className="exerciseSection-text-container">{props.index + 1}. Bench Press</div>
-        <div className="exerciseSection-set-container">
-          <SetSquare />
-          <SetSquare />
-          <SetSquare />
-          <SetSquare />
-          <SetSquare />
+        <div className="exerciseSection-text-container">
+          {props.index + 1}. {exerciseName}
         </div>
+        <div className="exerciseSection-set-container"></div>
       </div>
     </>
   );
