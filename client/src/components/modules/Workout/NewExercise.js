@@ -16,6 +16,11 @@ import "./NewExercise.css";
  * @param {string}
  */
 const NewExercise = (props) => {
+  const [reps, setReps] = useState("");
+  const [rpe, setRPE] = useState("");
+  const [weight, setWeight] = useState("");
+  const [setNumber, setSetNumber] = useState(1);
+
   useEffect(() => {
     console.log("HERE");
     if (props.selectedExercise) {
@@ -42,6 +47,7 @@ const NewExercise = (props) => {
         />
         <div className="newExercise-exerciseRecommendation">AI Search</div>
       </div>
+      <div className="newExercise-setNumber-container">Set #{setNumber}</div>
       <div className="newExercise-setInfo-container">
         <div className="newExercise-setInfoIndividual-container">
           <div className="newExercise-setInfoIndividual-text">Reps</div>
@@ -53,21 +59,21 @@ const NewExercise = (props) => {
           />
         </div>
         <div className="newExercise-setInfoIndividual-container">
+          <div className="newExercise-setInfoIndividual-text">Weight</div>
+          <input
+            className="newExercise-setInfoIndividual-input"
+            placeholder="?"
+            value={setWeight}
+            onChange={(e) => setSetNumber(e.target.value)}
+          />
+        </div>
+        <div className="newExercise-setInfoIndividual-container">
           <div className="newExercise-setInfoIndividual-text">RPE</div>
           <input
             className="newExercise-setInfoIndividual-input"
             placeholder="?"
             value={rpe}
             onChange={(e) => setRPE(e.target.value)}
-          />
-        </div>
-        <div className="newExercise-setInfoIndividual-container">
-          <div className="newExercise-setInfoIndividual-text">Set #</div>
-          <input
-            className="newExercise-setInfoIndividual-input"
-            placeholder="?"
-            value={setNumber}
-            onChange={(e) => setSetNumber(e.target.value)}
           />
         </div>
       </div>
