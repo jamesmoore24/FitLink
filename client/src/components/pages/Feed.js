@@ -17,7 +17,7 @@ const Feed = (props) => {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    get("/api/workouts").then((workoutObjs) => {
+    get("/api/workouts-feed").then((workoutObjs) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
       setWorkouts(reversedWorkoutObjs);
     });
@@ -29,7 +29,7 @@ const Feed = (props) => {
     workoutsList = workouts.map((workoutObj) => (
       <Post
         key={`Card_${workoutObj._id}`}
-        postId={workoutObj._id}
+        workoutId={workoutObj._id}
         creator_name={workoutObj.creator_name}
         creator_id={workoutObj.creator_id}
         timestamp={workoutObj.timestamp}

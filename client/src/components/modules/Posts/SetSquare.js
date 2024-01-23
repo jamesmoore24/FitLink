@@ -5,8 +5,12 @@ import "./SetSquare.css";
 /**
  * @param {number} setIndex
  * @param {string} reps
+ * @param {() => {}} setReps
  * @param {string} weight
+ * @param {() => {}} setWeight
  * @param {string} rpe
+ * @param {() => {}} setRPE
+ * @param {string} setNumber
  * @param {() => {}} setSetNumber
  * @param {() => {}} deleteSet
  * @param {string} viewStyle //either "create" or "view"
@@ -17,13 +21,20 @@ const SetSquare = (props) => {
   return (
     <div
       className={
-        props.viewStyle === "create" ? "setSquare-container-create" : "setSquare-container"
+        props.viewStyle === "create"
+          ? props.setNumber == props.setIndex
+            ? "setSquare-container-create-chosen"
+            : "setSquare-container-create"
+          : "setSquare-container"
       }
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
-        props.setSetNumber(props.setIndex);
-        console.log("CLICKED");
+        if (props.viewStyle == "create") {
+          props.setSetNumber(props.setIndex);
+          props.setReps(props.reps);
+          props.setWeight(props.weight);
+          props.setRPE(props.rpe);
+          console.log("CLICKED");
+        }
       }}
     >
       <div className="setSquare-text-top">{props.reps}</div>

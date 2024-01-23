@@ -55,7 +55,7 @@ router.get("/workout", (req, res) => {
   });
 });
 
-router.post("/workout", (req, res) => {
+router.post("/workout/create", (req, res) => {
   console.log(req.body);
   const newWorkout = new Workout({
     creator_id: req.user._id,
@@ -67,8 +67,24 @@ router.post("/workout", (req, res) => {
   });
 });
 
-router.get("/workouts", (req, res) => {
-  Workout.find({}).then((workouts) => res.send(workouts));
+router.post("/workout/save", (req, res) => {
+  Workout.findById(req.body.id).then((workout) => {
+    workout.posted = false;
+    workout.current = false;
+    workout.save();
+  });
+});
+
+router.post("/workout/post", (req, res) => {
+  Workout.findById(req.body.id).then((workout) => {
+    workout.posted = true;
+    workout.current = false;
+    workout.save();
+  });
+});
+
+router.get("/workouts-feed", (req, res) => {
+  Workout.find({ posted: true }).then((workouts) => res.send(workouts));
 });
 
 router.get("/exercises", (req, res) => {
@@ -98,12 +114,12 @@ router.post("/exercise/delete", (req, res) => {
 router.post("/exercise/update", (req, res) => {
   Exercise.findById(req.body.id).then((exercise) => {
     exercise.name = req.body.name;
-    exercise.save().then(() => console.log("SHould have changed"));
+    exercise.sets = req.body.sets;
+    exercise.save().then(res.send(exercise));
   });
 });
 
 router.get("/exercise/name", (req, res) => {
-  console.log(`HEREE RE ${req.query}`);
   Exercise.findById(req.query.id).then((exercise) => {
     res.send(exercise);
   });
@@ -129,19 +145,19 @@ router.post("/like", (req, res) => {
   if (req.body.isLiked) {
     const like = new Like({
       userId: req.user._id,
-      postId: req.body.postId,
+      workoutId: req.body.workoutId,
     });
     like.save().then((like) => console.log("like saved"));
   } else {
     Like.deleteOne({
       userId: req.user._id,
-      postId: req.body.postId,
+      workoutId: req.body.workoutId,
     }).then(() => console.log("like deleted"));
   }
 });
 
 router.get("/like", (req, res) => {
-  Like.find({ userId: req.query.userId, postId: req.query.postId }).then((like) => {
+  Like.find({ userId: req.query.userId, workoutId: req.query.workoutId }).then((like) => {
     res.send(like);
   });
 });
@@ -150,19 +166,19 @@ router.post("/star", (req, res) => {
   if (req.body.isStarred) {
     const star = new Star({
       userId: req.user._id,
-      postId: req.body.postId,
+      workoutId: req.body.workoutId,
     });
     star.save().then((star) => console.log("Star saved"));
   } else {
     Star.deleteOne({
       userId: req.user._id,
-      postId: req.body.postId,
+      workoutId: req.body.workoutId,
     }).then(() => console.log("Star deleted"));
   }
 });
 
 router.get("/star", (req, res) => {
-  Star.find({ userId: req.query.userId, postId: req.query.postId }).then((star) => {
+  Star.find({ userId: req.query.userId, workoutId: req.query.workoutId }).then((star) => {
     res.send(star);
   });
 });

@@ -5,7 +5,6 @@ import "./ExerciseSection.css";
 
 import TrashCan from "../../../public/trashcan.png";
 import TrashCanHalfFilled from "../../../public/trashcan_half_filled.png";
-import TrashCanFilled from "../../../public/trashcan_filled.png";
 import SetSquare from "./SetSquare";
 
 /**
@@ -35,10 +34,12 @@ const ExerciseSection = (props) => {
             ? props.selectedExerciseId === props.exerciseId
               ? "exerciseSection-selected-container"
               : "exerciseSection-container"
-            : "exerciseSection-container"
+            : "exerciseSection-container-view"
         }
         onClick={() => {
-          props.setSelectedExerciseId(props.exerciseId);
+          if (props.viewingStyle === "create") {
+            props.setSelectedExerciseId(props.exerciseId);
+          }
         }}
       >
         {props.viewingStyle === "create" && (
@@ -46,7 +47,6 @@ const ExerciseSection = (props) => {
             src={trashCanSrc}
             className="exerciseSection-trashCan"
             onMouseEnter={() => {
-              console.log(props.selectedExerciseId);
               setTrashCanSrc(TrashCanHalfFilled);
             }}
             onMouseLeave={() => setTrashCanSrc(TrashCan)}
@@ -59,7 +59,20 @@ const ExerciseSection = (props) => {
         <div className="exerciseSection-text-container">
           {props.index + 1}. {props.exerciseName}
         </div>
-        <div className="exerciseSection-set-container"></div>
+        <div className="exerciseSection-set-container">
+          {props.exerciseSets.map((set, ix) => {
+            return (
+              <SetSquare
+                key={ix}
+                setIndex={ix}
+                reps={set.reps}
+                weight={set.weight}
+                rpe={set.rpe}
+                viewStyle={"view"}
+              />
+            );
+          })}
+        </div>
       </div>
     </>
   );

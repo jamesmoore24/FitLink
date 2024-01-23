@@ -5,8 +5,8 @@
   align-items: center;
   margin: 1em;
   padding: 0.5em;
-  height: 90%;
-  width: 50vw;
+  height: 27em;
+  width: 25em;
   box-sizing: border-box;
   border-radius: 20px;
   padding: 10px;
@@ -89,8 +89,27 @@
 
 .newExercise-setNumber-container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+.newExercise-setDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.5em;
+  width: 1.5em;
+  transition: 0.3s transform;
+}
+
+.newExercise-setDelete:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.newExercise-setDelete:active {
+  transform: scale(0.9); /* Scale down on click */
 }
 
 .newExercise-setInfo-container {
@@ -123,7 +142,7 @@
 }
 
 .newExercise-setInfoIndividual-input {
-  font-size: 5em;
+  font-size: 4em;
   background-color: transparent;
   outline: none;
   border: none;
@@ -160,7 +179,7 @@
 
 .newWorkout-finishButton-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
 
   height: auto;
@@ -168,12 +187,18 @@
   align-items: center;
 }
 
+.newWorkout-errorSubmit-text {
+  font-size: var(--m);
+  color: red;
+}
+
 .newExercise-finishButton {
-  height: 6em;
-  width: 49%;
+  height: 4em;
+  width: 100%;
   font-size: var(--m);
   box-sizing: border-box;
   display: flex;
+
   justify-content: center;
   align-items: center;
   margin-top: 5px;

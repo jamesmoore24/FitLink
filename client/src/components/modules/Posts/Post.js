@@ -12,7 +12,7 @@ import FistFilled from "../../../public/fist_filled.png";
 
 /**
  * Proptypes
- * @param {string} postId
+ * @param {string} workoutId
  * @param {string} creator_id id of current logged in user
  * @param {string} creator_name
  * @param {Date} timestamp
@@ -25,16 +25,12 @@ const Post = (props) => {
   const [commentText, setCommentText] = useState(""); // Step 1: State variable for input value
   const [isLiked, setIsLiked] = useState(false);
   const [isStarred, setIsStarred] = useState(false);
-
-  const handleChange = (e) => {
-    // Step 2: Update state with input value
-    setCommentText(e.target.value);
-  };
+  const [exercises, setExercises] = useState([]);
 
   const addNewComment = (commentObj) => {
     console.log("Posting a comment");
     if (commentText.length > 0) {
-      post("/api/comment", { parent: props.postId, content: commentText }).then((comment) => {
+      post("/api/comment", { parent: props.workoutId, content: commentText }).then((comment) => {
         setComments(comments.concat([comment]));
       });
     }
@@ -43,13 +39,13 @@ const Post = (props) => {
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
-    post("/api/like/", { postId: props.postId, isLiked: !isLiked }).then((like) => {
+    post("/api/like/", { workoutId: props.workoutId, isLiked: !isLiked }).then((like) => {
       console.log("Like API hit");
     });
   };
 
   useEffect(() => {
-    get("/api/like/", { userId: props.userId, postId: props.postId }).then((likeVal) => {
+    get("/api/like/", { userId: props.userId, workoutId: props.workoutId }).then((likeVal) => {
       //if an object is returned then we know that we have a like on a post
       if (likeVal.length) {
         setIsLiked(true);
@@ -58,7 +54,7 @@ const Post = (props) => {
       }
     });
 
-    get("/api/star/", { userId: props.userId, postId: props.postId }).then((starVal) => {
+    get("/api/star/", { userId: props.userId, workoutId: props.workoutId }).then((starVal) => {
       //if an object is returned then we know that we have a like on a post
       console.log(starVal.length);
       if (starVal.length) {
@@ -68,8 +64,12 @@ const Post = (props) => {
       }
     });
 
-    get("/api/comments/", { parent: props.postId }).then((comments) => {
+    get("/api/comments/", { parent: props.workoutId }).then((comments) => {
       setComments(comments);
+    });
+
+    get("/api/exercises", { parent: props.workoutId }).then((exercises) => {
+      setExercises(exercises);
     });
   }, []);
 
@@ -77,17 +77,27 @@ const Post = (props) => {
     <div className="post-container">
       <PostTop
         creator_name={props.creator_name}
-        postId={props.postId}
+        workoutId={props.workoutId}
         timestamp={props.timestamp}
         isStarred={isStarred}
         setIsStarred={setIsStarred}
       />
 
       <div className="post-exercise-container">
-        <ExerciseSection />
-        <ExerciseSection />
-        <ExerciseSection />
-        <ExerciseSection />
+        {exercises.length === 0 ? (
+          <div className="newWorkout-reminderText">Start a new exercise!</div>
+        ) : (
+          exercises.map((exercise, ix) => (
+            <ExerciseSection
+              key={exercise._id}
+              index={ix}
+              exerciseId={exercise._id}
+              exerciseName={exercise.name}
+              exerciseSets={exercise.sets}
+              viewingStyle={"view"}
+            />
+          ))
+        )}
       </div>
 
       <div className="post-fistbump-container" onClick={toggleLike}>
@@ -123,7 +133,9 @@ const Post = (props) => {
           className="post-addCommentInput"
           placeholder="Leave a comment..."
           value={commentText} // Bind the input value to the state variable
-          onChange={handleChange} // Handle input changes
+          onChange={(e) => {
+            setCommentText(e.target.value);
+          }} // Handle input changes
         />
         <button className="post-addCommentPost" onClick={addNewComment}>
           Post

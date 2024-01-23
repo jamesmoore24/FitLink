@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { get, post } from "../../../utilities";
+import { useNavigate } from "react-router-dom";
 
 import NewExercise from "./NewExercise";
 import ExerciseSection from "../Posts/ExerciseSection";
@@ -11,6 +12,7 @@ import "./NewWorkout.css";
  * @param {string} userId
  */
 const NewWorkout = (props) => {
+  let navigate = useNavigate();
   const [currentWorkoutId, setCurrentWorkoutId] = useState(undefined);
   const [exercises, setExercises] = useState([]);
   const [selectedExerciseId, setSelectedExerciseId] = useState(undefined);
@@ -21,7 +23,7 @@ const NewWorkout = (props) => {
       //if there isn't a current workout then create one
       let workoutId;
       if (workout.length == 0) {
-        post("/api/workout", { current: true }).then((workout) => {
+        post("/api/workout/create", { current: true }).then((workout) => {
           console.log("Workout created");
           workoutId = workout._id;
         });
@@ -50,10 +52,19 @@ const NewWorkout = (props) => {
     });
   };
 
-  const updateExercise = (exerciseId) => {
-    //post request with params that update the exercise object for selected exercise
-    //change the exercise list to include the new exercise returned by the post request
-    //hopefully on setExercise() call it rerenders the list with updated information about the exerciseObj
+  const saveWorkout = () => {
+    console.log("HERE");
+    post("/api/workout/save", { id: currentWorkoutId }).then(() => {
+      console.log("Workout saved to drafts");
+      navigate("/profile");
+    });
+  };
+
+  const postWorkout = () => {
+    post("/api/workout/post", { id: currentWorkoutId }).then(() => {
+      console.log("Workout posted!");
+      navigate("/feed");
+    });
   };
 
   return (
@@ -82,9 +93,22 @@ const NewWorkout = (props) => {
         <button className="newWorkout-newExercise" onClick={createExercise}>
           New exercise
         </button>
-        <button className="newWorkout-newExercise">Save Workout</button>
+
+        <div className="newWorkout-postBox">
+          <button className="newWorkout-postBoxButton" onClick={saveWorkout}>
+            Save Workout
+          </button>
+          <button className="newWorkout-postBoxButton" onClick={postWorkout}>
+            Post Workout
+          </button>
+        </div>
       </div>
-      <NewExercise selectedExerciseId={selectedExerciseId} updateExercise={updateExercise} />
+      <NewExercise
+        selectedExerciseId={selectedExerciseId}
+        exercises={exercises}
+        deleteExercise={deleteExercise}
+        setExercises={setExercises}
+      />
     </>
   );
 };

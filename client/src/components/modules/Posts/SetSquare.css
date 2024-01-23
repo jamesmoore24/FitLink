@@ -6,8 +6,8 @@
   flex-direction: column;
   justify-content: center;
   margin-right: 5px;
-  width: 3em;
-  height: 3em;
+  height: 100%;
+  width: 20%;
   background-color: var(--primary);
   border-radius: 20px;
 }
@@ -30,7 +30,7 @@
   border-top: 1px black solid;
 }
 
-/* FOR SET CREATION */
+/* FOR CREATION */
 .setSquare-container-create {
   display: flex;
   flex-shrink: 0;
@@ -38,8 +38,9 @@
   flex-direction: column;
   justify-content: center;
   margin-right: 5px;
-  width: 3em;
-  height: 3em;
+  box-sizing: border-box;
+  height: 100%;
+  aspect-ratio: 1;
   background-color: var(--primary);
   border: 2px var(--primary) solid;
   border-radius: 20px;
@@ -75,6 +76,23 @@
   transform: scale(0.97); /* Scale down on click */
 }
 
+.setSquare-container-create-chosen {
+  display: flex;
+  flex-shrink: 0;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 5px;
+  box-sizing: border-box;
+  height: 100%;
+  aspect-ratio: 1;
+  background-color: white;
+  border: 2px var(--primary) solid;
+  border-radius: 20px;
+  transition: 0.3s transform, 0.3s background-color;
+  z-index: 2;
+}
+
 @media only screen and (max-aspect-ratio: 9/8) {
   .setSquare-container {
     display: flex;
@@ -82,8 +100,8 @@
     flex-direction: column;
     justify-content: center;
     margin-right: 5px;
-    width: 5em;
-    height: 5em;
+    height: 100%;
+    aspect-ratio: 1;
     background-color: var(--primary);
     border-radius: 20px;
   }

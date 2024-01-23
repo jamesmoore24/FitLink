@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { get, post } from "../../../utilities";
 import SetSquare from "../Posts/SetSquare";
 
-import MagnifyingGlass from "../../../public/search.png";
+import TrashCan from "../../../public/trashcan.png";
+import TrashCanHalfFilled from "../../../public/trashcan_half_filled.png";
 
 import "./NewExercise.css";
 
@@ -11,7 +12,9 @@ import "./NewExercise.css";
  *
  * Proptypes
  * @param {string} selectedExerciseId
- * @param {() => {}} updateExercise
+ * @param {[ExerciseObject]} exercises
+ * @param {() => {}} deleteSet
+ * @param {() => {}} setExercises
  */
 const NewExercise = (props) => {
   const [name, setName] = useState("");
@@ -20,42 +23,86 @@ const NewExercise = (props) => {
   const [weight, setWeight] = useState("");
   const [sets, setSets] = useState([]);
   const [setNumber, setSetNumber] = useState(0);
+  const [setChange, setSetChange] = useState(false);
+  const [trashCanSrc, setTrashCanSrc] = useState(TrashCan);
+  const [errorText, setErrorText] = useState("");
 
   //everytime the selected exercise changes, get information about exercise and store in variables
   useEffect(() => {
-    console.log(`HERE AT SELECTED`);
     if (props.selectedExerciseId) {
       get("/api/exercise/", {
         id: props.selectedExerciseId,
-      }).then((exercise) => {
-        setName(exercise.name);
-        setSets(exercise.sets);
-        setSetNumber(exercise.sets.length);
-      });
+      })
+        .then((exercise) => {
+          setName(exercise.name);
+          setSets(exercise.sets);
+          setSetNumber(exercise.sets.length);
+          setReps("");
+          setRPE("");
+          setWeight("");
+        })
+        .catch((error) => {});
     }
   }, [props.selectedExerciseId]);
 
-  const updateSet = () => {
-    console.log(
-      `Updating with ${reps}, ${weight}, and ${rpe}. Set number is ${setNumber}. Sets length${sets.length} `
-    );
-    const newSet = { reps: reps, weight: weight, rpe: rpe };
-    if (setNumber === sets.length) {
-      setSets([...sets, newSet]);
-      setSetNumber(setNumber + 1);
-    } else {
-      //modify the sets array using setSets at the index of setNumber
-      const updatedSets = sets.map((set, index) => {
-        if (index === setNumber) {
-          // Modify the set at this index
-          return newSet;
+  //this gets triggered anytime the sets object updates
+  useEffect(() => {
+    if (props.selectedExerciseId && sets) {
+      post("/api/exercise/update", { id: props.selectedExerciseId, name: name, sets: sets }).then(
+        (exercise) => {
+          props.setExercises(
+            props.exercises.map((ex) => {
+              if (ex._id === props.selectedExerciseId) {
+                return exercise;
+              } else {
+                return ex;
+              }
+            })
+          );
+          console.log("Exercise updated");
         }
-        return set;
-      });
-      setSets(updatedSets);
-      setSetNumber(sets.length);
+      );
     }
-    console.log(`Sets is now ${sets}`);
+  }, [setChange]);
+
+  const updateSet = () => {
+    if (
+      Number.isInteger(parseInt(reps)) &&
+      Number.isInteger(parseInt(weight)) &&
+      Number.isInteger(parseInt(rpe))
+    ) {
+      const newSet = { reps: reps, weight: weight, rpe: rpe };
+      setName(name);
+      if (setNumber === sets.length) {
+        setSets([...sets, newSet]);
+        setSetNumber(setNumber + 1);
+        setReps("");
+        setRPE("");
+        setWeight("");
+      } else {
+        //modify the sets array using setSets at the index of setNumber
+        const updatedSets = sets.map((set, index) => {
+          if (index === setNumber) {
+            // Modify the set at this index
+            return newSet;
+          }
+          return set;
+        });
+        setSets(updatedSets);
+
+        setSetNumber(sets.length);
+        setErrorText("");
+      }
+    } else if (!name) {
+      setErrorText("Please enter the name of the exercise.");
+    } else {
+      setErrorText("Please enter numeric values before saving.");
+    }
+    setSetChange(!setChange);
+  };
+
+  const deleteSet = () => {
+    setSets(sets.filter((set, ix) => ix !== setNumber));
   };
 
   if (!props.selectedExerciseId) {
@@ -72,7 +119,21 @@ const NewExercise = (props) => {
         />
         <div className="newExercise-exerciseRecommendation">AI Search</div>
       </div>
-      <div className="newExercise-setNumber-container">Set #{setNumber + 1}</div>
+      <div className="newExercise-setNumber-container">
+        {setNumber === sets.length ? "New" : "Editing"} set #{setNumber + 1}
+        {setNumber !== sets.length && (
+          <img
+            src={trashCanSrc}
+            className="newExercise-setDelete"
+            onMouseEnter={() => {
+              console.log(props.selectedExerciseId);
+              setTrashCanSrc(TrashCanHalfFilled);
+            }}
+            onMouseLeave={() => setTrashCanSrc(TrashCan)}
+            onClick={deleteSet}
+          />
+        )}
+      </div>
       <div className="newExercise-setInfo-container">
         <div className="newExercise-setInfoIndividual-container">
           <div className="newExercise-setInfoIndividual-text">Reps</div>
@@ -111,8 +172,12 @@ const NewExercise = (props) => {
                 key={ix}
                 setIndex={ix}
                 reps={set.reps}
+                setReps={setReps}
                 weight={set.weight}
+                setWeight={setWeight}
                 rpe={set.rpe}
+                setRPE={setRPE}
+                setNumber={setNumber}
                 setSetNumber={setSetNumber}
                 viewStyle={"create"}
               />
@@ -121,10 +186,10 @@ const NewExercise = (props) => {
         </div>
       </div>
       <div className="newWorkout-finishButton-container">
+        <div className="newWorkout-errorSubmit-text">{errorText}</div>
         <div className="newExercise-finishButton" onClick={updateSet}>
           Save Set
         </div>
-        <div className="newExercise-finishButton">Save Exercise</div>
       </div>
     </div>
   );

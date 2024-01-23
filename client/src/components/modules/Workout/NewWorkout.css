@@ -4,8 +4,9 @@
   justify-content: center;
   align-items: center;
   margin: 1em;
-  max-height: 90%;
-  width: 50%;
+  box-sizing: border-box;
+  max-height: 27em;
+  width: 25em;
   border-radius: 20px;
   padding: 10px;
   background-color: white;
@@ -46,7 +47,7 @@
 
 .newWorkout-newExercise {
   height: 3em;
-  width: 90%;
+  width: 91%;
   font-size: var(--m);
   background-color: var(--primary);
   color: white;
@@ -64,5 +65,38 @@
 }
 
 .newWorkout-newExercise:active {
+  transform: scale(0.9); /* Scale down on click */
+}
+
+.newWorkout-postBox {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  height: 6em;
+  width: 100%;
+  border: 2px red solid;
+}
+
+.newWorkout-postBoxButton {
+  height: 4em;
+  width: 40%;
+  margin: 5px;
+  font-size: var(--m);
+  background-color: var(--primary);
+  color: white;
+  border: 2px var(--primary) solid;
+  border-radius: 20px;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+  transform: scale(1.1);
+}
+
+.newWorkout-postBoxButton:hover {
+  background-color: white; /* New background color on hover */
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.newWorkout-postBoxButton:active {
   transform: scale(0.9); /* Scale down on click */
 }
