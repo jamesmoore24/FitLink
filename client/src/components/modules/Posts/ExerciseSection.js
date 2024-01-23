@@ -12,11 +12,10 @@ import SetSquare from "./SetSquare";
  *
  * Proptypes
  * @param {string} exerciseId
- * @param {string}
+ * @param {number} index
  * @param {string} selectedExercise
  * @param {() => {}} setSelectedExercise
- * @param {() => {}} deleteExercise
- * @param {() => {}} setDeletedExercise
+ * @param {string} viewingStyle //either "create" or "feed"
  */
 const ExerciseSection = (props) => {
   //need to use map or something to render all of the squares
@@ -27,28 +26,32 @@ const ExerciseSection = (props) => {
     <>
       <div
         className={
-          props.selectedExercise === props.exerciseId
-            ? "exerciseSection-selected-container"
+          props.viewingStyle === "create"
+            ? props.selectedExercise === props.exerciseId
+              ? "exerciseSection-selected-container"
+              : "exerciseSection-container"
             : "exerciseSection-container"
         }
         onClick={() => {
           props.setSelectedExercise(props.exerciseId);
         }}
       >
-        <img
-          src={trashCanSrc}
-          className="exerciseSection-trashCan"
-          onMouseEnter={() => {
-            console.log("HELLO");
-            setTrashCanSrc(TrashCanHalfFilled);
-          }}
-          onMouseLeave={() => setTrashCanSrc(TrashCan)}
-          onClick={() => {
-            console.log("Clicked can");
-            props.deleteExercise(props.exerciseId);
-          }}
-        />
-        <div className="exerciseSection-text-container">Bench Press</div>
+        {props.viewingStyle === "create" && (
+          <img
+            src={trashCanSrc}
+            className="exerciseSection-trashCan"
+            onMouseEnter={() => {
+              console.log("HELLO");
+              setTrashCanSrc(TrashCanHalfFilled);
+            }}
+            onMouseLeave={() => setTrashCanSrc(TrashCan)}
+            onClick={() => {
+              console.log("Clicked can");
+              props.deleteExercise(props.exerciseId);
+            }}
+          />
+        )}
+        <div className="exerciseSection-text-container">{props.index + 1}. Bench Press</div>
         <div className="exerciseSection-set-container">
           <SetSquare />
           <SetSquare />

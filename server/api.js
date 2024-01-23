@@ -49,8 +49,7 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 router.get("/current-workout", (req, res) => {
-  Workout.find({ creator_id: req.user._id }).then((workout) => {
-    console.log(`WORKOUT FOUND ${workout}`);
+  Workout.find({ creator_id: req.query.userId, current: true }).then((workout) => {
     res.send(workout);
   });
 });
@@ -59,7 +58,7 @@ router.post("/workout", (req, res) => {
   const newWorkout = new Workout({
     creator_id: req.user._id,
     creator_name: req.user.name,
-    current: true,
+    current: req.query.current,
   });
   newWorkout.save().then((workout) => {
     res.send(workout);
@@ -86,7 +85,7 @@ router.post("/exercise/create", (req, res) => {
 
 router.post("/exercise/delete", (req, res) => {
   Exercise.deleteOne({ _id: req.body.exerciseId }).then((exercise) => {
-    console.log("Deleted the exercise");
+    res.send(exercise);
   });
 });
 

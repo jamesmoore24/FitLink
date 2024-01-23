@@ -8,53 +8,58 @@ import "./NewWorkout.css";
 
 /**
  * @param {string} workoutId
+ * @param {string} userId
  */
 const NewWorkout = (props) => {
-  const [exercises, setExercises] = useState(undefined);
+  const [currentWorkoutId, setCurrentWorkoutId] = useState(undefined);
+  const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState(undefined);
-  const [deletedExercise, setDeletedExercise] = useState(true);
-  const [createdExercise, setCreatedExercise] = useState(true);
 
   useEffect(() => {
-    console.log("Rerendering...");
-    get("/api/exercises", { parent: props.workoutId }).then((exerciseObjs) => {
-      let reversedExerciseObjs = exerciseObjs.reverse();
-      const hasExercises = exerciseObjs.length !== 0;
-      if (hasExercises) {
-        setExercises(
-          reversedExerciseObjs.map((exerciseObj) => (
-            <ExerciseSection
-              key={exerciseObj._id}
-              exerciseId={exerciseObj._id}
-              selectedExercise={selectedExercise}
-              setSelectedExercise={setSelectedExercise}
-              deleteExercise={deleteExercise}
-            />
-          ))
-        );
+    get("/api/current-workout", { userId: props.userId }).then((workout) => {
+      let workoutId;
+      if (workout.length == 0) {
+        post("/api/workout", { current: true }).then((workout) => {
+          console.log("Workout created");
+          workoutId = workout._id;
+        });
       } else {
-        setExercises(<div>Add an exercise!</div>);
+        workoutId = workout[0]._id;
       }
+      setCurrentWorkoutId(workoutId);
+      get("/api/exercises", { parent: workoutId }).then((exercises) => {
+        console.log(exercises);
+        setExercises(exercises);
+      });
     });
-  }, [props.workoutId, selectedExercise, deletedExercise, createdExercise]);
+  }, []);
 
   const createExercise = () => {
-    post("/api/exercise/create", { workoutId: props.workoutId }).then((exercise) => {
-      setCreatedExercise(!createdExercise);
+    post("/api/exercise/create", { workoutId: currentWorkoutId }).then((exercise) => {
+      setExercises(exercises.concat([exercise]));
     });
   };
 
   const deleteExercise = (exerciseId) => {
-    console.log("Deleted exercise!");
     post("/api/exercise/delete", { exerciseId: exerciseId }).then(() => {
-      setDeletedExercise(!deletedExercise);
+      setExercises(exercises.filter((exercise) => exercise._id !== exerciseId));
     });
   };
 
   return (
     <>
       <div className="newWorkout-container">
-        {exercises}
+        {exercises.map((exercise, ix) => (
+          <ExerciseSection
+            key={exercise._id}
+            index={ix}
+            exerciseId={exercise._id}
+            selectedExercise={selectedExercise}
+            setSelectedExercise={setSelectedExercise}
+            deleteExercise={deleteExercise}
+            viewingStyle={"create"}
+          />
+        ))}
         <button className="newWorkout-newExercise" onClick={createExercise}>
           New exercise
         </button>

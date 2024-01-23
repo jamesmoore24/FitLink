@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 5em;
+  height: 3em;
   margin: 5px;
   transition: 0.2s transform;
 }
@@ -37,7 +37,7 @@
   align-items: center;
   width: 100%;
   border-radius: 20px;
-  height: 5em;
+  height: 3em;
   margin: 5px;
   background-color: var(--darkgrey);
 }

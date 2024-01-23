@@ -16,27 +16,13 @@ import "./Workout.css";
  */
 const Workout = (props) => {
   const [currentWorkout, setCurrentWorkout] = useState(undefined);
-  const [currentExercises, setCurrentExercises] = useState(undefined);
-
-  useEffect(() => {
-    get("/api/current-workout").then((workout) => {
-      console.log(workout[0]._id);
-      if (workout.length === 0) {
-        post("/api/workout").then((workout) => {
-          console.log("New workout created");
-        });
-      }
-      setCurrentWorkout(workout[0]._id);
-      console.log(`SET WORKOUT ${workout}`);
-    });
-  }, []);
 
   if (!props.userId) {
     return <div>Please sign in before creating a new workout.</div>;
   }
   return (
     <div className="workout-background-container">
-      <NewWorkout workoutId={currentWorkout} />
+      <NewWorkout workoutId={currentWorkout} userId={props.userId} />
     </div>
   );
 };
