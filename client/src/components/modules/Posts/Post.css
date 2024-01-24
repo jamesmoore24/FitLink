@@ -5,6 +5,7 @@
   height: auto;
   min-width: 40vw;
   max-width: 40vw;
+  box-sizing: border-box;
   border-radius: 20px;
   padding: 10px;
   background-color: white;

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { redirect } from "react-router-dom";
 
+import { get, post } from "../../utilities";
+
+import Post from "../modules/Posts/Post";
 import ActivityTracker from "../modules/Profile/ActivityTracker";
-import TextChoose from "../modules/Profile/TextChoose";
 
-import SleepyCat from "../../public/sleepy_cat.png";
-import SmilingCat from "../../public/close_up_cat.jpg";
+import ExampleProfile from "../../public/example_profile.jpg";
 
 import "../../utilities.css";
 import "./Profile.css";
@@ -17,63 +17,70 @@ import "./Profile.css";
  * @param {string} userId id of current logged in user
  */
 const Profile = (props) => {
-  const [textChooseChoice, setTextChooseChoice] = useState("posts");
-  const [pictureChoice, setPictureChoice] = useState(SleepyCat);
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [workouts, setWorkouts] = useState([]);
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
 
-  const toggleDropdown = () => {
-    console.log("HERE");
-    setIsOpen(!isOpen);
-  };
-
-  const closeDropdown = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      console.log("CLOSE");
-      setIsOpen(false);
-    }
-  };
-
-  // Add a click event listener to the entire document to close the dropdown
   useEffect(() => {
-    document.addEventListener("click", closeDropdown);
-
-    return () => {
-      document.removeEventListener("click", closeDropdown);
-    };
+    get("/api/workouts/feed").then((workoutObjs) => {
+      let reversedWorkoutObjs = workoutObjs.reverse();
+      setWorkouts(reversedWorkoutObjs);
+    });
   }, []);
+
+  let workoutsList = null;
+  const hasWorkouts = workouts.length !== 0;
+  if (hasWorkouts) {
+    workoutsList = workouts.map((workoutObj) => (
+      <Post
+        key={`Card_${workoutObj._id}`}
+        workoutId={workoutObj._id}
+        creator_name={workoutObj.creator_name}
+        creator_id={workoutObj.creator_id}
+        timestamp={workoutObj.timestamp}
+        userId={props.userId}
+        starred={workoutObj.starred}
+        likes={workoutObj.likes}
+      />
+    ));
+  } else {
+    workoutsList = <div className="feed-text-top">No workouts!</div>;
+  }
 
   if (!props.userId) {
     return <div>Please sign in before creating a new workout.</div>;
   }
   return (
-    <div className="profile-container">
-      <div className="profile-left-subcontainer">
-        <img className="profile-picture" src={pictureChoice} />
-
-        <div className="dropdown" onBlur={closeDropdown}>
-          <button className="dropdown-button" onClick={toggleDropdown}>
-            Dropdown
-          </button>
-          {isOpen && (
-            <div className="dropdown-content">
-              <a className="dropdown-option" href="#">
-                Option 1
-              </a>
-              <a className="dropdown-option" href="#">
-                Option 2
-              </a>
-              <a className="dropdown-option" href="#">
-                Option 3
-              </a>
-            </div>
-          )}
+    <div className="profile-background-container">
+      <div className="profile-left-container">
+        <img className="profile-pfp" src={ExampleProfile} />
+        <div className="profile-personalInfo-container">
+          <div className="profile-personalInfo-text">Name</div>
+          <div className="profile-textInput-container">
+            <input
+              className="profile-textInput"
+              placeholder="Add your name..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <div className="newExercise-exerciseRecommendation">Save</div>
+          </div>
+          <div className="profile-personalInfo-text">Bio</div>
+          <div className="profile-textInput-container">
+            <input
+              className="profile-textInput"
+              placeholder="Add a bio..."
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+            />
+            <div className="newExercise-exerciseRecommendation">Save</div>
+          </div>
         </div>
       </div>
 
-      <div className="profile-right-subcontainer">
-        <ActivityTracker />
-        <TextChoose />
+      <div className="profile-right-container">
+        <ActivityTracker userId={props.userId} />
+        {workoutsList}
       </div>
     </div>
   );
