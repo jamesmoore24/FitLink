@@ -92,10 +92,10 @@ router.get("/exercises/year", (req, res) => {
   let dateToCompare = new Date();
   dateToCompare.setFullYear(dateToCompare.getFullYear() - 1);
   console.log(`The date is ${dateToCompare}`);
-  Exercise.find({ creator_id: req.query.creator_id, timestamp: { $gt: dateToCompare } })
-    .then((workouts) => {
-      console.log("Workouts found:");
-      res.send(workouts);
+  Exercise.find({ creator_id: req.query.creator_id })
+    .then((exercises) => {
+      console.log(`Exercises found: ${exercises}`);
+      res.send(exercises);
     })
     .catch((err) => {
       console.error("Error during query:", err);
@@ -112,6 +112,7 @@ router.get("/exercise", (req, res) => {
 
 router.post("/exercise/create", (req, res) => {
   const newExercise = new Exercise({
+    creator_id: req.body.creator_id,
     parent: req.body.workoutId,
   });
   newExercise.save().then((exercise) => {

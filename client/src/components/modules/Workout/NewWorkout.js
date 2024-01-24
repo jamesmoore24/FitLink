@@ -40,10 +40,12 @@ const NewWorkout = (props) => {
   const createExercise = () => {
     if (currentWorkoutId) {
       console.log(`CREATING EXERCISE ${currentWorkoutId}`);
-      post("/api/exercise/create", { workoutId: currentWorkoutId }).then((exercise) => {
-        setExercises(exercises.concat([exercise]));
-        setSelectedExerciseId(exercise._id);
-      });
+      post("/api/exercise/create", { creator_id: props.userId, workoutId: currentWorkoutId }).then(
+        (exercise) => {
+          setExercises(exercises.concat([exercise]));
+          setSelectedExerciseId(exercise._id);
+        }
+      );
     }
   };
 

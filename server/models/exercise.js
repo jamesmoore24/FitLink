@@ -8,6 +8,7 @@ const setSchema = new mongoose.Schema({
 });
 
 const ExerciseSchema = new mongoose.Schema({
+  creator_id: String,
   name: { type: String, default: "" },
   parent: String, //what workout it is underneath
   timestamp: { type: Date, default: Date.now },
