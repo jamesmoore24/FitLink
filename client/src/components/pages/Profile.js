@@ -56,7 +56,7 @@ const Profile = (props) => {
       />
     ));
   } else {
-    workoutsList = <div className="feed-text-top">No personal workouts!</div>;
+    workoutsList = <div className="feed-text-top">No personal saved or posted workouts yet!</div>;
   }
 
   if (!props.userId) {

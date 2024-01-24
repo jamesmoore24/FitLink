@@ -89,7 +89,7 @@ router.get("/workouts/feed", (req, res) => {
 });
 
 router.get("/workouts/profile", (req, res) => {
-  Workout.find({ creator_id: req.user._id }).then((workouts) => res.send(workouts));
+  Workout.find({ creator_id: req.user._id, current: false }).then((workouts) => res.send(workouts));
 });
 
 router.get("/exercises/year", (req, res) => {
@@ -207,14 +207,14 @@ router.get("/nukedb", (req, res) => {
   User.deleteMany({}).then((comments) => {});
 });
 
-router.post("/user/update", (req, res) => {
+/* router.post("/user/update", (req, res) => {
   console.log(req.body.bio);
   User.findById(req.body.id).then((user) => {
     user.name = req.body.name;
     user.bio = req.body.bio;
     user.save().then((user) => res.send(user));
   });
-});
+}); */
 
 router.get("/user/info", (req, res) => {
   User.findById(req.query.id).then((user) => res.send(user));
