@@ -1,14 +1,16 @@
 .newWorkout-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 1em;
   box-sizing: border-box;
-  max-height: 27em;
-  width: 25em;
+  min-height: 80vh;
+  max-height: 80vh;
+  min-width: 40vw;
+  max-width: 40vw;
   border-radius: 20px;
-  padding: 10px;
+  padding: 20px;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
@@ -17,9 +19,12 @@
   .newWorkout-container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     margin: 1em;
-    max-height: 50%;
-    width: 90%;
+    min-height: 40vh;
+    max-height: 40vh;
+    min-width: 80vw;
+    max-width: 80vw;
     border-radius: 20px;
     padding: 10px;
     background-color: white;
@@ -27,9 +32,16 @@
   }
 }
 
+.newWorkout-topHalf-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .newWorkout-title {
   width: 100%;
-  font-size: var(--m);
+  font-size: var(--l);
 }
 
 .newWorkout-reminderText {
@@ -39,23 +51,29 @@
 }
 
 .newWorkout-exerciseBox {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em;
+  padding: 5px;
   background-color: var(--grey);
   border-radius: 20px;
+  box-sizing: border-box;
+  width: 100%;
   overflow: auto;
 }
 
 .newWorkout-newExercise {
   height: 3em;
-  width: 91%;
+  width: 100%;
   font-size: var(--m);
   background-color: var(--primary);
   color: white;
   margin: 5px;
   border: 2px var(--primary) solid;
   border-radius: 20px;
+  box-sizing: border-box;
   transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
-  transform: scale(1.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 .newWorkout-newExercise:hover {
@@ -70,30 +88,29 @@
 
 .newWorkout-postBox {
   display: flex;
-  justify-content: space-between;
-
+  justify-content: space-around;
   align-items: center;
-  height: 6em;
+  box-sizing: border-box;
   width: 100%;
-  border: 2px red solid;
 }
 
 .newWorkout-postBoxButton {
   height: 4em;
-  width: 40%;
-  margin: 5px;
+  width: 45%;
   font-size: var(--m);
   background-color: var(--primary);
   color: white;
+  box-sizing: border-box;
   border: 2px var(--primary) solid;
   border-radius: 20px;
   transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
-  transform: scale(1.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 .newWorkout-postBoxButton:hover {
   background-color: white; /* New background color on hover */
   cursor: pointer;
+  transform: scale(1.1);
   color: var(--primary);
 }
 

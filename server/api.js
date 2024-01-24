@@ -68,10 +68,11 @@ router.post("/workout/create", (req, res) => {
 });
 
 router.post("/workout/save", (req, res) => {
+  console.log(`IN API ${req.body.id}`);
   Workout.findById(req.body.id).then((workout) => {
     workout.posted = false;
     workout.current = false;
-    workout.save();
+    workout.save(res.send(workout));
   });
 });
 
@@ -79,7 +80,7 @@ router.post("/workout/post", (req, res) => {
   Workout.findById(req.body.id).then((workout) => {
     workout.posted = true;
     workout.current = false;
-    workout.save();
+    workout.save(res.send(workout));
   });
 });
 

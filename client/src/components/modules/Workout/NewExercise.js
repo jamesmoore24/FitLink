@@ -40,6 +40,7 @@ const NewExercise = (props) => {
           setReps("");
           setRPE("");
           setWeight("");
+          setErrorText("");
         })
         .catch((error) => {});
     }
@@ -91,8 +92,8 @@ const NewExercise = (props) => {
         setSets(updatedSets);
 
         setSetNumber(sets.length);
-        setErrorText("");
       }
+      setErrorText("");
     } else if (!name) {
       setErrorText("Please enter the name of the exercise.");
     } else {
@@ -164,7 +165,9 @@ const NewExercise = (props) => {
         </div>
       </div>
       <div className="newExercise-previousSets-container">
-        <div className="newExercise-previousSets-text">Previous sets:</div>
+        <div className="newExercise-previousSets-text">
+          {sets.length === 0 ? "No previous sets" : "Previous sets:"}
+        </div>
         <div className="newExercise-previousSets-sets">
           {sets.map((set, ix) => {
             return (

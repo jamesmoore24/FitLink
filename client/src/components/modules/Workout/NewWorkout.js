@@ -8,7 +8,6 @@ import ExerciseSection from "../Posts/ExerciseSection";
 import "./NewWorkout.css";
 
 /**
- * @param {string} workoutId
  * @param {string} userId
  */
 const NewWorkout = (props) => {
@@ -56,7 +55,7 @@ const NewWorkout = (props) => {
     console.log("HERE");
     post("/api/workout/save", { id: currentWorkoutId }).then(() => {
       console.log("Workout saved to drafts");
-      navigate("/profile");
+      navigate(`/profile/${props.userId}`);
     });
   };
 
@@ -70,29 +69,31 @@ const NewWorkout = (props) => {
   return (
     <>
       <div className="newWorkout-container">
-        <div className="newWorkout-title">Exercises:</div>
-        <div className="newWorkout-exerciseBox">
-          {exercises.length === 0 ? (
-            <div className="newWorkout-reminderText">Start a new exercise!</div>
-          ) : (
-            exercises.map((exercise, ix) => (
-              <ExerciseSection
-                key={exercise._id}
-                index={ix}
-                exerciseId={exercise._id}
-                exerciseName={exercise.name}
-                exerciseSets={exercise.sets}
-                selectedExerciseId={selectedExerciseId}
-                setSelectedExerciseId={setSelectedExerciseId}
-                deleteExercise={deleteExercise}
-                viewingStyle={"create"}
-              />
-            ))
-          )}
+        <div className="newWorkout-topHalf-container">
+          <div className="newWorkout-title">Exercises:</div>
+          <div className="newWorkout-exerciseBox">
+            {exercises.length === 0 ? (
+              <div className="newWorkout-reminderText">Start a new exercise!</div>
+            ) : (
+              exercises.map((exercise, ix) => (
+                <ExerciseSection
+                  key={exercise._id}
+                  index={ix}
+                  exerciseId={exercise._id}
+                  exerciseName={exercise.name}
+                  exerciseSets={exercise.sets}
+                  selectedExerciseId={selectedExerciseId}
+                  setSelectedExerciseId={setSelectedExerciseId}
+                  deleteExercise={deleteExercise}
+                  viewingStyle={"create"}
+                />
+              ))
+            )}
+          </div>
+          <button className="newWorkout-newExercise" onClick={createExercise}>
+            New exercise
+          </button>
         </div>
-        <button className="newWorkout-newExercise" onClick={createExercise}>
-          New exercise
-        </button>
 
         <div className="newWorkout-postBox">
           <button className="newWorkout-postBoxButton" onClick={saveWorkout}>

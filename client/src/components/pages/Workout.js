@@ -12,17 +12,14 @@ import "./Workout.css";
  *
  * Proptypes
  * @param {string} userId id of current logged in user
- * @param {string} currentWorkout
  */
 const Workout = (props) => {
-  const [currentWorkout, setCurrentWorkout] = useState(undefined);
-
   if (!props.userId) {
     return <div>Please sign in before creating a new workout.</div>;
   }
   return (
     <div className="workout-background-container">
-      <NewWorkout workoutId={currentWorkout} userId={props.userId} />
+      <NewWorkout userId={props.userId} />
     </div>
   );
 };

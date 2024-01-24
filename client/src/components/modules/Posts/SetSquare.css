@@ -5,9 +5,10 @@
   flex-shrink: 0;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box;
   margin-right: 5px;
-  height: 100%;
-  width: 20%;
+  height: 3em;
+  width: 3em;
   background-color: var(--primary);
   border-radius: 20px;
 }
@@ -39,8 +40,8 @@
   justify-content: center;
   margin-right: 5px;
   box-sizing: border-box;
-  height: 100%;
-  aspect-ratio: 1;
+  height: 3em;
+  width: 3em;
   background-color: var(--primary);
   border: 2px var(--primary) solid;
   border-radius: 20px;
