@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import { get, post } from "../../utilities";
 
@@ -22,11 +22,23 @@ const Profile = (props) => {
   const [bio, setBio] = useState("");
 
   useEffect(() => {
-    get("/api/workouts/feed").then((workoutObjs) => {
+    get("/api/workouts/profile").then((workoutObjs) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
       setWorkouts(reversedWorkoutObjs);
     });
+
+    get("/api/user/info", { id: props.userId }).then((user) => {
+      console.log("Got user info");
+      setName(user.name);
+      setBio(user.bio);
+    });
   }, []);
+
+  const updateUser = () => {
+    post("/api/user/update", { id: props.userId, name: name, bio: bio }).then((user) => {
+      console.log("UPdated user");
+    });
+  };
 
   let workoutsList = null;
   const hasWorkouts = workouts.length !== 0;
@@ -44,7 +56,7 @@ const Profile = (props) => {
       />
     ));
   } else {
-    workoutsList = <div className="feed-text-top">No workouts!</div>;
+    workoutsList = <div className="feed-text-top">No personal workouts!</div>;
   }
 
   if (!props.userId) {

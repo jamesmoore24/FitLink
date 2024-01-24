@@ -88,6 +88,10 @@ router.get("/workouts/feed", (req, res) => {
   Workout.find({ posted: true }).then((workouts) => res.send(workouts));
 });
 
+router.get("/workouts/profile", (req, res) => {
+  Workout.find({ creator_id: req.user._id }).then((workouts) => res.send(workouts));
+});
+
 router.get("/exercises/year", (req, res) => {
   let dateToCompare = new Date();
   dateToCompare.setFullYear(dateToCompare.getFullYear() - 1);
@@ -200,11 +204,20 @@ router.get("/star", (req, res) => {
 });
 
 router.get("/nukedb", (req, res) => {
-  Comment.deleteMany({}).then((comments) => {});
-  Exercise.deleteMany({}).then((exercises) => {});
-  Like.deleteMany({}).then((exercises) => {});
-  Star.deleteMany({}).then((exercises) => {});
-  Workout.deleteMany({}).then((workouts) => res.send(workouts));
+  User.deleteMany({}).then((comments) => {});
+});
+
+router.post("/user/update", (req, res) => {
+  console.log(req.body.bio);
+  User.findById(req.body.id).then((user) => {
+    user.name = req.body.name;
+    user.bio = req.body.bio;
+    user.save().then((user) => res.send(user));
+  });
+});
+
+router.get("/user/info", (req, res) => {
+  User.findById(req.query.id).then((user) => res.send(user));
 });
 
 // anything else falls to this "not found" case

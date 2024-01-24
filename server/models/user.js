@@ -7,6 +7,7 @@ const FriendSchema = new mongoose.Schema({
 
 const UserSchema = new mongoose.Schema({
   name: String,
+  bio: String,
   friends: {
     type: [FriendSchema],
     default: [],
