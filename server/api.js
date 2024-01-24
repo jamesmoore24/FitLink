@@ -48,9 +48,9 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-router.get("/workout", (req, res) => {
+router.get("/workout/current", (req, res) => {
   console.log(req.query);
-  Workout.find({ creator_id: req.query.userId, current: req.query.current }).then((workout) => {
+  Workout.find({ creator_id: req.query.userId, current: true }).then((workout) => {
     res.send(workout);
   });
 });
@@ -84,8 +84,22 @@ router.post("/workout/post", (req, res) => {
   });
 });
 
-router.get("/workouts-feed", (req, res) => {
+router.get("/workouts/feed", (req, res) => {
   Workout.find({ posted: true }).then((workouts) => res.send(workouts));
+});
+
+router.get("/exercises/year", (req, res) => {
+  let dateToCompare = new Date();
+  dateToCompare.setFullYear(dateToCompare.getFullYear() - 1);
+  console.log(`The date is ${dateToCompare}`);
+  Exercise.find({ creator_id: req.query.creator_id, timestamp: { $gt: dateToCompare } })
+    .then((workouts) => {
+      console.log("Workouts found:");
+      res.send(workouts);
+    })
+    .catch((err) => {
+      console.error("Error during query:", err);
+    });
 });
 
 router.get("/exercises", (req, res) => {
@@ -182,6 +196,14 @@ router.get("/star", (req, res) => {
   Star.find({ userId: req.query.userId, workoutId: req.query.workoutId }).then((star) => {
     res.send(star);
   });
+});
+
+router.get("/nukedb", (req, res) => {
+  Comment.deleteMany({}).then((comments) => {});
+  Exercise.deleteMany({}).then((exercises) => {});
+  Like.deleteMany({}).then((exercises) => {});
+  Star.deleteMany({}).then((exercises) => {});
+  Workout.deleteMany({}).then((workouts) => res.send(workouts));
 });
 
 // anything else falls to this "not found" case

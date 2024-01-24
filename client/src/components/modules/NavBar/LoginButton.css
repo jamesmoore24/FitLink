@@ -2,5 +2,4 @@
   height: 3em;
   display: flex;
   align-items: center; /* Align text and bars vertically */
-  border: 2px blue solid;
 }

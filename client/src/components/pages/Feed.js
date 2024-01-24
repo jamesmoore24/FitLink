@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 
 import Post from "../modules/Posts/Post";
+import ActivityTracker from "../modules/Profile/ActivityTracker";
 import { get, post } from "../../utilities";
 
 import "../../utilities.css";
@@ -17,7 +17,7 @@ const Feed = (props) => {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    get("/api/workouts-feed").then((workoutObjs) => {
+    get("/api/workouts/feed").then((workoutObjs) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
       setWorkouts(reversedWorkoutObjs);
     });
@@ -48,7 +48,9 @@ const Feed = (props) => {
   return (
     <div className="feed-background-container">
       <div className="feed-posts-container">{workoutsList}</div>
-      <div className="feed-activityFriends-container">Hello</div>
+      <div className="feed-activityFriends-container">
+        <ActivityTracker userId={props.userId} />
+      </div>
     </div>
   );
 };

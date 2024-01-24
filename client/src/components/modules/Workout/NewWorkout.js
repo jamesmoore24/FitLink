@@ -19,31 +19,32 @@ const NewWorkout = (props) => {
 
   useEffect(() => {
     //get the current workout
-    get("/api/workout", { userId: props.userId, current: true }).then((workout) => {
+    get("/api/workout/current", { userId: props.userId }).then((workout) => {
       //if there isn't a current workout then create one
-      let workoutId;
       if (workout.length == 0) {
         post("/api/workout/create", { current: true }).then((workout) => {
-          console.log("Workout created");
-          workoutId = workout._id;
+          setCurrentWorkoutId(workout._id);
         });
       } else {
-        workoutId = workout[0]._id;
+        setCurrentWorkoutId(workout[0]._id);
       }
-      setCurrentWorkoutId(workoutId);
-      get("/api/exercises", { parent: workoutId }).then((exercises) => {
-        console.log(exercises);
-        setExercises(exercises);
-      });
     });
   }, []);
 
-  const createExercise = () => {
-    console.log(exercises.length);
-    post("/api/exercise/create", { workoutId: currentWorkoutId }).then((exercise) => {
-      setExercises(exercises.concat([exercise]));
-      setSelectedExerciseId(exercise._id);
+  useEffect(() => {
+    get("/api/exercises", { parent: currentWorkoutId }).then((exercises) => {
+      setExercises(exercises);
     });
+  }, [currentWorkoutId]);
+
+  const createExercise = () => {
+    if (currentWorkoutId) {
+      console.log(`CREATING EXERCISE ${currentWorkoutId}`);
+      post("/api/exercise/create", { workoutId: currentWorkoutId }).then((exercise) => {
+        setExercises(exercises.concat([exercise]));
+        setSelectedExerciseId(exercise._id);
+      });
+    }
   };
 
   const deleteExercise = (exerciseId) => {
@@ -100,9 +101,11 @@ const NewWorkout = (props) => {
               ))}
             </div>
           )}
-          <button className="newWorkout-newExercise" onClick={createExercise}>
-            New exercise
-          </button>
+          {currentWorkoutId && (
+            <button className="newWorkout-newExercise" onClick={createExercise}>
+              New exercise
+            </button>
+          )}
         </div>
 
         <div className="newWorkout-errorPost-container">
