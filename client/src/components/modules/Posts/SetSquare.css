@@ -43,7 +43,6 @@
   height: 3em;
   width: 3em;
   background-color: var(--primary);
-  border: 2px var(--primary) solid;
   border-radius: 20px;
   transition: 0.3s transform, 0.3s background-color;
   z-index: 2;

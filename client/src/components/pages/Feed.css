@@ -38,3 +38,7 @@
 .feed-endPosts {
   color: var(--darkgrey);
 }
+
+.feed-text {
+  text-align: center;
+}

@@ -109,7 +109,6 @@
   height: 1.5em;
   width: 1.5em;
   transition: 0.3s transform;
-  border: 2px red solid;
 }
 
 .newExercise-setDelete:hover {

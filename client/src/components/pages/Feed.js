@@ -39,7 +39,7 @@ const Feed = (props) => {
       />
     ));
   } else {
-    workoutsList = <div>No workouts!</div>;
+    workoutsList = <div className="feed-text-top">No workouts!</div>;
   }
 
   if (!props.userId) {

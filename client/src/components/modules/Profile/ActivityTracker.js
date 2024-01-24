@@ -20,7 +20,6 @@ const ActivityTracker = (props) => {
   useEffect(() => {
     setTopText(getMonthSwitches());
     get("/api/exercises/year", { creator_id: props.userId }).then((exercises) => {
-      console.log(`HEREEE ${exercises}`);
       let reversedExercises = exercises.reverse();
       setExercises(reversedExercises);
     });
@@ -29,7 +28,6 @@ const ActivityTracker = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("CALCULATING DATA ARRAY");
     let index_exercises = 0;
     let resultArray = [];
     let dateToCompare = new Date();
@@ -61,7 +59,6 @@ const ActivityTracker = (props) => {
     const normalizedDataSet = resultArray.map((value) => {
       return 1 + (value * 9) / maxValue;
     });
-    console.log(normalizedDataSet);
     setSetData(normalizedDataSet);
   }, [exercises]);
 
@@ -108,40 +105,44 @@ const ActivityTracker = (props) => {
 
   return (
     <div className="activityTracker-container">
-      <div className="activityTracker-title">Activity this year</div>
-      <div className="activityTracker-graphText-container">
-        <div className="activityTracker-topText-container">
-          {topText.map((month, ix) => {
-            return (
-              <div key={ix} className="activityTracker-squareText">
-                {month}
-              </div>
-            );
-          })}
-        </div>
-        <div className="activityTracker-sideTextGraph-container">
-          <div className="activityTracker-sideText-container">
-            <div className="activityTracker-squareText">Mon</div>
-            <div className="activityTracker-squareText"></div>
-            <div className="activityTracker-squareText">Wed</div>
-            <div className="activityTracker-squareText"></div>
-            <div className="activityTracker-squareText">Fri</div>
-            <div className="activityTracker-squareText"></div>
-            <div className="activityTracker-squareText">Sun</div>
+      <div className="activityTracker-title">Activity this year:</div>
+      {exercises.length === 0 ? (
+        <div className="activityTracker-title">Create a workout first!</div>
+      ) : (
+        <div className="activityTracker-graphText-container">
+          <div className="activityTracker-topText-container">
+            {topText.map((month, ix) => {
+              return (
+                <div key={ix} className="activityTracker-squareText">
+                  {month}
+                </div>
+              );
+            })}
           </div>
-          <div className="activityTracker-graph-container ">
-            {setData &&
-              setData.map((value, index) => (
-                <div
-                  key={index}
-                  className="activityTracker-square"
-                  style={{ backgroundColor: getColorForValue(value) }}
-                  title={`Value: ${value}`}
-                />
-              ))}
+          <div className="activityTracker-sideTextGraph-container">
+            <div className="activityTracker-sideText-container">
+              <div className="activityTracker-squareText">Mon</div>
+              <div className="activityTracker-squareText"></div>
+              <div className="activityTracker-squareText">Wed</div>
+              <div className="activityTracker-squareText"></div>
+              <div className="activityTracker-squareText">Fri</div>
+              <div className="activityTracker-squareText"></div>
+              <div className="activityTracker-squareText">Sun</div>
+            </div>
+            <div className="activityTracker-graph-container ">
+              {setData &&
+                setData.map((value, index) => (
+                  <div
+                    key={index}
+                    className="activityTracker-square"
+                    style={{ backgroundColor: getColorForValue(value) }}
+                    title={`Value: ${value}`}
+                  />
+                ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -5,7 +5,7 @@
 }
 
 .Logo-container {
-  min-width: 5vw;
+  max-height: 1em;
   font-weight: bold; /* Make the text bold */
   display: flex;
   align-items: center; /* Align text and bars vertically */

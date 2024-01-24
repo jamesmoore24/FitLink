@@ -40,7 +40,6 @@
 
 .activityTracker-sideTextGraph-container {
   display: flex;
-  overflow: auto;
 }
 
 .activityTracker-sideText-container {
