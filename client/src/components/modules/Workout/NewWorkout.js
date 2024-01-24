@@ -15,6 +15,7 @@ const NewWorkout = (props) => {
   const [currentWorkoutId, setCurrentWorkoutId] = useState(undefined);
   const [exercises, setExercises] = useState([]);
   const [selectedExerciseId, setSelectedExerciseId] = useState(undefined);
+  const [errorText, setErrorText] = useState("");
 
   useEffect(() => {
     //get the current workout
@@ -38,9 +39,10 @@ const NewWorkout = (props) => {
   }, []);
 
   const createExercise = () => {
-    console.log(currentWorkoutId);
+    console.log(exercises.length);
     post("/api/exercise/create", { workoutId: currentWorkoutId }).then((exercise) => {
       setExercises(exercises.concat([exercise]));
+      setSelectedExerciseId(exercise._id);
     });
   };
 
@@ -53,17 +55,27 @@ const NewWorkout = (props) => {
 
   const saveWorkout = () => {
     console.log("HERE");
-    post("/api/workout/save", { id: currentWorkoutId }).then(() => {
-      console.log("Workout saved to drafts");
-      navigate(`/profile/${props.userId}`);
-    });
+    if (exercises.every((obj) => obj.name && obj.name.trim().length > 0)) {
+      post("/api/workout/save", { id: currentWorkoutId }).then(() => {
+        console.log("Workout saved to drafts");
+        navigate(`/profile/${props.userId}`);
+        setErrorText("");
+      });
+    } else {
+      setErrorText("You must name your exercises first.");
+    }
   };
 
   const postWorkout = () => {
-    post("/api/workout/post", { id: currentWorkoutId }).then(() => {
-      console.log("Workout posted!");
-      navigate("/feed");
-    });
+    if (exercises.every((obj) => obj.name && obj.name.trim().length > 0)) {
+      post("/api/workout/post", { id: currentWorkoutId }).then(() => {
+        console.log("Workout posted!");
+        navigate("/feed");
+        setErrorText("");
+      });
+    } else {
+      setErrorText("You must name your exercises first.");
+    }
   };
 
   return (
@@ -71,11 +83,9 @@ const NewWorkout = (props) => {
       <div className="newWorkout-container">
         <div className="newWorkout-topHalf-container">
           <div className="newWorkout-title">Exercises:</div>
-          <div className="newWorkout-exerciseBox">
-            {exercises.length === 0 ? (
-              <div className="newWorkout-reminderText">Start a new exercise!</div>
-            ) : (
-              exercises.map((exercise, ix) => (
+          {exercises.length !== 0 && (
+            <div className="newWorkout-exerciseBox">
+              {exercises.map((exercise, ix) => (
                 <ExerciseSection
                   key={exercise._id}
                   index={ix}
@@ -87,21 +97,24 @@ const NewWorkout = (props) => {
                   deleteExercise={deleteExercise}
                   viewingStyle={"create"}
                 />
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
           <button className="newWorkout-newExercise" onClick={createExercise}>
             New exercise
           </button>
         </div>
 
-        <div className="newWorkout-postBox">
-          <button className="newWorkout-postBoxButton" onClick={saveWorkout}>
-            Save Workout
-          </button>
-          <button className="newWorkout-postBoxButton" onClick={postWorkout}>
-            Post Workout
-          </button>
+        <div className="newWorkout-errorPost-container">
+          <div className="newWorkout-postError">{errorText}</div>
+          <div className="newWorkout-postBox">
+            <button className="newWorkout-postBoxButton" onClick={saveWorkout}>
+              Save Workout
+            </button>
+            <button className="newWorkout-postBoxButton" onClick={postWorkout}>
+              Post Workout
+            </button>
+          </div>
         </div>
       </div>
       <NewExercise

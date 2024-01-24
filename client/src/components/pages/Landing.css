@@ -3,12 +3,29 @@
 .overlay-container {
   display: flex;
   flex-direction: row;
-  top: 96px;
-  height: calc(100vh - 96px); /* This ensures that the container fits the full viewport height */
-  width: 100vw; /* This ensures that the container fits the full viewport width */
+  top: 3em;
+  height: calc(100vh - 3em); /* This ensures that the container fits the full viewport height */
+  width: 100%; /* This ensures that the container fits the full viewport width */
   justify-content: space-around; /* This will distribute space above and below the items equally */
   align-items: center;
   position: absolute; /* Positioning over the video */
+}
+
+.feed-background-container {
+  position: fixed;
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+  top: 3em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(100vh - 3em);
+  overflow: auto;
+  background-color: var(--grey);
+  z-index: -1;
 }
 
 /* Styling for fly-in components */

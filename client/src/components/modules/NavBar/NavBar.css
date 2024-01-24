@@ -2,6 +2,9 @@
   width: 100vw;
   height: 3em;
   display: flex;
+  box-sizing: border-box;
+  padding-left: 3vh;
+  padding-right: 3vh;
   justify-content: space-between;
   align-items: center;
   background-color: white;

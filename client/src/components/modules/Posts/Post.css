@@ -3,7 +3,8 @@
   flex-direction: column;
   margin: 20px;
   height: auto;
-  width: 20em;
+  min-width: 40vw;
+  max-width: 40vw;
   border-radius: 20px;
   padding: 10px;
   background-color: white;

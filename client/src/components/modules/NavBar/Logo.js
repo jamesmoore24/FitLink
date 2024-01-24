@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import LogoBars from "../../../public/logo_bars.png";
+
 import "./Logo.css";
 
 /**
@@ -10,9 +12,7 @@ const Logo = () => {
   return (
     <div className="Logo-container">
       <div className="LogoText u-inlineBlock">FitLink</div>
-      <div className="LogoBar1 u-inlineBlock" />
-      <div className="LogoBar2 u-inlineBlock" />
-      <div className="LogoBar3 u-inlineBlock" />
+      <img className="logo-barsImg" src={LogoBars} />
     </div>
   );
 };

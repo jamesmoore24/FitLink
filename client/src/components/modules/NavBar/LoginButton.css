@@ -1,8 +1,6 @@
 .loginButton-container {
-  height: 10vh;
-  width: 15vw;
-  padding-right: 3vh;
+  height: 3em;
   display: flex;
   align-items: center; /* Align text and bars vertically */
-  justify-content: right;
+  border: 2px blue solid;
 }

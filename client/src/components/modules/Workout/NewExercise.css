@@ -98,6 +98,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 2em;
   width: 100%;
 }
 
@@ -108,6 +109,7 @@
   height: 1.5em;
   width: 1.5em;
   transition: 0.3s transform;
+  border: 2px red solid;
 }
 
 .newExercise-setDelete:hover {
@@ -194,11 +196,6 @@
   min-height: 4em;
   width: 100%;
   align-items: center;
-}
-
-.newWorkout-errorFinish-container {
-  min-height: 5em;
-  width: 100%;
 }
 
 .newWorkout-errorSubmit-text {

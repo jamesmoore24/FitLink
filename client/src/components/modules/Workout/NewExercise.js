@@ -67,12 +67,16 @@ const NewExercise = (props) => {
   }, [setChange]);
 
   const updateSet = () => {
+    const repsParsed = Math.round(parseInt(reps));
+    const weightParsed = Math.round(parseInt(weight));
+    const rpeParsed = Math.round(parseInt(rpe));
     if (
-      Number.isInteger(parseInt(reps)) &&
-      Number.isInteger(parseInt(weight)) &&
-      Number.isInteger(parseInt(rpe))
+      Number.isInteger(repsParsed) &&
+      Number.isInteger(weightParsed) &&
+      Number.isInteger(rpeParsed) &&
+      rpeParsed <= 10
     ) {
-      const newSet = { reps: reps, weight: weight, rpe: rpe };
+      const newSet = { reps: repsParsed, weight: weightParsed, rpe: rpeParsed };
       setName(name);
       if (setNumber === sets.length) {
         setSets([...sets, newSet]);
@@ -90,14 +94,16 @@ const NewExercise = (props) => {
           return set;
         });
         setSets(updatedSets);
-
+        setReps("");
+        setRPE("");
+        setWeight("");
         setSetNumber(sets.length);
       }
       setErrorText("");
     } else if (!name) {
       setErrorText("Please enter the name of the exercise.");
     } else {
-      setErrorText("Please enter numeric values before saving.");
+      setErrorText("Please enter valid numeric values before saving.");
     }
     setSetChange(!setChange);
   };
@@ -155,7 +161,7 @@ const NewExercise = (props) => {
           />
         </div>
         <div className="newExercise-setInfoIndividual-container">
-          <div className="newExercise-setInfoIndividual-text">RPE</div>
+          <div className="newExercise-setInfoIndividual-text">Difficulty (1-10)</div>
           <input
             className="newExercise-setInfoIndividual-input"
             placeholder="?"
