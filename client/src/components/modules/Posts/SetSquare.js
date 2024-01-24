@@ -51,7 +51,6 @@ const SetSquare = (props) => {
           props.setReps(props.reps);
           props.setWeight(props.weight);
           props.setRPE(props.rpe);
-          console.log("CLICKED");
         }
       }}
       style={{

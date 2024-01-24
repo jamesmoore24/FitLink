@@ -39,7 +39,6 @@ const NewWorkout = (props) => {
 
   const createExercise = () => {
     if (currentWorkoutId) {
-      console.log(`CREATING EXERCISE ${currentWorkoutId}`);
       post("/api/exercise/create", { creator_id: props.userId, workoutId: currentWorkoutId }).then(
         (exercise) => {
           setExercises(exercises.concat([exercise]));
@@ -57,10 +56,8 @@ const NewWorkout = (props) => {
   };
 
   const saveWorkout = () => {
-    console.log("HERE");
     if (exercises.every((obj) => obj.name && obj.name.trim().length > 0)) {
       post("/api/workout/save", { id: currentWorkoutId }).then(() => {
-        console.log("Workout saved to drafts");
         navigate(`/profile/${props.userId}`);
         setErrorText("");
       });
@@ -72,7 +69,6 @@ const NewWorkout = (props) => {
   const postWorkout = () => {
     if (exercises.every((obj) => obj.name && obj.name.trim().length > 0)) {
       post("/api/workout/post", { id: currentWorkoutId }).then(() => {
-        console.log("Workout posted!");
         navigate("/feed");
         setErrorText("");
       });

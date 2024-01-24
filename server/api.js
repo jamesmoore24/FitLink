@@ -49,14 +49,12 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 router.get("/workout/current", (req, res) => {
-  console.log(req.query);
   Workout.find({ creator_id: req.query.userId, current: true }).then((workout) => {
     res.send(workout);
   });
 });
 
 router.post("/workout/create", (req, res) => {
-  console.log(req.body);
   const newWorkout = new Workout({
     creator_id: req.user._id,
     creator_name: req.user.name,
@@ -68,7 +66,6 @@ router.post("/workout/create", (req, res) => {
 });
 
 router.post("/workout/save", (req, res) => {
-  console.log(`IN API ${req.body.id}`);
   Workout.findById(req.body.id).then((workout) => {
     workout.posted = false;
     workout.current = false;
@@ -95,10 +92,8 @@ router.get("/workouts/profile", (req, res) => {
 router.get("/exercises/year", (req, res) => {
   let dateToCompare = new Date();
   dateToCompare.setFullYear(dateToCompare.getFullYear() - 1);
-  console.log(`The date is ${dateToCompare}`);
   Exercise.find({ creator_id: req.query.creator_id })
     .then((exercises) => {
-      console.log(`Exercises found: ${exercises}`);
       res.send(exercises);
     })
     .catch((err) => {
@@ -120,7 +115,6 @@ router.post("/exercise/create", (req, res) => {
     parent: req.body.workoutId,
   });
   newExercise.save().then((exercise) => {
-    console.log("Exercise created");
     res.send(exercise);
   });
 });

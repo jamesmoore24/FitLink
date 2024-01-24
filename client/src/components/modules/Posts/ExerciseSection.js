@@ -51,7 +51,6 @@ const ExerciseSection = (props) => {
             }}
             onMouseLeave={() => setTrashCanSrc(TrashCan)}
             onClick={() => {
-              console.log("Clicked can");
               props.deleteExercise(props.exerciseId);
             }}
           />

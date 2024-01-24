@@ -28,7 +28,6 @@ const Post = (props) => {
   const [exercises, setExercises] = useState([]);
 
   const addNewComment = (commentObj) => {
-    console.log("Posting a comment");
     if (commentText.length > 0) {
       post("/api/comment", { parent: props.workoutId, content: commentText }).then((comment) => {
         setComments(comments.concat([comment]));
@@ -39,9 +38,7 @@ const Post = (props) => {
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
-    post("/api/like/", { workoutId: props.workoutId, isLiked: !isLiked }).then((like) => {
-      console.log("Like API hit");
-    });
+    post("/api/like/", { workoutId: props.workoutId, isLiked: !isLiked }).then((like) => {});
   };
 
   useEffect(() => {
@@ -56,7 +53,6 @@ const Post = (props) => {
 
     get("/api/star/", { userId: props.userId, workoutId: props.workoutId }).then((starVal) => {
       //if an object is returned then we know that we have a like on a post
-      console.log(starVal.length);
       if (starVal.length) {
         setIsStarred(true);
       } else {
@@ -112,7 +108,7 @@ const Post = (props) => {
       </div>
 
       <div className="post-commentSectionIndicator">
-        {comments.length > 0 ? "Comments" : "Be the first to add a comment!"}
+        {comments.length > 0 ? `Comments (${comments.length})` : "Be the first to add a comment!"}
       </div>
       {comments.length > 0 && (
         <div className="post-commentSection">

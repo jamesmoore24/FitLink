@@ -46,7 +46,6 @@ const ActivityTracker = (props) => {
         index_exercises < exercises.length &&
         new Date(exercises[index_exercises].timestamp) <= endOfDay
       ) {
-        console.log(`IN HERE ${exercises[index_exercises].sets.length}`);
         setSum += exercises[index_exercises].sets.length;
         index_exercises++;
       }

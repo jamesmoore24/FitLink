@@ -60,7 +60,6 @@ const NewExercise = (props) => {
               }
             })
           );
-          console.log("Exercise updated");
         }
       );
     }
@@ -133,7 +132,6 @@ const NewExercise = (props) => {
             src={trashCanSrc}
             className="newExercise-setDelete"
             onMouseEnter={() => {
-              console.log(props.selectedExerciseId);
               setTrashCanSrc(TrashCanHalfFilled);
             }}
             onMouseLeave={() => setTrashCanSrc(TrashCan)}

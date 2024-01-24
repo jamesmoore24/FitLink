@@ -31,11 +31,8 @@ const PostTop = (props) => {
   const formattedTime = `${formattedHours}:${minutes < 10 ? "0" : ""}${minutes}${period}`;
 
   const toggleStar = () => {
-    console.log("TOGGLING");
     props.setIsStarred(!props.isStarred);
-    post("/api/star/", { postId: props.postId, isStarred: !props.isStarred }).then((star) => {
-      console.log("Star API hit");
-    });
+    post("/api/star/", { postId: props.postId, isStarred: !props.isStarred }).then((star) => {});
   };
 
   return (

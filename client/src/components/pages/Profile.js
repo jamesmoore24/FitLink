@@ -28,16 +28,13 @@ const Profile = (props) => {
     });
 
     get("/api/user/info", { id: props.userId }).then((user) => {
-      console.log("Got user info");
       setName(user.name);
       setBio(user.bio);
     });
   }, []);
 
   const updateUser = () => {
-    post("/api/user/update", { id: props.userId, name: name, bio: bio }).then((user) => {
-      console.log("UPdated user");
-    });
+    post("/api/user/update", { id: props.userId, name: name, bio: bio }).then((user) => {});
   };
 
   let workoutsList = null;
