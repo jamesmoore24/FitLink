@@ -111,8 +111,12 @@ const ActivityTracker = (props) => {
       <div className="activityTracker-title">Activity this year</div>
       <div className="activityTracker-graphText-container">
         <div className="activityTracker-topText-container">
-          {topText.map((month) => {
-            return <div className="activityTracker-squareText">{month}</div>;
+          {topText.map((month, ix) => {
+            return (
+              <div key={ix} className="activityTracker-squareText">
+                {month}
+              </div>
+            );
           })}
         </div>
         <div className="activityTracker-sideTextGraph-container">

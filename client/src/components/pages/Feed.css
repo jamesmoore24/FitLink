@@ -20,19 +20,19 @@
   max-height: 100%;
   padding: var(--l);
   flex-direction: column;
-  align-items: center;
+  align-items: end;
   box-sizing: border-box;
   overflow: auto;
 }
 
 .feed-activityFriends-container {
   display: flex;
+  align-items: start;
   min-width: 50%;
   min-height: 100%;
   padding: var(--l);
   box-sizing: border-box;
   flex-direction: column;
-  align-items: center;
 }
 
 .feed-endPosts {
