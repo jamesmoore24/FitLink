@@ -9,6 +9,7 @@ import "./ActivityTracker.css";
 const ActivityTracker = (props) => {
   const [exercises, setExercises] = useState([]);
   const [setData, setSetData] = useState([]);
+  const [topText, setTopText] = useState([]);
   //Obtain the date for today and subtract one year in javascript
   //get all of the exercises for a particular user
   //parse the data and take the amount of sets done for each exercise and sum them
@@ -17,6 +18,7 @@ const ActivityTracker = (props) => {
   //somehow make the squares wrap from bottom to top once the container reaches a certain max heightlz
 
   useEffect(() => {
+    setTopText(getMonthSwitches());
     get("/api/exercises/year", { creator_id: props.userId }).then((exercises) => {
       console.log(`HEREEE ${exercises}`);
       let reversedExercises = exercises.reverse();
@@ -63,9 +65,79 @@ const ActivityTracker = (props) => {
     setSetData(normalizedDataSet);
   }, [exercises]);
 
+  const getColorForValue = (value) => {
+    // Define your color scale here
+    // This is a simple example; adjust with your actual color scale
+    const colors = [
+      "#ff4b261F", // Very light (Almost transparent)
+      "#ff4b2619", // Significantly light
+      "#ff4b2633", // Much lighter
+      "#ff4b264C", // Lighter
+      "#ff4b2666", // Moderately light
+      "#ff4b267F", // Less light
+      "#ff4b2699", // Slightly light
+      "#ff4b26B2", // Approaching full color
+      "#ff4b26CC", // Near full color
+      "#ff4b26E6", // Almost full color
+    ];
+    return colors[Math.floor(value) - 1];
+  };
+
+  function getMonthSwitches() {
+    const result = [];
+    let currentDate = new Date();
+    currentDate.setFullYear(currentDate.getFullYear() - 1);
+    let previousMonth = currentDate.getMonth();
+
+    for (let i = 0; i < 26; i++) {
+      // Add two weeks to the current date
+      currentDate.setDate(currentDate.getDate() + 14);
+
+      // Check if the month has changed
+      if (currentDate.getMonth() !== previousMonth) {
+        // Month has changed, add abbreviated month name to the array
+        result.push(currentDate.toLocaleString("en-us", { month: "short" }));
+        previousMonth = currentDate.getMonth();
+      } else {
+        // Month hasn't changed, add empty string
+        result.push("");
+      }
+    }
+    return result;
+  }
+
   return (
     <div className="activityTracker-container">
       <div className="activityTracker-title">Activity this year</div>
+      <div className="activityTracker-graphText-container">
+        <div className="activityTracker-topText-container">
+          {topText.map((month) => {
+            return <div className="activityTracker-squareText">{month}</div>;
+          })}
+        </div>
+        <div className="activityTracker-sideTextGraph-container">
+          <div className="activityTracker-sideText-container">
+            <div className="activityTracker-squareText">Mon</div>
+            <div className="activityTracker-squareText"></div>
+            <div className="activityTracker-squareText">Wed</div>
+            <div className="activityTracker-squareText"></div>
+            <div className="activityTracker-squareText">Fri</div>
+            <div className="activityTracker-squareText"></div>
+            <div className="activityTracker-squareText">Sun</div>
+          </div>
+          <div className="activityTracker-graph-container ">
+            {setData &&
+              setData.map((value, index) => (
+                <div
+                  key={index}
+                  className="activityTracker-square"
+                  style={{ backgroundColor: getColorForValue(value) }}
+                  title={`Value: ${value}`}
+                />
+              ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

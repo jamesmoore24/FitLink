@@ -1,6 +1,7 @@
 .feed-background-container {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   position: fixed;
   top: 3em;
   left: 0;
@@ -21,7 +22,6 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  border: 2px green solid;
   overflow: auto;
 }
 
@@ -33,22 +33,8 @@
   box-sizing: border-box;
   flex-direction: column;
   align-items: center;
-  border: 2px red solid;
 }
 
 .feed-endPosts {
   color: var(--darkgrey);
 }
-/* 
-.feed-container {
-  width: 60%;
-  height: 100%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: auto;
-  white-space: nowrap;
-  border: 2px red solid;
-} */

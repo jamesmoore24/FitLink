@@ -1,6 +1,8 @@
 .activityTracker-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   min-height: 20vh;
   max-height: 20vh;
   min-width: 40vw;
@@ -15,4 +17,66 @@
   text-align: left;
   font-weight: 600;
   font-size: var(--l);
+}
+
+.activityTracker-graphText-container {
+  display: flex;
+  min-height: 100%;
+  max-width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: var(--s);
+  overflow: auto;
+}
+
+.activityTracker-topText-container {
+  display: flex;
+  min-width: 560px;
+  max-width: 560px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  width: 20px;
+}
+
+.activityTracker-sideTextGraph-container {
+  display: flex;
+  overflow: auto;
+}
+
+.activityTracker-sideText-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 70px;
+  max-height: 70px;
+  min-width: 20px;
+  max-width: 20px;
+}
+.activityTracker-graph-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  min-height: 70px;
+  max-height: 70px;
+  min-width: 530px;
+  max-width: 530px;
+}
+
+.activityTracker-square {
+  width: 8px;
+  height: 8px;
+  margin: 1px;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+
+.activityTracker-squareText {
+  height: 10px;
+  min-width: 20px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  font-size: 8px;
+  background-color: transparent;
+  display: flex;
+  align-items: center; /* Align text vertically */
+  overflow: hidden; /* Prevent content from spilling out */
 }
