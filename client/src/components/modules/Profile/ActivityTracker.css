@@ -3,8 +3,8 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  min-height: 20vh;
-  max-height: 20vh;
+  min-height: 23vh;
+  max-height: 23vh;
   min-width: 40vw;
   max-width: 40vw;
   border-radius: 20px;
@@ -15,6 +15,10 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
+.activityTracker-title-container {
+  display: flex;
+  width: 100%;
+}
 .activityTracker-title {
   text-align: left;
   font-weight: 600;
@@ -23,7 +27,7 @@
 
 .activityTracker-graphText-container {
   display: flex;
-  min-height: 100%;
+  max-height: 100%;
   max-width: 100%;
   flex-direction: column;
   justify-content: space-between;
@@ -33,8 +37,11 @@
 
 .activityTracker-topText-container {
   display: flex;
+  align-items: end;
   min-width: 560px;
   max-width: 560px;
+  min-height: 35px;
+  max-height: 35px;
   padding-left: 20px;
   box-sizing: border-box;
   width: 20px;
@@ -63,11 +70,33 @@
 }
 
 .activityTracker-square {
+  position: relative;
   width: 8px;
   height: 8px;
   margin: 1px;
   box-sizing: border-box;
   border-radius: 50%;
+}
+
+.activityTracker-square-label {
+  position: absolute;
+  text-align: center;
+  min-width: 3em;
+  color: black;
+  bottom: 100%; /* Position the label above the box */
+  left: 50%; /* Center the label horizontally */
+  transform: translateX(-50%); /* Adjust for the label's width to center it */
+  visibility: hidden;
+  background-color: lightgrey;
+  border-radius: 2px;
+  padding: 5px;
+  z-index: 1;
+}
+
+.activityTracker-square:hover .activityTracker-square-label {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s; /* Remove delay when hiding */
 }
 
 .activityTracker-squareText {

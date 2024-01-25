@@ -40,7 +40,6 @@
 .profile-pfp-container {
   display: flex;
   justify-content: center;
-  border: 2px red solid;
 }
 .profile-pfp {
   width: 15em;

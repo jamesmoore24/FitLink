@@ -27,10 +27,10 @@ const Profile = (props) => {
       setWorkouts(reversedWorkoutObjs);
     });
 
-    get("/api/user/info", { id: props.userId }).then((user) => {
+    /* get("/api/user/info", { id: props.userId }).then((user) => {
       setName(user.name);
       setBio(user.bio);
-    });
+    }); */
   }, []);
 
   const updateUser = () => {
@@ -73,6 +73,16 @@ const Profile = (props) => {
               placeholder="Add your name..."
               value={name}
               onChange={(e) => setName(e.target.value)}
+            />
+            <div className="newExercise-exerciseRecommendation">Save</div>
+          </div>
+          <div className="profile-personalInfo-text">Bio</div>
+          <div className="profile-textInput-container">
+            <input
+              className="profile-textInput"
+              placeholder="Add a bio..."
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
             />
             <div className="newExercise-exerciseRecommendation">Save</div>
           </div>

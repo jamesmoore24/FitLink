@@ -50,13 +50,26 @@ const ActivityTracker = (props) => {
         index_exercises++;
       }
 
-      resultArray.push(setSum);
+      // Format the date as MM/DD
+      let formattedDate = `${dateToCompare.getMonth() + 1}/${dateToCompare.getDate()}`;
+
+      // Create an object with properties date and setSum
+      let record = {
+        date: formattedDate,
+        setSum: setSum,
+      };
+
+      // Push the object to the result array
+      resultArray.push(record);
     }
 
-    const maxValue = Math.max(...resultArray);
+    const maxValue = Math.max(...resultArray.map((record) => record.setSum));
 
-    const normalizedDataSet = resultArray.map((value) => {
-      return 1 + (value * 9) / maxValue;
+    const normalizedDataSet = resultArray.map((record) => {
+      return {
+        ...record, // Spread operator to copy existing properties
+        normalizedSets: 1 + (record.setSum * 9) / maxValue,
+      };
     });
     setSetData(normalizedDataSet);
   }, [exercises]);
@@ -104,7 +117,10 @@ const ActivityTracker = (props) => {
 
   return (
     <div className="activityTracker-container">
-      <div className="activityTracker-title">Activity this year:</div>
+      <div class="activityTracker-title-container">
+        <div className="activityTracker-title">Activity this year:</div>
+      </div>
+
       {exercises.length === 0 ? (
         <div className="activityTracker-title">Create a workout first!</div>
       ) : (
@@ -134,9 +150,13 @@ const ActivityTracker = (props) => {
                   <div
                     key={index}
                     className="activityTracker-square"
-                    style={{ backgroundColor: getColorForValue(value) }}
-                    title={`Value: ${value}`}
-                  />
+                    style={{ backgroundColor: getColorForValue(value.normalizedSets) }}
+                    title={`Value: ${value.setSum}`}
+                  >
+                    <div className="activityTracker-square-label">
+                      {value.date}: {value.setSum} sets
+                    </div>
+                  </div>
                 ))}
             </div>
           </div>
