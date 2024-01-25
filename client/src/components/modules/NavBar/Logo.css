@@ -7,7 +7,6 @@
 .logo-image-container {
   min-width: 5em;
   max-width: 5em;
-  border: 2px green solid;
 }
 
 .Logo-container {
@@ -18,7 +17,6 @@
   align-items: center; /* Align text and bars vertically */
   justify-content: center;
   color: black;
-  border: 2px red solid;
 }
 
 .logo-barsImg {
