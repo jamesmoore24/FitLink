@@ -31,19 +31,26 @@ const Feed = (props) => {
     console.log(`SHOULD BE ME ${props.userId}`);
   }, []);
 
+  const deleteWorkout = (workout_id) => {
+    post("/api/workout/delete", { workout_id: workout_id }).then((workout) => {
+      setWorkouts(workouts.filter((wkt) => wkt._id !== workout_id));
+    });
+  };
+
   let workoutsList = null;
   const hasWorkouts = workouts.length !== 0;
   if (hasWorkouts) {
     workoutsList = workouts.map((workoutObj) => (
       <Post
         key={`Card_${workoutObj._id}`}
-        workoutId={workoutObj._id}
+        workout_id={workoutObj._id}
         creator_name={workoutObj.creator_name}
         creator_id={workoutObj.creator_id}
         timestamp={workoutObj.timestamp}
         userId={props.userId}
         starred={workoutObj.starred}
         likes={workoutObj.likes}
+        deleteWorkout={deleteWorkout}
       />
     ));
   }

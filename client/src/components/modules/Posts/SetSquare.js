@@ -19,7 +19,7 @@ const SetSquare = (props) => {
   const [isHovered, setIsHovered] = useState(false);
   //TO DO IMPLEMENT THE SHADING BASED ON RPE
   const getColorForValue = (rpe) => {
-    const rpeParsed = Math.round(parseInt(rpe)) - 1;
+    const rpeParsed = Math.round(parseInt(rpe));
     // Define your color scale here
     // This is a simple example; adjust with your actual color scale
     const colors = [
