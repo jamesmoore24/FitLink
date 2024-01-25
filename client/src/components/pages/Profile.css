@@ -1,8 +1,5 @@
 .profile-background-container {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-end;
   position: fixed;
   box-sizing: border-box;
   top: 3em;
@@ -19,13 +16,13 @@
 /*subdivide containers*/
 .profile-left-container {
   display: flex;
-  justify-content: space-between;
+  align-items: end;
   min-width: 50%;
-  min-height: 100%;
+  max-height: 100%;
   padding: var(--l);
-  flex-direction: column;
-  align-items: center;
   box-sizing: border-box;
+  overflow: auto;
+  flex-direction: column;
 }
 
 .profile-right-container {
@@ -40,7 +37,11 @@
 }
 
 /* actual containers */
-
+.profile-pfp-container {
+  display: flex;
+  justify-content: center;
+  border: 2px red solid;
+}
 .profile-pfp {
   width: 15em;
   height: 15em;
@@ -52,8 +53,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  min-width: 100%;
-  min-height: 35vh;
+  min-width: 40vw;
+  max-width: 40vw;
+  min-height: 40vh;
   border-radius: 20px;
   box-sizing: border-box;
   padding: 10px;

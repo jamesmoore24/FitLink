@@ -62,8 +62,10 @@ const Profile = (props) => {
   return (
     <div className="profile-background-container">
       <div className="profile-left-container">
-        <img className="profile-pfp" src={ExampleProfile} />
         <div className="profile-personalInfo-container">
+          <div className="profile-pfp-container">
+            <img className="profile-pfp" src={ExampleProfile} />
+          </div>
           <div className="profile-personalInfo-text">Name</div>
           <div className="profile-textInput-container">
             <input

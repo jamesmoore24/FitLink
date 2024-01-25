@@ -7,13 +7,13 @@ const FriendSchema = new mongoose.Schema({
 
 const UserSchema = new mongoose.Schema({
   name: String,
-  bio: String,
+  bio: { type: String, default: "" },
   friends: {
     type: [FriendSchema],
     default: [],
   },
   googleid: String,
-  profile_picture: String,
+  profile_picture: { type: String, default: "../../public/example_profile.jpg" },
 });
 
 // compile model from schema

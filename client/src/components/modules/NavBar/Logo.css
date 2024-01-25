@@ -4,13 +4,21 @@
   font-weight: 500;
 }
 
+.logo-image-container {
+  min-width: 5em;
+  max-width: 5em;
+  border: 2px green solid;
+}
+
 .Logo-container {
   max-height: 1em;
+  width: 4em;
   font-weight: bold; /* Make the text bold */
   display: flex;
   align-items: center; /* Align text and bars vertically */
   justify-content: center;
   color: black;
+  border: 2px red solid;
 }
 
 .logo-barsImg {
