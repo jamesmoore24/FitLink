@@ -31,6 +31,8 @@ const App = () => {
         setUserId(user._id);
       }
     });
+
+    //get("/api/nukedb").then(() => console.log("DB NUKED"));
   }, []);
 
   const handleLogin = (credentialResponse) => {
@@ -56,10 +58,13 @@ const App = () => {
         <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
 
         <Routes>
-          <Route path="/" element={<Landing userId={userId} />} />
-          <Route path="/feed" element={<Feed userId={userId} />} />
-          <Route path="/workout" element={<Workout userId={userId} />} />
-          <Route path="/profile/:userId" element={<Profile userId={userId} />} />
+          <Route path="/" element={<Landing userId={userId} setUserId={setUserId} />} />
+          <Route path="/feed" element={<Feed userId={userId} setUserId={setUserId} />} />
+          <Route path="/workout" element={<Workout userId={userId} setUserId={setUserId} />} />
+          <Route
+            path="/profile/:userId"
+            element={<Profile userId={userId} setUserId={setUserId} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

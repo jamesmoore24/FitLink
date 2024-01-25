@@ -35,8 +35,11 @@
   flex-direction: column;
 }
 
-.feed-endPosts {
+.feed-text-top {
+  display: flex;
   color: var(--darkgrey);
+  justify-content: center;
+  align-items: center;
 }
 
 .feed-text {

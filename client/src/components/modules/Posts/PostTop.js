@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import "./PostTop.css";
 import { post } from "../../../utilities";
 
 import ProfilePicture from "../../../public/example_profile.jpg";
-import Medal from "../../../public/gold-medal.png";
 import Star from "../../../public/star.png";
 import StarFilled from "../../../public/star_filled.png";
+import TrashCan from "../../../public/trashcan.png";
+import TrashCanHalfFilled from "../../../public/trashcan_half_filled.png";
 
 /**
  * Page component to display when at the "/chat" route
  *
  * Proptypes
+ * @param {string} workout_id
  * @param {string} creator_name
- * @param {string} postId
+ * @param {string} creator_id
+ * @param {string} userId
  * @param {Date} timestamp
  * @param {Boolean} isStarred
  * @param {(PostObject) => {}} setIsStarred
+ * @param {() => {}} deleteWorkout
  */
 const PostTop = (props) => {
+  const [trashCanSrc, setTrashCanSrc] = useState(TrashCan);
+
   const date = new Date(props.timestamp);
   const hours = date.getHours();
   const minutes = date.getMinutes();
@@ -32,7 +38,9 @@ const PostTop = (props) => {
 
   const toggleStar = () => {
     props.setIsStarred(!props.isStarred);
-    post("/api/star/", { postId: props.postId, isStarred: !props.isStarred }).then((star) => {});
+    post("/api/star/", { workoutId: props.workout_id, isStarred: !props.isStarred }).then(
+      (star) => {}
+    );
   };
 
   return (
@@ -50,11 +58,29 @@ const PostTop = (props) => {
         </div>
       </div>
       <div className="postTop-personalBest-container">
-        <img
-          className="postTop-star"
-          src={props.isStarred ? StarFilled : Star}
-          onClick={toggleStar}
-        />
+        <div className="postTop-starTrash-container">
+          <img
+            className="postTop-star"
+            src={props.isStarred ? StarFilled : Star}
+            onClick={() => {
+              toggleStar();
+            }}
+          />
+          {props.creator_id == props.userId && (
+            <img
+              src={trashCanSrc}
+              className="postTop-star"
+              onMouseEnter={() => {
+                setTrashCanSrc(TrashCanHalfFilled);
+              }}
+              onMouseLeave={() => setTrashCanSrc(TrashCan)}
+              onClick={() => {
+                props.deleteWorkout(props.workout_id);
+              }}
+            />
+          )}
+        </div>
+
         <div className="postTop-personalBestText">3 Personal Bests</div>
       </div>
     </div>

@@ -141,7 +141,10 @@ const NewExercise = (props) => {
       </div>
       <div className="newExercise-setInfo-container">
         <div className="newExercise-setInfoIndividual-container">
-          <div className="newExercise-setInfoIndividual-text">Reps</div>
+          <div className="newExercise-setInfoIndividual-text-container">
+            <div className="newExercise-setInfoIndividual-titleText">Reps</div>
+            <div className="newExercise-setInfoIndividual-subText"></div>
+          </div>
           <input
             className="newExercise-setInfoIndividual-input"
             placeholder="?"
@@ -150,7 +153,10 @@ const NewExercise = (props) => {
           />
         </div>
         <div className="newExercise-setInfoIndividual-container">
-          <div className="newExercise-setInfoIndividual-text">Weight</div>
+          <div className="newExercise-setInfoIndividual-text-container">
+            <div className="newExercise-setInfoIndividual-titleText">Weight</div>
+            <div className="newExercise-setInfoIndividual-subText">(lbs)</div>
+          </div>
           <input
             className="newExercise-setInfoIndividual-input"
             placeholder="?"
@@ -159,7 +165,11 @@ const NewExercise = (props) => {
           />
         </div>
         <div className="newExercise-setInfoIndividual-container">
-          <div className="newExercise-setInfoIndividual-text">Difficulty (1-10)</div>
+          <div className="newExercise-setInfoIndividual-text-container">
+            <div className="newExercise-setInfoIndividual-titleText">Difficulty</div>
+            <div className="newExercise-setInfoIndividual-subText">(1-10)</div>
+          </div>
+
           <input
             className="newExercise-setInfoIndividual-input"
             placeholder="?"

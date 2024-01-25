@@ -55,10 +55,15 @@
   color: var(--primary);
 }
 
+.postTop-starTrash-container {
+  display: flex;
+}
+
 .postTop-star {
   color: var(--primary);
   height: 1.5em;
   width: 1.5em;
+  margin-left: 5px;
   transition: transform 0.3s;
 }
 

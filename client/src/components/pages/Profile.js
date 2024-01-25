@@ -24,17 +24,28 @@ const Profile = (props) => {
   useEffect(() => {
     get("/api/workouts/profile").then((workoutObjs) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
+      console.log(workoutObjs);
       setWorkouts(reversedWorkoutObjs);
     });
 
-    /* get("/api/user/info", { id: props.userId }).then((user) => {
+    //get("/api/nukedb").then((data) => console.log("Database objects deleted"));
+    get("/api/user/info").then((user) => {
+      console.log("HERE");
       setName(user.name);
       setBio(user.bio);
-    }); */
+    });
   }, []);
 
   const updateUser = () => {
-    post("/api/user/update", { id: props.userId, name: name, bio: bio }).then((user) => {});
+    post("/api/user/update", { name: name, bio: bio }).then((user) => {
+      console.log("User information updated in database");
+    });
+  };
+
+  const deleteWorkout = (workout_id) => {
+    post("/api/workout/delete", { workout_id: workout_id }).then((workout) => {
+      setWorkouts(workouts.filter((wkt) => wkt._id !== workout_id));
+    });
   };
 
   let workoutsList = null;
@@ -43,13 +54,14 @@ const Profile = (props) => {
     workoutsList = workouts.map((workoutObj) => (
       <Post
         key={`Card_${workoutObj._id}`}
-        workoutId={workoutObj._id}
+        workout_id={workoutObj._id}
         creator_name={workoutObj.creator_name}
         creator_id={workoutObj.creator_id}
         timestamp={workoutObj.timestamp}
         userId={props.userId}
         starred={workoutObj.starred}
         likes={workoutObj.likes}
+        deleteWorkout={deleteWorkout}
       />
     ));
   } else {
@@ -74,7 +86,9 @@ const Profile = (props) => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <div className="newExercise-exerciseRecommendation">Save</div>
+            <div className="newExercise-exerciseRecommendation" onClick={updateUser}>
+              Save
+            </div>
           </div>
           <div className="profile-personalInfo-text">Bio</div>
           <div className="profile-textInput-container">
@@ -84,17 +98,9 @@ const Profile = (props) => {
               value={bio}
               onChange={(e) => setBio(e.target.value)}
             />
-            <div className="newExercise-exerciseRecommendation">Save</div>
-          </div>
-          <div className="profile-personalInfo-text">Bio</div>
-          <div className="profile-textInput-container">
-            <input
-              className="profile-textInput"
-              placeholder="Add a bio..."
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-            />
-            <div className="newExercise-exerciseRecommendation">Save</div>
+            <div className="newExercise-exerciseRecommendation" onClick={updateUser}>
+              Save
+            </div>
           </div>
         </div>
       </div>

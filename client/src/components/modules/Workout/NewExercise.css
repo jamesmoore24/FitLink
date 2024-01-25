@@ -145,8 +145,25 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-.newExercise-setInfoIndividual-text {
-  height: auto;
+.newExercise-setInfoIndividual-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 2em;
+}
+
+.newExercise-setInfoIndividual-titleText {
+  max-height: 1em;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.newExercise-setInfoIndividual-subText {
+  min-height: 1.5em;
+  font-size: var(--m);
+  color: grey;
   text-align: center;
 }
 
@@ -159,6 +176,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  word-wrap: break-word;
   height: 70%;
 }
 

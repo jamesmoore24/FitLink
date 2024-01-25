@@ -12,13 +12,14 @@ import FistFilled from "../../../public/fist_filled.png";
 
 /**
  * Proptypes
- * @param {string} workoutId
- * @param {string} creator_id id of current logged in user
+ * @param {string} workout_id
+ * @param {string} creator_id id of user who made the workout object
  * @param {string} creator_name
  * @param {Date} timestamp
  * @param {boolean} starred
  * @param {number} likes
  * @param {string} userId
+ * @param {() => {}} deleteWorkout
  */
 const Post = (props) => {
   const [comments, setComments] = useState([]);
@@ -29,7 +30,7 @@ const Post = (props) => {
 
   const addNewComment = (commentObj) => {
     if (commentText.length > 0) {
-      post("/api/comment", { parent: props.workoutId, content: commentText }).then((comment) => {
+      post("/api/comment", { parent: props.workout_id, content: commentText }).then((comment) => {
         setComments(comments.concat([comment]));
       });
     }
@@ -38,11 +39,11 @@ const Post = (props) => {
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
-    post("/api/like/", { workoutId: props.workoutId, isLiked: !isLiked }).then((like) => {});
+    post("/api/like/", { workoutId: props.workout_id, isLiked: !isLiked }).then((like) => {});
   };
 
   useEffect(() => {
-    get("/api/like/", { userId: props.userId, workoutId: props.workoutId }).then((likeVal) => {
+    get("/api/like/", { userId: props.userId, workoutId: props.workout_id }).then((likeVal) => {
       //if an object is returned then we know that we have a like on a post
       if (likeVal.length) {
         setIsLiked(true);
@@ -51,8 +52,9 @@ const Post = (props) => {
       }
     });
 
-    get("/api/star/", { userId: props.userId, workoutId: props.workoutId }).then((starVal) => {
+    get("/api/star/", { userId: props.userId, workoutId: props.workout_id }).then((starVal) => {
       //if an object is returned then we know that we have a like on a post
+      console.log(props.workout_id);
       if (starVal.length) {
         setIsStarred(true);
       } else {
@@ -60,11 +62,11 @@ const Post = (props) => {
       }
     });
 
-    get("/api/comments/", { parent: props.workoutId }).then((comments) => {
+    get("/api/comments/", { parent: props.workout_id }).then((comments) => {
       setComments(comments);
     });
 
-    get("/api/exercises", { parent: props.workoutId }).then((exercises) => {
+    get("/api/exercises", { parent: props.workout_id }).then((exercises) => {
       setExercises(exercises);
     });
   }, []);
@@ -73,10 +75,13 @@ const Post = (props) => {
     <div className="post-container">
       <PostTop
         creator_name={props.creator_name}
-        workoutId={props.workoutId}
+        creator_id={props.creator_id}
+        userId={props.userId}
+        workout_id={props.workout_id}
         timestamp={props.timestamp}
         isStarred={isStarred}
         setIsStarred={setIsStarred}
+        deleteWorkout={props.deleteWorkout}
       />
 
       <div className="post-exercise-container">
@@ -117,8 +122,9 @@ const Post = (props) => {
               key={`SingleComment_${comment._id}`}
               _id={comment._id}
               creator_name={comment.creator_name}
-              creator_id={comment.creator_id}
+              creatorId={comment.creatorId}
               content={comment.content}
+              timestamp={comment.timestamp}
             />
           ))}
         </div>

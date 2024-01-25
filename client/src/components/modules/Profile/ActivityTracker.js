@@ -117,8 +117,8 @@ const ActivityTracker = (props) => {
 
   return (
     <div className="activityTracker-container">
-      <div class="activityTracker-title-container">
-        <div className="activityTracker-title">Activity this year:</div>
+      <div className="activityTracker-title-container">
+        <div className="activityTracker-title">Activity this year</div>
       </div>
 
       {exercises.length === 0 ? (
@@ -151,10 +151,9 @@ const ActivityTracker = (props) => {
                     key={index}
                     className="activityTracker-square"
                     style={{ backgroundColor: getColorForValue(value.normalizedSets) }}
-                    title={`Value: ${value.setSum}`}
                   >
                     <div className="activityTracker-square-label">
-                      {value.date}: {value.setSum} sets
+                      {value.date}: {value.setSum} set{value.setSum == 1 ? "" : "s"}
                     </div>
                   </div>
                 ))}

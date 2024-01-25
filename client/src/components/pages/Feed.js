@@ -21,6 +21,14 @@ const Feed = (props) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
       setWorkouts(reversedWorkoutObjs);
     });
+    get("/api/whoami").then((user) => {
+      if (user._id) {
+        // they are registed in the database, and currently logged in.
+        console.log(`LOL HACKY ${user._id}`);
+        props.setUserId(user._id);
+      }
+    });
+    console.log(`SHOULD BE ME ${props.userId}`);
   }, []);
 
   let workoutsList = null;
@@ -38,8 +46,6 @@ const Feed = (props) => {
         likes={workoutObj.likes}
       />
     ));
-  } else {
-    workoutsList = <div className="feed-text-top">No workouts!</div>;
   }
 
   if (!props.userId) {
