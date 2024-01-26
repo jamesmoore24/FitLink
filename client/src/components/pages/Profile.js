@@ -20,6 +20,8 @@ const Profile = (props) => {
   const [workouts, setWorkouts] = useState([]);
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(null);
 
   useEffect(() => {
     get("/api/workouts/profile").then((workoutObjs) => {
@@ -33,6 +35,7 @@ const Profile = (props) => {
       console.log("HERE");
       setName(user.name);
       setBio(user.bio);
+      setProfilePicture(user.profile_picture);
     });
   }, []);
 
@@ -68,6 +71,37 @@ const Profile = (props) => {
     workoutsList = <div className="feed-text-top">No personal saved or posted workouts yet!</div>;
   }
 
+  const handleImageChange = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      console.log(selectedFile);
+      console.log(file);
+      setSelectedFile(file);
+    }
+  };
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  async function uploadImage() {
+    console.log("BELOW IS SELECTED");
+    console.log(selectedFile);
+    const base64String = await convertToBase64(selectedFile);
+    const imageData = base64String.split(",")[1];
+
+    // Now, send this string to your API endpoint
+    post("/api/image/upload", { file: imageData }).then((user) => {
+      console.log("IMAGE SAVED");
+      setProfilePicture(user.profile_picture);
+    });
+  }
+
   if (!props.userId) {
     return <div>Please sign in before creating a new workout.</div>;
   }
@@ -76,7 +110,20 @@ const Profile = (props) => {
       <div className="profile-left-container">
         <div className="profile-personalInfo-container">
           <div className="profile-pfp-container">
-            <img className="profile-pfp" src={ExampleProfile} />
+            <img className="profile-pfp" src={profilePicture} />
+            <label htmlFor="file-upload" className="profile-pfpUpload-container">
+              Select Profile Photo
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              name="sampleFile"
+              onChange={handleImageChange}
+              className="profile-pfpUpload-container"
+            />
+            <div className="profile-pfpUpload-container" onClick={uploadImage}>
+              Upload Photo
+            </div>
           </div>
           <div className="profile-personalInfo-text">Name</div>
           <div className="profile-textInput-container">

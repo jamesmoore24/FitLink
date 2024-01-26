@@ -83,6 +83,7 @@
   position: absolute;
   text-align: center;
   min-width: 3em;
+  max-width: 3em;
   color: black;
   bottom: 100%; /* Position the label above the box */
   left: 50%; /* Center the label horizontally */
@@ -103,6 +104,7 @@
 .activityTracker-squareText {
   height: 10px;
   min-width: 20px;
+  max-width: 20px;
   box-sizing: border-box;
   border-radius: 2px;
   font-size: 8px;

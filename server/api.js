@@ -8,6 +8,9 @@
 */
 
 const express = require("express");
+const multer = require("multer");
+const axios = require("axios");
+const upload = multer({ dest: "uploads/" });
 
 // import models so we can interact with the database
 const User = require("./models/user");
@@ -235,6 +238,43 @@ router.post("/user/update", (req, res) => {
     console.log(user);
     user.save().then((user) => res.send(user));
   });
+});
+
+router.post("/image/upload", async (req, res) => {
+  console.log("IN IMAGE API");
+
+  fetch("https://api.imgur.com/3/image", {
+    method: "POST",
+    headers: {
+      Authorization: "Client-ID a670efe26c0f9b7",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      image: req.body.file, // Assuming this is a base64 encoded string
+      type: "base64",
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Imgur API responded with status: ${response.status}`);
+      }
+      console.log("IMAGE UPLOADED!!!!");
+      return response.json();
+    })
+    .then((data) => {
+      if (!data.success) {
+        throw new Error("Failed to upload image to Imgur");
+      }
+      console.log(data);
+      User.findById(req.user._id).then((user) => {
+        user.profile_picture = data.data.link;
+        user.save().then((user) => res.send(user));
+      });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      res.status(500).send("An error occurred");
+    });
 });
 
 router.get("/user/info", (req, res) => {
