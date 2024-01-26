@@ -19,7 +19,11 @@ const Workout = (props) => {
   }
   return (
     <div className="workout-background-container">
-      <NewWorkout userId={props.userId} />
+      <NewWorkout
+        userId={props.userId}
+        setNotificationOn={props.setNotificationOn}
+        setNotificationText={props.setNotificationText}
+      />
     </div>
   );
 };

@@ -18,8 +18,10 @@
   display: flex;
   align-items: end;
   min-width: 50%;
-  max-height: 100%;
-  padding: var(--l);
+  min-height: 100%;
+  padding-top: 48px;
+  padding-bottom: 48px;
+  padding-right: var(--l);
   box-sizing: border-box;
   overflow: auto;
   flex-direction: column;
@@ -30,7 +32,9 @@
   align-items: start;
   min-width: 50%;
   max-height: 100%;
-  padding: var(--l);
+  padding-top: 48px;
+  padding-bottom: 48px;
+  padding-left: var(--l);
   box-sizing: border-box;
   overflow: auto;
   flex-direction: column;
@@ -53,7 +57,7 @@
   right: 0;
   height: 3em;
   width: 3em;
-  margin: 10px;
+  margin: var(--l);
   border-radius: 50%;
   background-color: var(--primary);
   border: 2px var(--primary) solid;
@@ -153,22 +157,28 @@ input[type="file"] {
   transform: scale(0.95); /* Scale down on click */
 }
 
+.profile-allTextInput-container .profile-textInputTitle-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .profile-textInputTitle-container {
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 }
 
 .profile-personalInfo-container {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   min-width: 40vw;
   max-width: 40vw;
-  min-height: 40vh;
+  min-height: 100%;
   border-radius: 20px;
   box-sizing: border-box;
-  padding: 10px;
+  padding: var(--l);
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }

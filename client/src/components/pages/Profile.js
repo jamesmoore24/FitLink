@@ -15,6 +15,8 @@ import "./Profile.css";
  *
  * Proptypes
  * @param {string} userId id of current logged in user
+ * @param {() => {boolean}} setNotificationOn
+ * @param {() => {string}} setNotificationText
  */
 const Profile = (props) => {
   const [workouts, setWorkouts] = useState([]);
@@ -143,12 +145,16 @@ const Profile = (props) => {
                         // Code to run if uploadImage succeeds
                         updateUser();
                         setIsEditing(!isEditing);
+                        props.setNotificationOn(true);
+                        props.setNotificationText("Profile saved!");
                       })
                       .catch((error) => {
                         console.log("ERROR UPLOADING");
                       });
                   } else {
                     updateUser();
+                    props.setNotificationOn(true);
+                    props.setNotificationText("Profile saved!");
                     setIsEditing(!isEditing);
                   }
                 } else {
@@ -187,33 +193,34 @@ const Profile = (props) => {
               </>
             )}
           </div>
-          <div className="profile-textInputTitle-container">
-            <div className="profile-personalInfo-text">Name</div>
-            <div
-              className={`profile-textInput-container ${isEditing ? "editable" : "non-editable"}`}
-            >
-              <input
-                className="profile-textInput"
-                placeholder="Add your name..."
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                readOnly={!isEditing}
-              />
+          <div className="profile-allTextInput-container">
+            <div className="profile-textInputTitle-container">
+              <div className="profile-personalInfo-text">Name</div>
+              <div
+                className={`profile-textInput-container ${isEditing ? "editable" : "non-editable"}`}
+              >
+                <input
+                  className="profile-textInput"
+                  placeholder="Add your name..."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  readOnly={!isEditing}
+                />
+              </div>
             </div>
-          </div>
-
-          <div className="profile-textInputTitle-container">
-            <div className="profile-personalInfo-text">Bio</div>
-            <div
-              className={`profile-textInput-container ${isEditing ? "editable" : "non-editable"}`}
-            >
-              <input
-                className="profile-textInput"
-                placeholder="Add your name..."
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                readOnly={!isEditing}
-              />
+            <div className="profile-textInputTitle-container">
+              <div className="profile-personalInfo-text">Bio</div>
+              <div
+                className={`profile-textInput-container ${isEditing ? "editable" : "non-editable"}`}
+              >
+                <input
+                  className="profile-textInput"
+                  placeholder="Add your name..."
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  readOnly={!isEditing}
+                />
+              </div>
             </div>
           </div>
         </div>

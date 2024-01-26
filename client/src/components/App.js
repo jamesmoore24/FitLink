@@ -22,6 +22,8 @@ import { get, post } from "../utilities";
  */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
+  const [notificationOn, setNotificationOn] = useState(false);
+  const [notificationText, setNotificationText] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +36,17 @@ const App = () => {
 
     //get("/api/nukedb").then(() => console.log("DB NUKED"));
   }, []);
+
+  useEffect(() => {
+    let timer;
+    if (notificationOn) {
+      timer = setTimeout(() => {
+        setNotificationOn(false);
+      }, 2500); // 2500 milliseconds = 2.5 seconds
+    }
+
+    return () => clearTimeout(timer); // Cleanup the timer
+  }, [notificationOn]);
 
   const handleLogin = (credentialResponse) => {
     navigate("/feed");
@@ -56,14 +69,35 @@ const App = () => {
     <>
       <div className="app-container">
         <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        <div className={`app-popUpNotification ${notificationOn ? "show" : ""}`}>
+          {notificationText}
+          <div className="notification-bar"></div>
+        </div>
 
         <Routes>
           <Route path="/" element={<Landing userId={userId} setUserId={setUserId} />} />
           <Route path="/feed" element={<Feed userId={userId} setUserId={setUserId} />} />
-          <Route path="/workout" element={<Workout userId={userId} setUserId={setUserId} />} />
+          <Route
+            path="/workout"
+            element={
+              <Workout
+                userId={userId}
+                setUserId={setUserId}
+                setNotificationOn={setNotificationOn}
+                setNotificationText={setNotificationText}
+              />
+            }
+          />
           <Route
             path="/profile/:userId"
-            element={<Profile userId={userId} setUserId={setUserId} />}
+            element={
+              <Profile
+                userId={userId}
+                setUserId={setUserId}
+                setNotificationOn={setNotificationOn}
+                setNotificationText={setNotificationText}
+              />
+            }
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

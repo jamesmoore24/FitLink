@@ -109,10 +109,24 @@ const NewWorkout = (props) => {
         <div className="newWorkout-errorPost-container">
           <div className="newWorkout-postError">{errorText}</div>
           <div className="newWorkout-postBox">
-            <button className="newWorkout-postBoxButton" onClick={saveWorkout}>
-              Save Workout
+            <button
+              className="newWorkout-postBoxButton"
+              onClick={() => {
+                saveWorkout();
+                props.setNotificationOn(true);
+                props.setNotificationText("Workout saved to drafts!");
+              }}
+            >
+              Save to Drafts
             </button>
-            <button className="newWorkout-postBoxButton" onClick={postWorkout}>
+            <button
+              className="newWorkout-postBoxButton"
+              onClick={() => {
+                postWorkout();
+                props.setNotificationOn(true);
+                props.setNotificationText("Workout posted!");
+              }}
+            >
               Post Workout
             </button>
           </div>
