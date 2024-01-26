@@ -21,6 +21,7 @@ const Profile = (props) => {
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
+  const [changedSelectedFile, setChangedSelectedFile] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePictureError, setProfilePictureError] = useState("");
@@ -82,6 +83,8 @@ const Profile = (props) => {
       console.log(selectedFile);
       console.log(file);
       setSelectedFile(file);
+      setProfilePictureError("");
+      setChangedSelectedFile(true);
     }
   };
 
@@ -95,25 +98,28 @@ const Profile = (props) => {
   }
 
   async function uploadImage() {
-    setIsLoading(true);
-    const base64String = await convertToBase64(selectedFile);
-    const imageData = base64String.split(",")[1];
+    try {
+      setIsLoading(true);
+      const base64String = await convertToBase64(selectedFile);
+      const imageData = base64String.split(",")[1];
 
-    // Now, send this string to your API endpoint
-    post("/api/image/upload", { file: imageData })
-      .then((user) => {
-        console.log("IMAGE SAVED");
-        setProfilePicture(user.profile_picture);
-        setProfilePictureError("");
-        setChangedProfilePicture(!changedProfilePicture);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Here Error uploading image:", error);
-        setProfilePictureError("Error uploading image. Try a different image.");
-        setIsLoading(false);
-        // Optionally, reset or handle other states as needed
-      });
+      // Send this string to your API endpoint and await its response
+      const user = await post("/api/image/upload", { file: imageData });
+      setProfilePicture(user.profile_picture);
+      setProfilePictureError("");
+      setChangedProfilePicture(!changedProfilePicture);
+      setIsLoading(false);
+
+      // Return a resolved promise
+      return Promise.resolve();
+    } catch (error) {
+      console.error("Here Error uploading image:", error);
+      setProfilePictureError("Error uploading image. Try a different image.");
+      setIsLoading(false);
+
+      // Return a rejected promise
+      return Promise.reject(error);
+    }
   }
 
   if (!props.userId) {
@@ -130,12 +136,24 @@ const Profile = (props) => {
               className="profile-edit-container"
               onClick={() => {
                 if (isEditing) {
-                  if (selectedFile) {
-                    uploadImage();
+                  if (selectedFile && changedSelectedFile) {
+                    setChangedSelectedFile(false);
+                    uploadImage()
+                      .then(() => {
+                        // Code to run if uploadImage succeeds
+                        updateUser();
+                        setIsEditing(!isEditing);
+                      })
+                      .catch((error) => {
+                        console.log("ERROR UPLOADING");
+                      });
+                  } else {
+                    updateUser();
+                    setIsEditing(!isEditing);
                   }
-                  updateUser();
+                } else {
+                  setIsEditing(!isEditing);
                 }
-                setIsEditing(!isEditing);
               }}
             >
               {isEditing ? "Save" : "Edit"}
@@ -181,11 +199,6 @@ const Profile = (props) => {
                 onChange={(e) => setName(e.target.value)}
                 readOnly={!isEditing}
               />
-              {isEditing && (
-                <div className="newExercise-exerciseRecommendation" onClick={updateUser}>
-                  Save
-                </div>
-              )}
             </div>
           </div>
 
@@ -198,14 +211,9 @@ const Profile = (props) => {
                 className="profile-textInput"
                 placeholder="Add your name..."
                 value={bio}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setBio(e.target.value)}
                 readOnly={!isEditing}
               />
-              {isEditing && (
-                <div className="newExercise-exerciseRecommendation" onClick={updateUser}>
-                  Save
-                </div>
-              )}
             </div>
           </div>
         </div>
