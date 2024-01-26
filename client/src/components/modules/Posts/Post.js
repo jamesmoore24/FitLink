@@ -73,7 +73,6 @@ const Post = (props) => {
     });
 
     get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
-      console.log("HEREEEEE");
       setProfilePicture(user.profile_picture);
     });
   }, [props.changedProfilePicture]);

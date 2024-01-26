@@ -110,6 +110,11 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
+.profile-pfpFileSelected-container {
+  font-size: 12px;
+  color: black;
+}
+
 input[type="file"] {
   width: 0.1px;
   height: 0.1px;
@@ -146,6 +151,11 @@ input[type="file"] {
 
 .profile-pfpUpload-container:active {
   transform: scale(0.95); /* Scale down on click */
+}
+
+.profile-textInputTitle-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-personalInfo-container {

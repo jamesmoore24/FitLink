@@ -241,8 +241,6 @@ router.post("/user/update", (req, res) => {
 });
 
 router.post("/image/upload", async (req, res) => {
-  console.log("IN IMAGE API");
-
   fetch("https://api.imgur.com/3/image", {
     method: "POST",
     headers: {
@@ -256,7 +254,7 @@ router.post("/image/upload", async (req, res) => {
   })
     .then((response) => {
       if (!response.ok) {
-        throw new Error(`Imgur API responded with status: ${response.status}`);
+        throw new Error(`Imgur API responded with status: ${response}`);
       }
       return response.json();
     })
@@ -270,7 +268,7 @@ router.post("/image/upload", async (req, res) => {
       });
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Here Error:", error);
       res.status(500).send("An error occurred");
     });
 });
