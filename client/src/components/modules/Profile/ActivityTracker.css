@@ -17,7 +17,6 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  border: 2px red solid;
 }
 .activityTracker-title {
   text-align: left;
@@ -33,7 +32,6 @@
   justify-content: space-between;
   font-size: var(--s);
   overflow: auto;
-  border: 2px red solid;
 }
 
 .activityTracker-topText-container {
