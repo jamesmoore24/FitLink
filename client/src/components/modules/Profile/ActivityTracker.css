@@ -3,8 +3,6 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  min-height: 23vh;
-  max-height: 23vh;
   min-width: 40vw;
   max-width: 40vw;
   border-radius: 20px;
@@ -19,6 +17,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  border: 2px red solid;
 }
 .activityTracker-title {
   text-align: left;
@@ -34,6 +33,7 @@
   justify-content: space-between;
   font-size: var(--s);
   overflow: auto;
+  border: 2px red solid;
 }
 
 .activityTracker-topText-container {

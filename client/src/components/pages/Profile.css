@@ -90,7 +90,7 @@
   width: 3em;
   font-size: var(--m);
   border-top: 4px var(--primary) solid;
-  margin: 10px;
+  margin: var(--l);
   border-radius: 50%;
   animation: spin 2s linear infinite;
 }
