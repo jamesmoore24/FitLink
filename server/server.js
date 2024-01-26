@@ -27,6 +27,7 @@ const http = require("http");
 const express = require("express"); // backend framework for our node server.
 const session = require("express-session"); // library that stores info about each connected user
 const mongoose = require("mongoose"); // library to connect to MongoDB
+const bodyParser = require("body-parser");
 const path = require("path"); // provide utilities for working with file and directory paths
 
 const api = require("./api");
@@ -59,6 +60,8 @@ const app = express();
 app.use(validator.checkRoutes);
 
 // allow us to process POST requests
+app.use(bodyParser.json({ limit: "20mb" }));
+app.use(bodyParser.urlencoded({ limit: "20mb", extended: true }));
 app.use(express.json());
 
 // set up a session, which will persist login data across requests

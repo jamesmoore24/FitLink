@@ -20,10 +20,12 @@ import FistFilled from "../../../public/fist_filled.png";
  * @param {number} likes
  * @param {string} userId
  * @param {() => {}} deleteWorkout
+ * @param {boolean} changedProfilePicture
  */
 const Post = (props) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState(""); // Step 1: State variable for input value
+  const [profilePicture, setProfilePicture] = useState(undefined);
   const [isLiked, setIsLiked] = useState(false);
   const [isStarred, setIsStarred] = useState(false);
   const [exercises, setExercises] = useState([]);
@@ -69,13 +71,19 @@ const Post = (props) => {
     get("/api/exercises", { parent: props.workout_id }).then((exercises) => {
       setExercises(exercises);
     });
-  }, []);
+
+    get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
+      console.log("HEREEEEE");
+      setProfilePicture(user.profile_picture);
+    });
+  }, [props.changedProfilePicture]);
 
   return (
     <div className="post-container">
       <PostTop
         creator_name={props.creator_name}
         creator_id={props.creator_id}
+        creator_pfp={profilePicture}
         userId={props.userId}
         workout_id={props.workout_id}
         timestamp={props.timestamp}
@@ -125,6 +133,7 @@ const Post = (props) => {
               creatorId={comment.creatorId}
               content={comment.content}
               timestamp={comment.timestamp}
+              changedProfilePicture={props.changedProfilePicture}
             />
           ))}
         </div>

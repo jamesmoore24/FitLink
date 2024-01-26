@@ -258,14 +258,12 @@ router.post("/image/upload", async (req, res) => {
       if (!response.ok) {
         throw new Error(`Imgur API responded with status: ${response.status}`);
       }
-      console.log("IMAGE UPLOADED!!!!");
       return response.json();
     })
     .then((data) => {
       if (!data.success) {
         throw new Error("Failed to upload image to Imgur");
       }
-      console.log(data);
       User.findById(req.user._id).then((user) => {
         user.profile_picture = data.data.link;
         user.save().then((user) => res.send(user));
@@ -279,6 +277,10 @@ router.post("/image/upload", async (req, res) => {
 
 router.get("/user/info", (req, res) => {
   User.findById(req.user._id).then((user) => res.send(user));
+});
+
+router.get("/user/profile-picture", (req, res) => {
+  User.findById(req.query.creator_id).then((user) => res.send(user));
 });
 
 // anything else falls to this "not found" case

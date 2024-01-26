@@ -21,7 +21,10 @@ const Profile = (props) => {
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
+  const [changedProfilePicture, setChangedProfilePicture] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     get("/api/workouts/profile").then((workoutObjs) => {
@@ -65,6 +68,7 @@ const Profile = (props) => {
         starred={workoutObj.starred}
         likes={workoutObj.likes}
         deleteWorkout={deleteWorkout}
+        changedProfilePicture={changedProfilePicture}
       />
     ));
   } else {
@@ -90,8 +94,7 @@ const Profile = (props) => {
   }
 
   async function uploadImage() {
-    console.log("BELOW IS SELECTED");
-    console.log(selectedFile);
+    setIsLoading(true);
     const base64String = await convertToBase64(selectedFile);
     const imageData = base64String.split(",")[1];
 
@@ -99,6 +102,8 @@ const Profile = (props) => {
     post("/api/image/upload", { file: imageData }).then((user) => {
       console.log("IMAGE SAVED");
       setProfilePicture(user.profile_picture);
+      setChangedProfilePicture(!changedProfilePicture);
+      setIsLoading(false);
     });
   }
 
@@ -109,45 +114,74 @@ const Profile = (props) => {
     <div className="profile-background-container">
       <div className="profile-left-container">
         <div className="profile-personalInfo-container">
-          <div className="profile-pfp-container">
-            <img className="profile-pfp" src={profilePicture} />
-            <label htmlFor="file-upload" className="profile-pfpUpload-container">
-              Select Profile Photo
-            </label>
-            <input
-              id="file-upload"
-              type="file"
-              name="sampleFile"
-              onChange={handleImageChange}
-              className="profile-pfpUpload-container"
-            />
-            <div className="profile-pfpUpload-container" onClick={uploadImage}>
-              Upload Photo
+          {isLoading ? (
+            <div className="profile-editSpinner-container" />
+          ) : (
+            <div
+              className="profile-edit-container"
+              onClick={() => {
+                if (isEditing) {
+                  if (selectedFile !== profilePicture) {
+                    uploadImage();
+                  }
+                  updateUser();
+                }
+                setIsEditing(!isEditing);
+              }}
+            >
+              {isEditing ? "Save" : "Edit"}
             </div>
+          )}
+          <div className="profile-pfp-container">
+            <div
+              className="profile-pfp"
+              src={profilePicture}
+              style={{ backgroundImage: `url(${profilePicture})` }}
+            />
+            {isEditing && (
+              <label htmlFor="file-upload" className="profile-pfpUpload-container">
+                Select Profile Photo
+              </label>
+            )}
+            {isEditing && (
+              <input
+                id="file-upload"
+                type="file"
+                name="sampleFile"
+                onChange={handleImageChange}
+                className="profile-pfpUpload-container"
+              />
+            )}
           </div>
           <div className="profile-personalInfo-text">Name</div>
-          <div className="profile-textInput-container">
+          <div className={`profile-textInput-container ${isEditing ? "editable" : "non-editable"}`}>
             <input
               className="profile-textInput"
               placeholder="Add your name..."
               value={name}
               onChange={(e) => setName(e.target.value)}
+              readOnly={!isEditing}
             />
-            <div className="newExercise-exerciseRecommendation" onClick={updateUser}>
-              Save
-            </div>
+            {isEditing && (
+              <div className="newExercise-exerciseRecommendation" onClick={updateUser}>
+                Save
+              </div>
+            )}
           </div>
           <div className="profile-personalInfo-text">Bio</div>
-          <div className="profile-textInput-container">
+          <div className={`profile-textInput-container ${isEditing ? "editable" : "non-editable"}`}>
             <input
               className="profile-textInput"
-              placeholder="Add a bio..."
+              placeholder="Add your name..."
               value={bio}
-              onChange={(e) => setBio(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
+              readOnly={!isEditing}
             />
-            <div className="newExercise-exerciseRecommendation" onClick={updateUser}>
-              Save
-            </div>
+            {isEditing && (
+              <div className="newExercise-exerciseRecommendation" onClick={updateUser}>
+                Save
+              </div>
+            )}
           </div>
         </div>
       </div>

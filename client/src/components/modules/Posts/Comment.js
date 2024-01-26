@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import { get, post } from "../../../utilities";
 
 import "./Comment.css";
 
@@ -8,12 +10,21 @@ import ProfilePicture from "../../../public/example_profile.jpg";
  * Proptypes
  * @param {string} creator_id
  * @param {string} creator_name
+ * @param {string} changedProfilePicture
  * @param {string} parent
  * @param {string} params
  * @param {string} timestamp
  */
 const Comment = (props) => {
+  const [profilePicture, setProfilePicture] = useState("");
   //need to use map or something to render all of the squares
+
+  useEffect(() => {
+    get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
+      setProfilePicture(user.profile_picture);
+    });
+  }, [props.changedProfilePicture]);
+
   function timeSince(dateString) {
     const date = new Date(dateString);
     const now = new Date();
@@ -48,7 +59,11 @@ const Comment = (props) => {
   return (
     <div className="comment-container">
       <div className="comment-profilePicture-container">
-        <img className="comment-profilePicture" src={ProfilePicture} />
+        <div
+          className="comment-profilePicture"
+          src={profilePicture}
+          style={{ backgroundImage: `url(${profilePicture})` }}
+        />
       </div>
       <div className="comment-nameAndComment-container">
         <div className="comment-nameTime-container">

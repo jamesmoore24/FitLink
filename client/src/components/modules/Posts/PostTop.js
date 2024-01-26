@@ -16,6 +16,7 @@ import TrashCanHalfFilled from "../../../public/trashcan_half_filled.png";
  * @param {string} workout_id
  * @param {string} creator_name
  * @param {string} creator_id
+ * @param {string} creator_pfp
  * @param {string} userId
  * @param {Date} timestamp
  * @param {Boolean} isStarred
@@ -39,7 +40,9 @@ const PostTop = (props) => {
   const toggleStar = () => {
     props.setIsStarred(!props.isStarred);
     post("/api/star/", { workoutId: props.workout_id, isStarred: !props.isStarred }).then(
-      (star) => {}
+      (star) => {
+        console.log("Star logged.");
+      }
     );
   };
 
@@ -47,7 +50,11 @@ const PostTop = (props) => {
     <div className="postTop-container">
       <div className="postTop-profilePictureAndDescription">
         <div className="postTop-profilePicture-container">
-          <img className="postTop-profilePicture" src={ProfilePicture} />
+          <div
+            className="postTop-profilePicture"
+            src={props.creator_pfp}
+            style={{ backgroundImage: `url(${props.creator_pfp})` }}
+          />
         </div>
 
         <div className="postTop-profileNameFollowTime-container">
