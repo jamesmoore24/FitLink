@@ -184,14 +184,13 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  min-height: 20%;
+  min-height: 25%;
   width: 100%;
 }
 
 .newExercise-previousSets-text {
   display: flex;
   align-items: center;
-  height: 30%;
   width: 100%;
   font-size: var(--l);
 }

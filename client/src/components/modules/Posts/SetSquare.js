@@ -58,8 +58,16 @@ const SetSquare = (props) => {
           props.setNumber === props.setIndex ? "#FFFFFFFF" : getColorForValue(props.rpe),
       }}
     >
-      <div className="setSquare-text-top">{props.reps}</div>
-      <div className="setSquare-text">{props.weight}</div>
+      <div
+        className={
+          props.viewStyle === "create" ? "setSquare-text-top-create" : "setSquare-text-top"
+        }
+      >
+        {props.reps}
+      </div>
+      <div className={props.viewStyle === "create" ? "setSquare-text-create" : "setSquare-text"}>
+        {props.weight}
+      </div>
     </div>
   );
 };
