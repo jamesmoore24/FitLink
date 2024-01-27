@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { get, post } from "../../utilities";
 
 import "../../utilities.css";
 import "./Landing.css";
@@ -15,6 +16,7 @@ import VideoPlayer from "../modules/SignUp/Video";
  */
 const Landing = (props) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const navigate = useNavigate();
 
   const words = [
     "working-out",
@@ -36,6 +38,13 @@ const Landing = (props) => {
     const intervalId = setInterval(() => {
       setCurrentWordIndex((prevIndex) => (prevIndex === words.length - 1 ? 0 : prevIndex + 1));
     }, duration);
+
+    get("/api/whoami").then((user) => {
+      console.log("HERE");
+      if (user) {
+        navigate("/feed");
+      }
+    });
 
     return () => clearInterval(intervalId);
   }, [words, duration]);

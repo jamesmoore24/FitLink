@@ -13,6 +13,8 @@ import "./Feed.css";
  *
  * Proptypes
  * @param {string} userId id of current logged in user
+ * @param {() => {}} setNotificationOn
+ * @param {() => {}} setNotificationText
  */
 const Feed = (props) => {
   const [workouts, setWorkouts] = useState([]);
@@ -57,7 +59,10 @@ const Feed = (props) => {
     <div className="feed-background-container">
       <div className="feed-posts-container">{workoutsList}</div>
       <div className="feed-activityFriends-container">
-        <Friends />
+        <Friends
+          setNotificationOn={props.setNotificationOn}
+          setNotificationText={props.setNotificationText}
+        />
       </div>
     </div>
   );

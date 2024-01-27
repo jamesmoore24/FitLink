@@ -1,11 +1,19 @@
 .friend-section {
   display: flex;
   align-items: center;
+  width: 100%;
   justify-content: space-between;
   background-color: white;
+  box-sizing: border-box;
   padding: 10px;
+  margin-top: 5px;
   border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.3s background-color;
+}
+
+.friend-section:hover {
+  background-color: var(--grey);
+  cursor: pointer;
 }
 
 .avatar {
@@ -21,20 +29,31 @@
 
 .friend-name {
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 0.7em;
 }
 
-.friend-last-workout {
-  display: block; /* To ensure it's on a new line */
-  color: grey;
-  font-size: 0.9em;
+.friend-followButton {
+  border-radius: 20px;
+  border: none;
+  padding: 10px;
+  transition: 0.3s transform;
 }
 
-.friend-socials {
-  /* Adjust as needed */
+.friend-followButton:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
+.friend-followButton:active {
+  transform: scale(0.9);
+}
 .social-icon {
   font-size: 1.5em; /* Adjust based on actual icons */
   margin-left: 10px; /* Space between icons */
+}
+
+.friend-followBack {
+  color: grey;
+  font-size: 0.5em;
+  margin-right: 5px;
 }

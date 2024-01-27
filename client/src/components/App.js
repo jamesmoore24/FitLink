@@ -76,7 +76,17 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Landing userId={userId} setUserId={setUserId} />} />
-          <Route path="/feed" element={<Feed userId={userId} setUserId={setUserId} />} />
+          <Route
+            path="/feed"
+            element={
+              <Feed
+                userId={userId}
+                setUserId={setUserId}
+                setNotificationOn={setNotificationOn}
+                setNotificationText={setNotificationText}
+              />
+            }
+          />
           <Route
             path="/workout"
             element={

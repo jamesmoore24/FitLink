@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Menu.css"; // Ensure this CSS file is created and linked
 
-const FriendsMenu = ({ selected, setSelected, friendRequestsCount }) => {
+const FriendsMenu = ({ selected, setSelected, friendRequestsCount, friendsCount }) => {
   const [underlineStyle, setUnderlineStyle] = useState({});
   const menuRef = useRef(null);
 
@@ -19,7 +19,7 @@ const FriendsMenu = ({ selected, setSelected, friendRequestsCount }) => {
         className={`friends-menu-item ${selected === "friends" ? "active" : ""}`}
         onClick={() => setSelected("friends")}
       >
-        Friends
+        Friends ({friendsCount})
       </div>
       <div
         className={`friends-menu-item ${selected === "requests" ? "active" : ""}`}

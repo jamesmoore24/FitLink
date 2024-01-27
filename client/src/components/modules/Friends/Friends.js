@@ -8,13 +8,14 @@ import "./Friends.css";
 
 /**
  * @param {string} userId
+ * @param {() => {}} setNotificationOn
+ * @param {() => {}} setNotificationText
  */
 const Friends = (props) => {
   const [selected, setSelected] = useState("friends");
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);
   const [explore, setExplore] = useState([]);
-  const friendRequestsCount = 5; // Example count
 
   useEffect(() => {
     // Define the function to fetch data
@@ -22,27 +23,40 @@ const Friends = (props) => {
       try {
         const profileResponse = await get("/api/user/profile");
         const user = profileResponse; // Adjust based on how your API returns the response
-        console.log(user.friends.length);
+        console.log(user.friends);
 
         // Get friends profiles
         const friendsProfiles = await Promise.all(
           user.friends.map((friendId) =>
-            get("/api/user/info", { creator_id: friendId }).then((res) => res.data)
+            get("/api/user/info", { creator_id: friendId }).then((res) => {
+              // Assuming 'res' is the user object returned from the API
+              // Also, ensure that 'res.friends' is an array before calling 'includes'
+              return {
+                friend: res,
+                followBack:
+                  res.friends && Array.isArray(res.friends)
+                    ? res.friends.includes(user._id)
+                    : false,
+              };
+            })
           )
         );
+        console.log("HEREEE");
+        console.log(requests);
         setFriends(friendsProfiles);
 
         // Get requests profiles
         const requestsProfiles = await Promise.all(
           user.requests.map((requestId) =>
-            get("/api/user/info", { creator_id: requestId }).then((res) => res.data)
+            get("/api/user/info", { creator_id: requestId }).then((res) => res)
           )
         );
         setRequests(requestsProfiles);
 
         // Get explore profiles, excluding the user's friends
-        console.log(`USERS FRIENDS ${typeof user.friends}`);
-        const exploreResponse = await get("/api/users/explore", { ids: user.friends });
+        const exploreResponse = await get("/api/users/explore", {
+          ids: [...user.friends, ...user.requests],
+        });
         setExplore(exploreResponse);
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -54,14 +68,73 @@ const Friends = (props) => {
     fetchData();
   }, []); // Assuming `get` is a function that correctly makes a GET request and handles the query parameters.
 
+  const handleFollowClick = (userId, actionType) => {
+    // Perform the API call to follow/unfollow the user based on actionType
+    // For example, using a hypothetical 'followUser' API method
+    console.log(actionType);
+    if (actionType === "follow") {
+      post("/api/user/follow", { follow_id: userId }).then((userFollow) => {
+        setExplore(explore.filter((user) => user._id !== userId));
+        setRequests(requests.filter((user) => user._id !== userId));
+        get("/api/user/profile").then((user) => {
+          setFriends([
+            ...friends,
+            {
+              friend: userFollow,
+              followBack:
+                userFollow.friends && Array.isArray(userFollow.friends)
+                  ? userFollow.friends.includes(user._id)
+                  : false,
+            },
+          ]);
+        });
+        props.setNotificationOn(true);
+        props.setNotificationText(`Followed ${userFollow.name}`);
+      });
+    } else if (actionType === "unfollow") {
+      post("/api/user/unfollow", { follow_id: userId }).then((userUnfollow) => {
+        if (userUnfollow.stillFollows) {
+          setRequests([...requests, userUnfollow.user]);
+        } else {
+          setExplore([...explore, userUnfollow.user]);
+        }
+        setFriends(friends.filter((user) => user.friend._id !== userUnfollow.user._id));
+        props.setNotificationOn(true);
+        props.setNotificationText(`Unfollowed ${userUnfollow.user.name}`);
+      });
+    }
+  };
+
   const renderSection = () => {
     switch (selected) {
       case "friends":
-        return friends.map((friend) => <FriendSection key={friend.id} name={friend.name} />);
+        return friends.map((friend) => (
+          <FriendSection
+            key={friend._id}
+            friend={friend.friend}
+            followBack={friend.followBack}
+            followStatus={"following"}
+            onFollowClick={() => handleFollowClick(friend.friend._id, "unfollow")}
+          />
+        ));
       case "explore":
-        return explore.map((user) => <FriendSection key={user.id} name={user.name} />);
+        return explore.map((user) => (
+          <FriendSection
+            key={user._id}
+            friend={user}
+            followStatus={"follow"}
+            onFollowClick={() => handleFollowClick(user._id, "follow")}
+          />
+        ));
       case "requests":
-        return requests.map((request) => <FriendSection key={request.id} name={request.name} />);
+        return requests.map((request) => (
+          <FriendSection
+            key={request._id}
+            friend={request}
+            followStatus={"followBack"}
+            onFollowClick={() => handleFollowClick(request._id, "follow")}
+          />
+        ));
       default:
         return null;
     }
@@ -69,13 +142,11 @@ const Friends = (props) => {
 
   return (
     <div className="friends-container">
-      <div className="friends-title-container">
-        <div className="friends-title">Friends</div>
-      </div>
       <Menu
         selected={selected}
         setSelected={setSelected}
-        friendRequestsCount={friendRequestsCount}
+        friendRequestsCount={requests.length}
+        friendsCount={friends.length}
       />
       {renderSection()}
     </div>

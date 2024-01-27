@@ -19,7 +19,6 @@ const Exercise = require("./models/exercise");
 const Workout = require("./models/workout");
 const Like = require("./models/like");
 const Star = require("./models/star");
-
 // import authentication library
 const auth = require("./auth");
 
@@ -272,7 +271,6 @@ router.post("/image/upload", async (req, res) => {
 });
 
 router.get("/user/info", (req, res) => {
-  console.log("HERE");
   User.findById(req.query.creator_id).then((user) => res.send(user));
 });
 
@@ -295,19 +293,117 @@ router.post("/user/update", (req, res) => {
 });
 
 router.get("/users/explore", (req, res) => {
-  let idsToExclude = [req.user._id];
+  let idsToExclude = [];
 
-  // Check if 'ids' query parameter exists and is not an empty string
-  if (req.query.ids && req.query.ids.length > 0) {
-    // Assuming 'ids' are sent as a comma-separated string
-    idsToExclude = req.query.ids.split(",");
+  // Convert req.user._id to a string and add it to idsToExclude
+  if (req.user && req.user._id) {
+    idsToExclude.push(req.user._id.toString());
+  }
+
+  // Check if 'ids' query parameter exists
+  if (req.query.ids) {
+    if (Array.isArray(req.query.ids)) {
+      // If 'ids' is already an array, add them to idsToExclude
+      idsToExclude = idsToExclude.concat(req.query.ids.map((id) => id.toString()));
+    } else if (typeof req.query.ids === "string" && req.query.ids.length > 0) {
+      // If 'ids' is a string, split it into an array and add them to idsToExclude
+      idsToExclude = idsToExclude.concat(req.query.ids.split(","));
+    }
   }
 
   User.find({ _id: { $nin: idsToExclude } })
     .limit(10)
     .then((users) => {
-      console.log(users);
       res.json(users);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+router.post("/user/unfollow", (req, res) => {
+  // Assuming req.user._id and req.body.follow_id are already validated and exist
+  const userId = req.user._id;
+  const unfollowId = req.body.follow_id;
+
+  // Find the user who is being unfollowed
+  User.findById(unfollowId)
+    .then((userUnfollow) => {
+      // Find the user who is unfollowing
+      User.findById(userId)
+        .then((user) => {
+          // Check if the user is in the unfollow user's friends list
+          let stillFollows = false;
+          if (userUnfollow.friends.includes(userId) && !userUnfollow.requests.includes(userId)) {
+            user.requests.push(userUnfollow._id);
+            stillFollows = true;
+          }
+
+          //if unfollowing person who has you in their requests (they don't follow you back)
+          if (userUnfollow.requests.includes(userId)) {
+            userUnfollow.requests = userUnfollow.requests.filter((request) => request !== userId);
+          }
+
+          user.friends = user.friends.filter((friend) => friend !== unfollowId.toString());
+
+          // Save both user documents
+          Promise.all([userUnfollow.save(), user.save()])
+            .then(() => {
+              res.send({ user: userUnfollow, stillFollows: stillFollows });
+            })
+            .catch((err) => {
+              res.status(500).send(err);
+            });
+        })
+        .catch((err) => {
+          res.status(500).send(err);
+        });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+router.post("/user/follow", (req, res) => {
+  // Assuming req.user._id and req.body.follow_id are validated and exist
+  const userId = req.user._id;
+  const followId = req.body.follow_id;
+
+  // Find the user to follow
+  User.findById(followId)
+    .then((userToFollow) => {
+      // Find the user who is following
+      User.findById(userId)
+        .then((user) => {
+          // Check if the user is already in the other user's friends list
+          if (userToFollow.friends.includes(userId)) {
+            // this should be in the user's "request"
+            console.log(user.requests);
+            console.log(userToFollow._id);
+            user.friends.push(userToFollow._id);
+            user.requests = user.requests.filter(
+              (requestId) => requestId !== userToFollow._id.toString()
+            );
+          } else {
+            // this should be in user's explore
+            if (!userToFollow.requests.includes(userId)) {
+              userToFollow.requests.push(userId);
+            }
+            user.friends.push(userToFollow._id);
+          }
+
+          // Save both user documents
+          Promise.all([userToFollow.save(), user.save()])
+            .then(() => {
+              res.send(userToFollow);
+            })
+            .catch((err) => {
+              res.status(500).send(err);
+            });
+        })
+        .catch((err) => {
+          res.status(500).send(err);
+        });
     })
     .catch((err) => {
       res.status(500).send(err);
