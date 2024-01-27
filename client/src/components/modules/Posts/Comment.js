@@ -20,9 +20,11 @@ const Comment = (props) => {
   //need to use map or something to render all of the squares
 
   useEffect(() => {
-    get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
-      setProfilePicture(user.profile_picture);
-    });
+    if (props.creator_id) {
+      get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
+        setProfilePicture(user.profile_picture);
+      });
+    }
   }, [props.changedProfilePicture]);
 
   function timeSince(dateString) {

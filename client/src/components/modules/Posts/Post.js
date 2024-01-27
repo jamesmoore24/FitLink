@@ -60,7 +60,6 @@ const Post = (props) => {
 
     get("/api/star/", { userId: props.userId, workoutId: props.workout_id }).then((starVal) => {
       //if an object is returned then we know that we have a like on a post
-      console.log(props.workout_id);
       if (starVal.length) {
         setIsStarred(true);
       } else {
@@ -76,9 +75,13 @@ const Post = (props) => {
       setExercises(exercises);
     });
 
-    get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
-      setProfilePicture(user.profile_picture);
-    });
+    if (props.creator_id) {
+      get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
+        console.log(`HERE ${user.profile_picture}`);
+        console.log(props.creator_id);
+        setProfilePicture(user.profile_picture);
+      });
+    }
   }, [props.changedProfilePicture]);
 
   return (
@@ -136,7 +139,7 @@ const Post = (props) => {
               key={`SingleComment_${comment._id}`}
               _id={comment._id}
               creator_name={comment.creator_name}
-              creatorId={comment.creatorId}
+              creator_id={comment.creator_id}
               content={comment.content}
               timestamp={comment.timestamp}
               changedProfilePicture={props.changedProfilePicture}

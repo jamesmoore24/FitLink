@@ -38,8 +38,7 @@ const Profile = (props) => {
     });
 
     //get("/api/nukedb").then((data) => console.log("Database objects deleted"));
-    get("/api/user/info").then((user) => {
-      console.log("HERE");
+    get("/api/user/profile").then((user) => {
       setName(user.name);
       setBio(user.bio);
       setProfilePicture(user.profile_picture);

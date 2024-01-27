@@ -86,8 +86,12 @@ const PostTop = (props) => {
           />
           {props.creator_id == props.userId && (
             <>
-              <img
-                src={trashCanSrc}
+              <div
+                style={{
+                  backgroundImage: `url(${trashCanSrc})`,
+                  backgroundSize: "cover", // Ensures the background image covers the whole div
+                  backgroundPosition: "center", // Centers the background image
+                }}
                 className="postTop-star"
                 onMouseEnter={() => {
                   setTrashCanSrc(TrashCanHalfFilled);
@@ -96,12 +100,20 @@ const PostTop = (props) => {
                 onClick={() => {
                   props.deleteWorkout(props.workout_id);
                 }}
-              />
-              <img
-                src={props.visibility ? Visible : NotVisible}
+              >
+                <div className="postTop-star-label">Delete workout</div>
+              </div>
+              <div
+                style={{
+                  backgroundImage: `url(${props.visibility ? Visible : NotVisible})`,
+                  backgroundSize: "cover", // Ensures the background image covers the whole div
+                  backgroundPosition: "center", // Centers the background image
+                }}
                 className="postTop-star"
                 onClick={toggleVisibility}
-              />
+              >
+                <div className="postTop-star-label">Toggle visiblity</div>
+              </div>
             </>
           )}
         </div>

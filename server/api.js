@@ -282,6 +282,11 @@ router.post("/image/upload", async (req, res) => {
 });
 
 router.get("/user/info", (req, res) => {
+  console.log("HERE");
+  User.findById(req.query.creator_id).then((user) => res.send(user));
+});
+
+router.get("/user/profile", (req, res) => {
   User.findById(req.user._id).then((user) => res.send(user));
 });
 

@@ -64,10 +64,11 @@
 }
 
 .postTop-star {
+  position: relative;
   color: var(--primary);
   height: 1.5em;
   width: 1.5em;
-  margin-left: 5px;
+  margin-left: 10px;
   transition: transform 0.3s;
 }
 
@@ -78,4 +79,30 @@
 
 .postTop-star:active {
   transform: scale(0.9); /* Scale down on click */
+}
+
+.postTop-star-label {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-width: 3em;
+  max-width: 3em;
+  font-size: var(--s);
+  color: black;
+  bottom: 110%; /* Position the label above the box */
+  left: 50%; /* Center the label horizontally */
+  transform: translateX(-50%); /* Adjust for the label's width to center it */
+  visibility: hidden;
+  background-color: lightgrey;
+  border-radius: 2px;
+  padding: 5px;
+  z-index: 1;
+}
+
+.postTop-star:hover .postTop-star-label {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s; /* Remove delay when hiding */
 }
