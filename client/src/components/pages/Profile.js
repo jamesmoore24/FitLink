@@ -108,6 +108,7 @@ const Profile = (props) => {
       // Send this string to your API endpoint and await its response
       const user = await post("/api/image/upload", { file: imageData });
       setProfilePicture(user.profile_picture);
+      console.log(user.profilePicture);
       setProfilePictureError("");
       setChangedProfilePicture(!changedProfilePicture);
       setIsLoading(false);

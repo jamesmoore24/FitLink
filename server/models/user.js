@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
     default: [],
   },
   googleid: String,
-  profile_picture: { type: String, default: "../../public/example_profile.jpg" },
+  profile_picture: { type: String, default: "https://i.imgur.com/Wfv7adq.png" },
 });
 
 // compile model from schema
