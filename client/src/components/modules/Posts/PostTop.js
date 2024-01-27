@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import "./PostTop.css";
 import { post } from "../../../utilities";
 
-import ProfilePicture from "../../../public/example_profile.jpg";
+import Visible from "../../../public/visibile.png";
+import NotVisible from "../../../public/not_visible.png";
 import Star from "../../../public/star.png";
 import StarFilled from "../../../public/star_filled.png";
 import TrashCan from "../../../public/trashcan.png";
@@ -17,11 +18,14 @@ import TrashCanHalfFilled from "../../../public/trashcan_half_filled.png";
  * @param {string} creator_name
  * @param {string} creator_id
  * @param {string} creator_pfp
+ * @param {boolean} posted
  * @param {string} userId
  * @param {Date} timestamp
  * @param {Boolean} isStarred
  * @param {(PostObject) => {}} setIsStarred
  * @param {() => {}} deleteWorkout
+ * @param {boolean} visibility
+ * @param {() => {}} setVisibility
  */
 const PostTop = (props) => {
   const [trashCanSrc, setTrashCanSrc] = useState(TrashCan);
@@ -44,6 +48,13 @@ const PostTop = (props) => {
         console.log("Star logged.");
       }
     );
+  };
+
+  const toggleVisibility = () => {
+    post("/api/workout/change-visibility", { id: props.workout_id }).then((post) => {
+      console.log("Visibility changed");
+      props.setVisibility(!props.visibility);
+    });
   };
 
   return (
@@ -74,17 +85,24 @@ const PostTop = (props) => {
             }}
           />
           {props.creator_id == props.userId && (
-            <img
-              src={trashCanSrc}
-              className="postTop-star"
-              onMouseEnter={() => {
-                setTrashCanSrc(TrashCanHalfFilled);
-              }}
-              onMouseLeave={() => setTrashCanSrc(TrashCan)}
-              onClick={() => {
-                props.deleteWorkout(props.workout_id);
-              }}
-            />
+            <>
+              <img
+                src={trashCanSrc}
+                className="postTop-star"
+                onMouseEnter={() => {
+                  setTrashCanSrc(TrashCanHalfFilled);
+                }}
+                onMouseLeave={() => setTrashCanSrc(TrashCan)}
+                onClick={() => {
+                  props.deleteWorkout(props.workout_id);
+                }}
+              />
+              <img
+                src={props.visibility ? Visible : NotVisible}
+                className="postTop-star"
+                onClick={toggleVisibility}
+              />
+            </>
           )}
         </div>
 

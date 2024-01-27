@@ -46,6 +46,7 @@ const Feed = (props) => {
         workout_id={workoutObj._id}
         creator_name={workoutObj.creator_name}
         creator_id={workoutObj.creator_id}
+        posted={workoutObj.posted}
         timestamp={workoutObj.timestamp}
         userId={props.userId}
         starred={workoutObj.starred}

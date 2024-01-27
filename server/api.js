@@ -103,6 +103,14 @@ router.post("/workout/delete", (req, res) => {
   );
 });
 
+router.post("/workout/change-visibility", (req, res) => {
+  console.log("HERE");
+  Workout.findById(req.body.id).then((workout) => {
+    workout.posted = !workout.posted;
+    workout.save().then((workout) => res.send(workout));
+  });
+});
+
 router.get("/workouts/feed", (req, res) => {
   Workout.find({ posted: true }).then((workouts) => res.send(workouts));
 });

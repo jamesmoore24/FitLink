@@ -15,6 +15,7 @@ import FistFilled from "../../../public/fist_filled.png";
  * @param {string} workout_id
  * @param {string} creator_id id of user who made the workout object
  * @param {string} creator_name
+ * @param {boolean} posted
  * @param {Date} timestamp
  * @param {boolean} starred
  * @param {number} likes
@@ -29,6 +30,7 @@ const Post = (props) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isStarred, setIsStarred] = useState(false);
   const [exercises, setExercises] = useState([]);
+  const [visibility, setVisibility] = useState(false);
 
   const addNewComment = (commentObj) => {
     if (commentText.length > 0) {
@@ -45,6 +47,8 @@ const Post = (props) => {
   };
 
   useEffect(() => {
+    setVisibility(props.posted);
+
     get("/api/like/", { userId: props.userId, workoutId: props.workout_id }).then((likeVal) => {
       //if an object is returned then we know that we have a like on a post
       if (likeVal.length) {
@@ -84,11 +88,14 @@ const Post = (props) => {
         creator_id={props.creator_id}
         creator_pfp={profilePicture}
         userId={props.userId}
+        posted={props.posted}
         workout_id={props.workout_id}
         timestamp={props.timestamp}
         isStarred={isStarred}
         setIsStarred={setIsStarred}
         deleteWorkout={props.deleteWorkout}
+        visibility={visibility}
+        setVisibility={setVisibility}
       />
 
       <div className="post-exercise-container">
