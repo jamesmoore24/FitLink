@@ -42,7 +42,7 @@ const App = () => {
     if (notificationOn) {
       timer = setTimeout(() => {
         setNotificationOn(false);
-      }, 2500); // 2500 milliseconds = 2.5 seconds
+      }, 2000); // 2500 milliseconds = 2.5 seconds
     }
 
     return () => clearTimeout(timer); // Cleanup the timer

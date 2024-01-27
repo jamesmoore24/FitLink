@@ -12,6 +12,8 @@ import "./NewExercise.css";
  *
  * Proptypes
  * @param {string} selectedExerciseId
+ * @param {string} setNotificationOn
+ * @param {string} setNotificationText
  * @param {[ExerciseObject]} exercises
  * @param {() => {}} deleteSet
  * @param {() => {}} setExercises
@@ -98,6 +100,8 @@ const NewExercise = (props) => {
         setWeight("");
         setSetNumber(sets.length);
       }
+      props.setNotificationOn(true);
+      props.setNotificationText("Exercise saved!");
       setErrorText("");
     } else if (!name) {
       setErrorText("Please enter the name of the exercise.");

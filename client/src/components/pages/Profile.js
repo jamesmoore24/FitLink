@@ -55,6 +55,8 @@ const Profile = (props) => {
   const deleteWorkout = (workout_id) => {
     post("/api/workout/delete", { workout_id: workout_id }).then((workout) => {
       setWorkouts(workouts.filter((wkt) => wkt._id !== workout_id));
+      props.setNotificationOn(true);
+      props.setNotificationText("Workout deleted!");
     });
   };
 

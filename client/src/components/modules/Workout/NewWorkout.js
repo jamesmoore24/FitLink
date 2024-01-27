@@ -9,6 +9,9 @@ import "./NewWorkout.css";
 
 /**
  * @param {string} userId
+ * @param {string} setNotificationOn
+ * @param {string} setNotificationText
+ * @param {string} changeSet
  */
 const NewWorkout = (props) => {
   let navigate = useNavigate();
@@ -137,6 +140,8 @@ const NewWorkout = (props) => {
         exercises={exercises}
         deleteExercise={deleteExercise}
         setExercises={setExercises}
+        setNotificationOn={props.setNotificationOn}
+        setNotificationText={props.setNotificationText}
       />
     </>
   );
