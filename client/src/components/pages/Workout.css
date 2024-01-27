@@ -8,7 +8,9 @@
   right: 0;
   bottom: 0;
   width: 100%;
-  height: calc(100vh - 3em);
+  padding-top: 48px;
+  padding-bottom: 48px;
+  max-height: calc(100vh - 3em);
   overflow: auto;
   background-color: var(--grey);
   z-index: -1;

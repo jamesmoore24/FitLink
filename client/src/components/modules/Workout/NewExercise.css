@@ -3,16 +3,13 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-top: 48px;
   margin-left: var(--l);
-  padding: 0.5em;
-  min-height: 80vh;
-  max-height: 80vh;
+  box-sizing: border-box;
+  height: 100%;
   min-width: 40vw;
   max-width: 40vw;
-  box-sizing: border-box;
   border-radius: 20px;
-  padding: 20px;
+  padding: var(--l);
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
