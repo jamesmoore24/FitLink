@@ -238,16 +238,6 @@ router.get("/nukedb", (req, res) => {
   Workout.deleteMany({}).then((comments) => {});
 });
 
-router.post("/user/update", (req, res) => {
-  console.log(req.user._id);
-  User.findById(req.user._id).then((user) => {
-    user.name = req.body.name;
-    user.bio = req.body.bio;
-    console.log(user);
-    user.save().then((user) => res.send(user));
-  });
-});
-
 router.post("/image/upload", async (req, res) => {
   fetch("https://api.imgur.com/3/image", {
     method: "POST",
@@ -292,6 +282,36 @@ router.get("/user/profile", (req, res) => {
 
 router.get("/user/profile-picture", (req, res) => {
   User.findById(req.query.creator_id).then((user) => res.send(user));
+});
+
+router.post("/user/update", (req, res) => {
+  console.log(req.user._id);
+  User.findById(req.user._id).then((user) => {
+    user.name = req.body.name;
+    user.bio = req.body.bio;
+    console.log(user);
+    user.save().then((user) => res.send(user));
+  });
+});
+
+router.get("/users/explore", (req, res) => {
+  let idsToExclude = [req.user._id];
+
+  // Check if 'ids' query parameter exists and is not an empty string
+  if (req.query.ids && req.query.ids.length > 0) {
+    // Assuming 'ids' are sent as a comma-separated string
+    idsToExclude = req.query.ids.split(",");
+  }
+
+  User.find({ _id: { $nin: idsToExclude } })
+    .limit(10)
+    .then((users) => {
+      console.log(users);
+      res.json(users);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
 });
 
 // anything else falls to this "not found" case

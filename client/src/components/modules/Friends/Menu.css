@@ -1,0 +1,47 @@
+.friends-menu {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f0f0f0;
+  padding: 5px;
+  font-size: var(--m);
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.friends-menu-item {
+  cursor: pointer;
+  padding: 5px;
+  color: grey;
+  transition: color 0.3s;
+  position: relative; /* Added for notification positioning */
+}
+
+.friends-menu-item.active {
+  color: black;
+}
+
+.friends-menu-underline {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: black;
+  transition: left 0.3s, width 0.3s;
+}
+
+.friends-menu-notification {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Make sure width and height are equal */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75em;
+  position: absolute;
+  top: 50%; /* Center vertically relative to the parent */
+  left: 100%; /* Position to the right end of the parent */
+  transform: translate(0, -50%); /* Adjust vertically to center with the parent's text */
+  box-sizing: border-box;
+}

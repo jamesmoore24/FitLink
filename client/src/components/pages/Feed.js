@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Post from "../modules/Posts/Post";
 import ActivityTracker from "../modules/Profile/ActivityTracker";
+import Friends from "../modules/Friends/Friends";
 import { get, post } from "../../utilities";
 
 import "../../utilities.css";
@@ -20,13 +21,6 @@ const Feed = (props) => {
     get("/api/workouts/feed").then((workoutObjs) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
       setWorkouts(reversedWorkoutObjs);
-    });
-    get("/api/whoami").then((user) => {
-      if (user._id) {
-        // they are registed in the database, and currently logged in.
-        console.log(`LOL HACKY ${user._id}`);
-        props.setUserId(user._id);
-      }
     });
     console.log(`SHOULD BE ME ${props.userId}`);
   }, []);
@@ -63,7 +57,7 @@ const Feed = (props) => {
     <div className="feed-background-container">
       <div className="feed-posts-container">{workoutsList}</div>
       <div className="feed-activityFriends-container">
-        <ActivityTracker userId={props.userId} />
+        <Friends />
       </div>
     </div>
   );

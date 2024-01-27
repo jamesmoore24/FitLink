@@ -1,0 +1,40 @@
+.friend-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 50px; /* Adjust based on actual size */
+  height: 50px; /* Adjust based on actual size */
+}
+
+.friend-info {
+  flex-grow: 1;
+  padding-left: 10px; /* Space between avatar and text */
+}
+
+.friend-name {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.friend-last-workout {
+  display: block; /* To ensure it's on a new line */
+  color: grey;
+  font-size: 0.9em;
+}
+
+.friend-socials {
+  /* Adjust as needed */
+}
+
+.social-icon {
+  font-size: 1.5em; /* Adjust based on actual icons */
+  margin-left: 10px; /* Space between icons */
+}
