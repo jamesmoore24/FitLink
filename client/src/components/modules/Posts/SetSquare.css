@@ -40,8 +40,8 @@
   justify-content: center;
   margin-right: 5px;
   box-sizing: border-box;
-  height: 5em;
-  width: 5em;
+  height: 3em;
+  width: 3em;
   background-color: var(--primary);
   border-radius: 20px;
   transition: 0.3s transform, 0.3s background-color;
@@ -84,8 +84,8 @@
   justify-content: center;
   margin-right: 5px;
   box-sizing: border-box;
-  height: 5em;
-  width: 5em;
+  height: 3em;
+  width: 3em;
   background-color: white;
   border: 2px var(--primary) solid;
   border-radius: 20px;
