@@ -134,47 +134,44 @@ const Profile = (props) => {
     <div className="profile-background-container">
       <div className="profile-left-container">
         <div className="profile-personalInfo-container">
-          {if (userId === props.userId) {
-            return (
-              isLoading ? (
-                <div className="profile-editSpinner-container" />
-              ) : (
-                <div
-                  className="profile-edit-container"
-                  onClick={() => {
-                    if (isEditing) {
-                      if (selectedFile && changedSelectedFile) {
-                        setChangedSelectedFile(false);
-                        uploadImage()
-                          .then(() => {
-                            // Code to run if uploadImage succeeds
-                            updateUser();
-                            setIsEditing(!isEditing);
-                            props.setNotificationOn(true);
-                            props.setNotificationText("Profile saved!");
-                          })
-                          .catch((error) => {
-                            console.log("ERROR UPLOADING");
-                          });
-                      } else {
-                        updateUser();
-                        props.setNotificationOn(true);
-                        props.setNotificationText("Profile saved!");
-                        setIsEditing(!isEditing);
-                      }
+          {userId === props.userId ? (
+            isLoading ? (
+              <div className="profile-editSpinner-container" />
+            ) : (
+              <div
+                className="profile-edit-container"
+                onClick={() => {
+                  if (isEditing) {
+                    if (selectedFile && changedSelectedFile) {
+                      setChangedSelectedFile(false);
+                      uploadImage()
+                        .then(() => {
+                          // Code to run if uploadImage succeeds
+                          updateUser();
+                          setIsEditing(!isEditing);
+                          props.setNotificationOn(true);
+                          props.setNotificationText("Profile saved!");
+                        })
+                        .catch((error) => {
+                          console.log("ERROR UPLOADING");
+                        });
                     } else {
+                      updateUser();
+                      props.setNotificationOn(true);
+                      props.setNotificationText("Profile saved!");
                       setIsEditing(!isEditing);
                     }
-                  }}
-                >
-                  {isEditing ? "Save" : "Edit"}
-                </div>
-              )
-            );
-          } else {
-            // Render nothing or alternative content
-            return null;
-          }}
+                  } else {
+                    setIsEditing(!isEditing);
+                  }
+                }}
+              >
+                {isEditing ? "Save" : "Edit"}
+              </div>
+            )
+          ) : (
+            <></>
+          )}
           <div className="profile-pfp-container">
             <div
               className="profile-pfp"
