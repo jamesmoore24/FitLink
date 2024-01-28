@@ -8,7 +8,6 @@
 */
 
 const express = require("express");
-const multer = require("multer");
 
 // import models so we can interact with the database
 const User = require("./models/user");
@@ -33,8 +32,7 @@ router.get("/whoami", (req, res) => {
     // not logged in
     return res.send({});
   }
-  console.log(req.user);
-  res.send(req.user);
+  User.findById(req.user._id).then((user) => res.send(user));
 });
 
 router.post("/initsocket", (req, res) => {
@@ -270,11 +268,15 @@ router.post("/image/upload", async (req, res) => {
 });
 
 router.get("/user/info", (req, res) => {
-  User.findById(req.query.creator_id).then((user) => res.send(user));
+  User.findById(req.query.creator_id).then((user) => {
+    res.send(user);
+    console.log(user);
+  });
 });
 
 router.get("/user/profile/:userId", (req, res) => {
   const userId = req.params.userId;
+  console.log(`USER PARAMS ${req.params.userId}`);
   User.findById(userId).then((user) => res.send(user));
 });
 

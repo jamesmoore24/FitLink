@@ -24,7 +24,6 @@ const Feed = (props) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
       setWorkouts(reversedWorkoutObjs);
     });
-    console.log(`SHOULD BE ME ${props.userId}`);
   }, []);
 
   const deleteWorkout = (workout_id) => {

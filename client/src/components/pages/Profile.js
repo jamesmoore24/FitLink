@@ -33,7 +33,6 @@ const Profile = (props) => {
   useEffect(() => {
     get(`/api/workouts/profile/${userId}`).then((workoutObjs) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
-      console.log(workoutObjs);
       setWorkouts(reversedWorkoutObjs);
     });
 

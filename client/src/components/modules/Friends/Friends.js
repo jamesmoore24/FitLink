@@ -23,14 +23,15 @@ const Friends = (props) => {
       try {
         const profileResponse = await get("/api/whoami");
         const user = profileResponse; // Adjust based on how your API returns the response
-        console.log(user.friends);
 
         // Get friends profiles
+        console.log(user.friends);
         const friendsProfiles = await Promise.all(
           user.friends.map((friendId) =>
             get("/api/user/info", { creator_id: friendId }).then((res) => {
               // Assuming 'res' is the user object returned from the API
               // Also, ensure that 'res.friends' is an array before calling 'includes'
+              console.log(`Here ${res}`);
               return {
                 friend: res,
                 followBack:
@@ -41,8 +42,6 @@ const Friends = (props) => {
             })
           )
         );
-        console.log("HEREEE");
-        console.log(requests);
         setFriends(friendsProfiles);
 
         // Get requests profiles

@@ -9,8 +9,6 @@ const FriendSection = ({ friend, followBack, followStatus, onFollowClick }) => {
   let followBackText = "";
   const navigate = useNavigate();
 
-  console.log(followBack);
-
   switch (followStatus) {
     case "follow":
       buttonText = "Follow";
@@ -31,14 +29,15 @@ const FriendSection = ({ friend, followBack, followStatus, onFollowClick }) => {
   }
 
   return (
-    <div
-      className="friend-section"
-      onClick={() => {
-        navigate(`/profile/${friend._id}`);
-      }}
-    >
-      <img src={friend.profile_picture} alt="Avatar" className="avatar" />{" "}
-      {/* Replace 'avatar.jpg' with the actual image path */}
+    <div className="friend-section">
+      <img
+        src={friend.profile_picture}
+        alt="Avatar"
+        className="avatar"
+        onClick={() => {
+          navigate(`/profile/${friend._id}`);
+        }}
+      />{" "}
       <div className="friend-info">
         <span className="friend-name">{friend.name}</span>
       </div>

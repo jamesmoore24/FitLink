@@ -13,13 +13,16 @@
 
 .friend-section:hover {
   background-color: var(--grey);
-  cursor: pointer;
 }
 
 .avatar {
   border-radius: 50%;
   width: 50px; /* Adjust based on actual size */
   height: 50px; /* Adjust based on actual size */
+}
+
+.avatar:hover {
+  cursor: pointer;
 }
 
 .friend-info {
