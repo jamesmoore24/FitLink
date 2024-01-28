@@ -9,8 +9,6 @@
 
 const express = require("express");
 const multer = require("multer");
-const axios = require("axios");
-const upload = multer({ dest: "uploads/" });
 
 // import models so we can interact with the database
 const User = require("./models/user");
@@ -35,8 +33,8 @@ router.get("/whoami", (req, res) => {
     // not logged in
     return res.send({});
   }
-
-  res.send(req.user);
+  console.log(`HERE ${req.user._id}`);
+  res.send({ _id: req.user._id });
 });
 
 router.post("/initsocket", (req, res) => {

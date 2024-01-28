@@ -35,16 +35,17 @@ const Landing = (props) => {
   const duration = 3000;
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentWordIndex((prevIndex) => (prevIndex === words.length - 1 ? 0 : prevIndex + 1));
-    }, duration);
-
     get("/api/whoami").then((user) => {
-      console.log("HERE");
-      if (user) {
+      if (user && user._id) {
         navigate("/feed");
       }
     });
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentWordIndex((prevIndex) => (prevIndex === words.length - 1 ? 0 : prevIndex + 1));
+    }, duration);
 
     return () => clearInterval(intervalId);
   }, [words, duration]);
