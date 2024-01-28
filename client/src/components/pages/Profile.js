@@ -42,7 +42,7 @@ const Profile = (props) => {
       setBio(user.bio);
       setProfilePicture(user.profile_picture);
     });
-  }, []);
+  }, [userId]);
 
   const updateUser = () => {
     post("/api/user/update", { name: name, bio: bio }).then((user) => {
