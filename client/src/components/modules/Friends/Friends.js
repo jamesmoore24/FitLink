@@ -168,6 +168,7 @@ const Friends = (props) => {
         setSelected={setSelected}
         friendRequestsCount={requests.length}
         friendsCount={friends.length}
+        exploreCount={explore.length}
       />
       <div className="friends-textInput-container">
         <img src={Search} className="friends-searchImage" />
