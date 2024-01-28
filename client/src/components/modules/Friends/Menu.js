@@ -25,7 +25,7 @@ const FriendsMenu = ({ selected, setSelected, friendRequestsCount, friendsCount 
         className={`friends-menu-item ${selected === "requests" ? "active" : ""}`}
         onClick={() => setSelected("requests")}
       >
-        Requests
+        Follow Back
         {friendRequestsCount > 0 && (
           <span className="friends-menu-notification">{friendRequestsCount}</span>
         )}

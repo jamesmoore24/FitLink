@@ -59,22 +59,30 @@ const NewWorkout = (props) => {
   };
 
   const saveWorkout = () => {
-    if (exercises.every((obj) => obj.name && obj.name.trim().length > 0)) {
+    if (exercises.every((obj) => obj.name && obj.name.trim().length > 0) && exercises.length > 0) {
       post("/api/workout/save", { id: currentWorkoutId }).then(() => {
         navigate(`/profile/${props.userId}`);
         setErrorText("");
+        props.setNotificationOn(true);
+        props.setNotificationText("Workout saved to drafts!");
       });
+    } else if (exercises.length == 0) {
+      setErrorText("You must save an exercise first.");
     } else {
       setErrorText("You must name your exercises first.");
     }
   };
 
   const postWorkout = () => {
-    if (exercises.every((obj) => obj.name && obj.name.trim().length > 0)) {
+    if (exercises.every((obj) => obj.name && obj.name.trim().length > 0) && exercises.length > 0) {
       post("/api/workout/post", { id: currentWorkoutId }).then(() => {
         navigate("/feed");
         setErrorText("");
+        props.setNotificationOn(true);
+        props.setNotificationText("Workout posted!");
       });
+    } else if (exercises.length == 0) {
+      setErrorText("You must save an exercise first.");
     } else {
       setErrorText("You must name your exercises first.");
     }
@@ -116,8 +124,6 @@ const NewWorkout = (props) => {
               className="newWorkout-postBoxButton"
               onClick={() => {
                 saveWorkout();
-                props.setNotificationOn(true);
-                props.setNotificationText("Workout saved to drafts!");
               }}
             >
               Save to Drafts
@@ -126,8 +132,6 @@ const NewWorkout = (props) => {
               className="newWorkout-postBoxButton"
               onClick={() => {
                 postWorkout();
-                props.setNotificationOn(true);
-                props.setNotificationText("Workout posted!");
               }}
             >
               Post Workout

@@ -21,3 +21,40 @@
   font-weight: 600;
   font-size: var(--l);
 }
+
+.friends-textInput-container {
+  display: flex;
+  align-items: center;
+  background-color: var(--grey);
+  padding: 5px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.friends-textInput-container:hover,
+.friends-textInput-container:focus-within {
+  background-color: var(--medgrey);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.friends-textInput {
+  background-color: transparent;
+  font-size: var(--m);
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  height: 100%;
+  width: 80%;
+  border-radius: 20px;
+}
+
+.friends-searchImage {
+  height: 1.5em;
+  width: 1.5em;
+}

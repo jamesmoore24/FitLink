@@ -3,6 +3,7 @@ import { get, post } from "../../../utilities";
 
 import Menu from "./Menu";
 import FriendSection from "./FriendSection";
+import Search from "../../../public/search.png";
 
 import "./Friends.css";
 
@@ -16,6 +17,7 @@ const Friends = (props) => {
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);
   const [explore, setExplore] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     // Define the function to fetch data
@@ -104,10 +106,30 @@ const Friends = (props) => {
     }
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value); // Convert to lowercase for case-insensitive comparison
+  };
+
+  // Filter function
+  const filterByName = (list, isFriend) => {
+    console.log(list, isFriend);
+    if (isFriend) {
+      return list.filter((user) =>
+        user.friend.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    return list.filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  };
+
+  // Filtered lists based on the search term
+  const filteredFriends = filterByName(friends, true);
+  const filteredRequests = filterByName(requests, false);
+  const filteredExplore = filterByName(explore, false);
+
   const renderSection = () => {
     switch (selected) {
       case "friends":
-        return friends.map((friend) => (
+        return filteredFriends.map((friend) => (
           <FriendSection
             key={friend._id}
             friend={friend.friend}
@@ -117,7 +139,7 @@ const Friends = (props) => {
           />
         ));
       case "explore":
-        return explore.map((user) => (
+        return filteredExplore.map((user) => (
           <FriendSection
             key={user._id}
             friend={user}
@@ -126,7 +148,7 @@ const Friends = (props) => {
           />
         ));
       case "requests":
-        return requests.map((request) => (
+        return filteredRequests.map((request) => (
           <FriendSection
             key={request._id}
             friend={request}
@@ -147,6 +169,15 @@ const Friends = (props) => {
         friendRequestsCount={requests.length}
         friendsCount={friends.length}
       />
+      <div className="friends-textInput-container">
+        <img src={Search} className="friends-searchImage" />
+        <input
+          className="friends-textInput"
+          placeholder="Enter a name..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </div>
       {renderSection()}
     </div>
   );

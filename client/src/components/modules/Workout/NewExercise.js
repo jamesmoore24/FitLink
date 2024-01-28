@@ -75,7 +75,8 @@ const NewExercise = (props) => {
       Number.isInteger(repsParsed) &&
       Number.isInteger(weightParsed) &&
       Number.isInteger(rpeParsed) &&
-      rpeParsed <= 10
+      rpeParsed <= 10 &&
+      name.length > 0
     ) {
       const newSet = { reps: repsParsed, weight: weightParsed, rpe: rpeParsed };
       setName(name);
