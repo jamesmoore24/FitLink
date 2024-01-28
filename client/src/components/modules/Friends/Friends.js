@@ -21,7 +21,7 @@ const Friends = (props) => {
     // Define the function to fetch data
     const fetchData = async () => {
       try {
-        const profileResponse = await get("/api/user/profile");
+        const profileResponse = await get("/api/whoami");
         const user = profileResponse; // Adjust based on how your API returns the response
         console.log(user.friends);
 
@@ -76,7 +76,7 @@ const Friends = (props) => {
       post("/api/user/follow", { follow_id: userId }).then((userFollow) => {
         setExplore(explore.filter((user) => user._id !== userId));
         setRequests(requests.filter((user) => user._id !== userId));
-        get("/api/user/profile").then((user) => {
+        get("/api/whoami").then((user) => {
           setFriends([
             ...friends,
             {

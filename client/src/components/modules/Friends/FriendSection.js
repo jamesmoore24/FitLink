@@ -1,10 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import "./FriendSection.css"; // Ensure to create this CSS file
 
 const FriendSection = ({ friend, followBack, followStatus, onFollowClick }) => {
   let buttonText = "";
   let buttonColor = "";
   let followBackText = "";
+  const navigate = useNavigate();
 
   console.log(followBack);
 
@@ -31,7 +34,7 @@ const FriendSection = ({ friend, followBack, followStatus, onFollowClick }) => {
     <div
       className="friend-section"
       onClick={() => {
-        console.log(followBackText);
+        navigate(`/profile/${friend._id}`);
       }}
     >
       <img src={friend.profile_picture} alt="Avatar" className="avatar" />{" "}

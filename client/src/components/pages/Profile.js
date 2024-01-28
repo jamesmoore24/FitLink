@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-
+import { useParams } from "react-router-dom";
 import { get, post } from "../../utilities";
 
 import Post from "../modules/Posts/Post";
 import ActivityTracker from "../modules/Profile/ActivityTracker";
-
-import ExampleProfile from "../../public/example_profile.jpg";
 
 import "../../utilities.css";
 import "./Profile.css";
@@ -14,7 +12,6 @@ import "./Profile.css";
  * Page component to display when at the "/profile" route
  *
  * Proptypes
- * @param {string} userId id of current logged in user
  * @param {() => {boolean}} setNotificationOn
  * @param {() => {string}} setNotificationText
  */
@@ -29,16 +26,19 @@ const Profile = (props) => {
   const [profilePictureError, setProfilePictureError] = useState("");
   const [changedProfilePicture, setChangedProfilePicture] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+  const { userId } = useParams(); // This extracts userId from the URL
 
   useEffect(() => {
-    get("/api/workouts/profile").then((workoutObjs) => {
+    get(`/api/workouts/profile/${userId}`).then((workoutObjs) => {
       let reversedWorkoutObjs = workoutObjs.reverse();
       console.log(workoutObjs);
       setWorkouts(reversedWorkoutObjs);
     });
 
     //get("/api/nukedb").then((data) => console.log("Database objects deleted"));
-    get("/api/user/profile").then((user) => {
+    get(`/api/user/profile/${userId}`).then((user) => {
       setName(user.name);
       setBio(user.bio);
       setProfilePicture(user.profile_picture);
@@ -134,40 +134,47 @@ const Profile = (props) => {
     <div className="profile-background-container">
       <div className="profile-left-container">
         <div className="profile-personalInfo-container">
-          {isLoading ? (
-            <div className="profile-editSpinner-container" />
-          ) : (
-            <div
-              className="profile-edit-container"
-              onClick={() => {
-                if (isEditing) {
-                  if (selectedFile && changedSelectedFile) {
-                    setChangedSelectedFile(false);
-                    uploadImage()
-                      .then(() => {
-                        // Code to run if uploadImage succeeds
+          {if (userId === props.userId) {
+            return (
+              isLoading ? (
+                <div className="profile-editSpinner-container" />
+              ) : (
+                <div
+                  className="profile-edit-container"
+                  onClick={() => {
+                    if (isEditing) {
+                      if (selectedFile && changedSelectedFile) {
+                        setChangedSelectedFile(false);
+                        uploadImage()
+                          .then(() => {
+                            // Code to run if uploadImage succeeds
+                            updateUser();
+                            setIsEditing(!isEditing);
+                            props.setNotificationOn(true);
+                            props.setNotificationText("Profile saved!");
+                          })
+                          .catch((error) => {
+                            console.log("ERROR UPLOADING");
+                          });
+                      } else {
                         updateUser();
-                        setIsEditing(!isEditing);
                         props.setNotificationOn(true);
                         props.setNotificationText("Profile saved!");
-                      })
-                      .catch((error) => {
-                        console.log("ERROR UPLOADING");
-                      });
-                  } else {
-                    updateUser();
-                    props.setNotificationOn(true);
-                    props.setNotificationText("Profile saved!");
-                    setIsEditing(!isEditing);
-                  }
-                } else {
-                  setIsEditing(!isEditing);
-                }
-              }}
-            >
-              {isEditing ? "Save" : "Edit"}
-            </div>
-          )}
+                        setIsEditing(!isEditing);
+                      }
+                    } else {
+                      setIsEditing(!isEditing);
+                    }
+                  }}
+                >
+                  {isEditing ? "Save" : "Edit"}
+                </div>
+              )
+            );
+          } else {
+            // Render nothing or alternative content
+            return null;
+          }}
           <div className="profile-pfp-container">
             <div
               className="profile-pfp"
@@ -229,8 +236,8 @@ const Profile = (props) => {
         </div>
       </div>
 
-      <div className="profile-right-container">
-        <ActivityTracker userId={props.userId} />
+      <div className="profile-right-container" onClick={() => console.log(props.userId)}>
+        {props.userId === userId && <ActivityTracker userId={props.userId} />}
         {workoutsList}
       </div>
     </div>

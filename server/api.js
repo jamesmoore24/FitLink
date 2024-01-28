@@ -33,8 +33,8 @@ router.get("/whoami", (req, res) => {
     // not logged in
     return res.send({});
   }
-  console.log(`HERE ${req.user._id}`);
-  res.send({ _id: req.user._id });
+  console.log(req.user);
+  res.send(req.user);
 });
 
 router.post("/initsocket", (req, res) => {
@@ -112,8 +112,9 @@ router.get("/workouts/feed", (req, res) => {
   Workout.find({ posted: true }).then((workouts) => res.send(workouts));
 });
 
-router.get("/workouts/profile", (req, res) => {
-  Workout.find({ creator_id: req.user._id, current: false }).then((workouts) => res.send(workouts));
+router.get("/workouts/profile/:userId", (req, res) => {
+  const userId = req.params.userId;
+  Workout.find({ creator_id: userId, current: false }).then((workouts) => res.send(workouts));
 });
 
 router.get("/exercises/year", (req, res) => {
@@ -272,12 +273,9 @@ router.get("/user/info", (req, res) => {
   User.findById(req.query.creator_id).then((user) => res.send(user));
 });
 
-router.get("/user/profile", (req, res) => {
-  User.findById(req.user._id).then((user) => res.send(user));
-});
-
-router.get("/user/profile-picture", (req, res) => {
-  User.findById(req.query.creator_id).then((user) => res.send(user));
+router.get("/user/profile/:userId", (req, res) => {
+  const userId = req.params.userId;
+  User.findById(userId).then((user) => res.send(user));
 });
 
 router.post("/user/update", (req, res) => {
