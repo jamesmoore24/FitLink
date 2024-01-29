@@ -6,8 +6,7 @@ import "./FitBot.css";
 import Profile from "../../../public/default_profile.png";
 import FitBot from "../../../public/fitbot.png";
 
-const ChatComponent = () => {
-  const [messages, setMessages] = useState([]);
+const ChatComponent = (props) => {
   const [postText, setPostText] = useState("");
   const [fadingOutIndex, setFadingOutIndex] = useState(null);
   const [user, setUser] = useState(undefined);
@@ -19,7 +18,7 @@ const ChatComponent = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]); // Runs whenever the messages array changes
+  }, [props.messages]); // Runs whenever the props.messages array changes
 
   const [suggestions, setSuggestions] = useState([
     "Hello",
@@ -28,16 +27,10 @@ const ChatComponent = () => {
     "Please type your question",
   ]);
 
-  useEffect(() => {
-    get("/api/whoami").then((user) => {
-      setUser(user);
-    });
-  }, []);
-
   const handleSend = () => {
     if (postText.trim()) {
       const newMessage = { id: Date.now(), text: postText, sender: "user" };
-      setMessages([...messages, newMessage]);
+      props.setMessages([...props.messages, newMessage]);
       sendMessageToBot(postText);
       setPostText("");
     }
@@ -46,13 +39,13 @@ const ChatComponent = () => {
   const ChatBubble = ({ text, isUser, imgSrc }) => (
     <div className={`chat-message ${isUser ? "user" : "bot"}`}>
       <img
-        src={isUser ? user.profile_picture : FitBot}
+        src={isUser ? props.user.profile_picture : FitBot}
         alt="Profile"
         className="chat-bubble-image"
       />
       <div className="chat-bubble-container">
         <div className={`chat-bubble-username ${isUser ? "user" : "bot"}`}>
-          {isUser ? user.name : "FitBot"}
+          {isUser ? props.user.name : "FitBot"}
         </div>
         <div className={`chat-bubble ${isUser ? "user" : "bot"}`}>{text}</div>
       </div>
@@ -72,7 +65,7 @@ const ChatComponent = () => {
 
     // Simulate bot response delay
     setTimeout(() => {
-      setMessages((prevMessages) => [...prevMessages, botResponse]);
+      props.setMessages((prevMessages) => [...prevMessages, botResponse]);
     }, 1000);
   };
 
@@ -95,12 +88,12 @@ const ChatComponent = () => {
   return (
     <>
       <div className="fitbot-chat-container">
-        {messages.length > 0 ? (
+        {props.messages.length > 0 ? (
           <div className="fitbot-chat-messages">
-            {messages.map((message) => (
+            {props.messages.map((message) => (
               <ChatBubble key={message.id} text={message.text} isUser={message.sender === "user"} />
             ))}
-            <div ref={messagesEndRef} /> {/* Invisible element at the end of the messages */}
+            <div ref={props.messagesEndRef} /> {/* Invisible element at the end of the messages */}
           </div>
         ) : (
           <div className="fitbot-chat-container">

@@ -21,6 +21,8 @@ import "./Friends.css";
 const Friends = (props) => {
   const [selected, setSelected] = useState("friends");
   const [friendSelected, setFriendSelected] = useState(false);
+  const [user, setUser] = useState(undefined);
+  const [messages, setMessages] = useState([]);
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);
   const [explore, setExplore] = useState([]);
@@ -32,9 +34,8 @@ const Friends = (props) => {
       try {
         const profileResponse = await get("/api/whoami");
         const user = profileResponse; // Adjust based on how your API returns the response
-
+        setUser(user);
         // Get friends profiles
-        console.log(user.friends);
         const friendsProfiles = await Promise.all(
           user.friends.map((friendId) =>
             get("/api/user/info", { creator_id: friendId }).then((res) => {
@@ -219,7 +220,7 @@ const Friends = (props) => {
           {renderFriendSection()}
         </>
       ) : (
-        <FitBot />
+        <FitBot messages={messages} setMessages={setMessages} user={user} />
       )}
     </div>
   );
