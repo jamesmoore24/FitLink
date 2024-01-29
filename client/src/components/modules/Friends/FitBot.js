@@ -6,10 +6,11 @@ import "./FitBot.css";
 import Profile from "../../../public/default_profile.png";
 import FitBot from "../../../public/fitbot.png";
 
+/**
+ */
 const ChatComponent = (props) => {
   const [postText, setPostText] = useState("");
   const [fadingOutIndex, setFadingOutIndex] = useState(null);
-  const [user, setUser] = useState(undefined);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -36,7 +37,30 @@ const ChatComponent = (props) => {
     }
   };
 
-  const ChatBubble = ({ text, isUser, imgSrc }) => (
+  const sendMessageToBot = (q) => {
+    // Placeholder for sending message to RAG-based AI
+    // This is where you would integrate with the AI service.
+    // For now, we'll just mock a bot response.
+    console.log(`Querying ${q}`);
+    post("/api/query", { query: q })
+      .then((res) => {
+        const botResponse = {
+          id: Date.now(),
+          text: res.queryresponse,
+          sender: "bot",
+          imgSrc: FitBot,
+        };
+        props.setMessages((prevMessages) => [...prevMessages, botResponse]);
+      })
+      .catch(() => {
+        setResponse("error during query. check your server logs!");
+        setTimeout(() => {
+          setResponse("");
+        }, 2000);
+      });
+  };
+
+  const ChatBubble = ({ text, isUser }) => (
     <div className={`chat-message ${isUser ? "user" : "bot"}`}>
       <img
         src={isUser ? props.user.profile_picture : FitBot}
@@ -51,23 +75,6 @@ const ChatComponent = (props) => {
       </div>
     </div>
   );
-
-  const sendMessageToBot = (userMessage) => {
-    // Placeholder for sending message to RAG-based AI
-    // This is where you would integrate with the AI service.
-    // For now, we'll just mock a bot response.
-    const botResponse = {
-      id: Date.now(),
-      text: "I'm a placeholder bot response.I'm a placeholder bot response.",
-      sender: "bot",
-      imgSrc: FitBot,
-    };
-
-    // Simulate bot response delay
-    setTimeout(() => {
-      props.setMessages((prevMessages) => [...prevMessages, botResponse]);
-    }, 1000);
-  };
 
   const removeSuggestion = (indexToRemove) => {
     // Mark the suggestion as fading out
@@ -119,6 +126,7 @@ const ChatComponent = (props) => {
           value={postText} // Bind the input value to the state variable
           onChange={(e) => {
             setPostText(e.target.value);
+            console.log(postText);
           }} // Handle input changes
         />
         <button className="fitbot-addCommentPost" onClick={handleSend}>

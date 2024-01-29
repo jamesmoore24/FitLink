@@ -27,60 +27,76 @@ const Friends = (props) => {
   const [requests, setRequests] = useState([]);
   const [explore, setExplore] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  //AI STUFF
+  const [corpus, setCorpus] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [runnable, setRunnable] = useState(false);
+  const [response, setResponse] = useState("");
 
   useEffect(() => {
-    // Define the function to fetch data
-    const fetchData = async () => {
-      try {
-        const profileResponse = await get("/api/whoami");
-        const user = profileResponse; // Adjust based on how your API returns the response
-        setUser(user);
-        // Get friends profiles
-        const friendsProfiles = await Promise.all(
-          user.friends.map((friendId) =>
-            get("/api/user/info", { creator_id: friendId }).then((res) => {
-              // Assuming 'res' is the user object returned from the API
-              // Also, ensure that 'res.friends' is an array before calling 'includes'
-              console.log(`Here ${res}`);
-              return {
-                friend: res,
-                followBack:
-                  res.friends && Array.isArray(res.friends)
-                    ? res.friends.includes(user._id)
-                    : false,
-              };
-            })
-          )
-        );
-        setFriends(friendsProfiles);
-
-        // Get requests profiles
-        const requestsProfiles = await Promise.all(
-          user.requests.map((requestId) =>
-            get("/api/user/info", { creator_id: requestId }).then((res) => res)
-          )
-        );
-        setRequests(requestsProfiles);
-
-        // Get explore profiles, excluding the user's friends
-        const exploreResponse = await get("/api/users/explore", {
-          ids: [...user.friends, ...user.requests],
-        });
-        setExplore(exploreResponse);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-        // Handle errors as needed
-      }
-    };
-
-    // Call the fetch function
     fetchData();
+    get("/api/isrunnable").then((res) => {
+      if (res.isrunnable) {
+        setRunnable(true);
+        get("/api/document").then((corpus) => {
+          setCorpus(corpus);
+        });
+      }
+      setLoading(false);
+    });
   }, []); // Assuming `get` is a function that correctly makes a GET request and handles the query parameters.
+
+  // Define the function to fetch data
+  const fetchData = async () => {
+    try {
+      const profileResponse = await get("/api/whoami");
+      const user = profileResponse; // Adjust based on how your API returns the response
+      setUser(user);
+      // Get friends profiles
+      const friendsProfiles = await Promise.all(
+        user.friends.map((friendId) =>
+          get("/api/user/info", { creator_id: friendId }).then((res) => {
+            // Assuming 'res' is the user object returned from the API
+            // Also, ensure that 'res.friends' is an array before calling 'includes'
+            return {
+              friend: res,
+              followBack:
+                res.friends && Array.isArray(res.friends) ? res.friends.includes(user._id) : false,
+            };
+          })
+        )
+      );
+      setFriends(friendsProfiles);
+
+      // Get requests profiles
+      const requestsProfiles = await Promise.all(
+        user.requests.map((requestId) =>
+          get("/api/user/info", { creator_id: requestId }).then((res) => res)
+        )
+      );
+      setRequests(requestsProfiles);
+
+      // Get explore profiles, excluding the user's friends
+      const exploreResponse = await get("/api/users/explore", {
+        ids: [...user.friends, ...user.requests],
+      });
+      setExplore(exploreResponse);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      // Handle errors as needed
+    }
+  };
+
+  const addCorpus = () => {
+    console.log("Setting corpus");
+    post("api/document", { content: "Jimmy likes apples" }).then((newDoc) => {
+      console.log("Corpus should be updated");
+    });
+  };
 
   const handleFollowClick = (userId, actionType) => {
     // Perform the API call to follow/unfollow the user based on actionType
     // For example, using a hypothetical 'followUser' API method
-    console.log(actionType);
     if (actionType === "follow") {
       post("/api/user/follow", { follow_id: userId }).then((userFollow) => {
         setExplore(explore.filter((user) => user._id !== userId));
@@ -120,7 +136,6 @@ const Friends = (props) => {
 
   // Filter function
   const filterByName = (list, isFriend) => {
-    console.log(list, isFriend);
     if (isFriend) {
       return list.filter((user) =>
         user.friend.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -168,6 +183,9 @@ const Friends = (props) => {
         return null;
     }
   };
+  if (!runnable) {
+    return <p>Not connected to chroma DB</p>;
+  }
   return (
     <div className="friends-container">
       <div className="friends-tab-container u-flex">

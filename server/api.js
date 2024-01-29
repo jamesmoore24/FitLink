@@ -16,6 +16,8 @@ const Exercise = require("./models/exercise");
 const Workout = require("./models/workout");
 const Like = require("./models/like");
 const Star = require("./models/star");
+const Document = require("./models/document");
+
 // import authentication library
 const auth = require("./auth");
 
@@ -24,6 +26,7 @@ const router = express.Router();
 
 //initialize socket
 const socketManager = require("./server-socket");
+const ragManager = require("./rag");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -396,6 +399,85 @@ router.post("/user/follow", (req, res) => {
     .catch((err) => {
       res.status(500).send(err);
     });
+});
+
+//RAG
+
+router.get("/isrunnable", (req, res) => {
+  res.send({ isrunnable: ragManager.isRunnable() });
+});
+
+router.post("/document", (req, res) => {
+  const newDocument = new Document({
+    content: req.body.content,
+  });
+
+  const addDocument = async (document) => {
+    try {
+      await document.save();
+      await ragManager.addDocument(document);
+      res.send(document);
+    } catch (error) {
+      console.log("error:", error);
+      res.status(500);
+      res.send({});
+    }
+  };
+
+  addDocument(newDocument);
+});
+
+router.get("/document", (req, res) => {
+  Document.find({}).then((documents) => res.send(documents));
+});
+
+router.post("/updateDocument", (req, res) => {
+  const updateDocument = async (id) => {
+    const document = await Document.findById(id);
+    if (!document) res.send({});
+    try {
+      document.content = req.body.content;
+      await document.save();
+      await ragManager.updateDocument(document);
+      res.send({});
+    } catch (error) {
+      console.log("error:", error);
+      res.status(500);
+      res.send({});
+    }
+  };
+  updateDocument(req.body._id);
+});
+
+router.post("/deleteDocument", (req, res) => {
+  const deleteDocument = async (id) => {
+    const document = await Document.findById(id);
+    if (!document) res.send({});
+    try {
+      await ragManager.deleteDocument(id);
+      await document.remove();
+      res.send({});
+    } catch {
+      // if deleting from the vector db failed (e.g., it doesn't exist)
+      await document.remove();
+      res.send({});
+    }
+  };
+  deleteDocument(req.body._id);
+});
+
+router.post("/query", (req, res) => {
+  const makeQuery = async () => {
+    try {
+      const queryresponse = await ragManager.retrievalAugmentedGeneration(req.body.query);
+      res.send({ queryresponse });
+    } catch (error) {
+      console.log("error:", error);
+      res.status(500);
+      res.send({});
+    }
+  };
+  makeQuery();
 });
 
 // anything else falls to this "not found" case
