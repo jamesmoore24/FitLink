@@ -1,37 +1,109 @@
 .fitbot-chat-container {
   display: flex;
   flex-direction: column;
-  height: 80vh; /* Adjust the height as needed */
+  max-height: 50vh; /* Adjust the height as needed */
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
 }
 
+@media only screen and (max-aspect-ratio: 9/8) {
+  .fitbot-chat-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 30vh; /* Adjust the height as needed */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+}
+
+.fitbot-chat-empty-text {
+  align-self: center;
+  font-size: var(--m);
+}
+
 .fitbot-chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px;
-  background-color: #f9f9f9; /* Light grey background */
-}
-
-.fitbot-message {
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 15px;
-  max-width: 70%;
+  display: flex;
+  flex-direction: column;
   word-wrap: break-word;
+  width: 100%; /* Make sure it fills the parent container */
+  overflow-y: auto; /* Allow scrolling */
 }
 
-.fitbot-message.user {
+.chat-message {
+  display: flex;
+  align-items: center;
+}
+
+.chat-message.bot {
+  display: flex;
+  align-items: center;
+}
+
+.chat-message.user {
+  display: flex;
+  flex-direction: row-reverse;
   align-self: flex-end;
-  background-color: #007bff; /* User messages in blue */
-  color: white;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.fitbot-message.bot {
-  align-self: flex-start;
-  background-color: #e9e9eb; /* Bot messages in grey */
+.chat-bubble-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-bubble-username.bot {
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.chat-bubble-username.user {
+  align-self: flex-end;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.chat-bubble-image {
+  width: 1em; /* Example size, adjust as needed */
+  height: 40px; /* Example size, adjust as needed */
+  border-radius: 50%; /* Circular images */
+  margin: 5px; /* Space between image and text */
+  margin-bottom: 10px;
+  align-self: flex-end;
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+.chat-bubble {
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.chat-bubble-image {
+  width: 1.5em; /* Example size, adjust as needed */
+  height: 1.5em; /* Example size, adjust as needed */
+  border-radius: 50%; /* Circular images */
+  background-color: white;
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+.chat-bubble.bot {
+  background-color: #e9e9eb; /* Light gray for bot messages */
   color: black;
+  max-width: 60%;
+  border-radius: 20px 20px 20px 0;
+  align-self: flex-start; /* Default alignment for messages */
+}
+
+.chat-bubble.user {
+  background-color: #007bff; /* Blue for user messages */
+  color: white;
+  max-width: 95%;
+  border-radius: 20px 20px 0 20px;
+  align-self: flex-end; /* Default alignment for messages */
 }
 
 .fitbot-chat-input {
@@ -62,4 +134,84 @@
 
 .fitbot-chat-input button:hover {
   background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Your existing styles */
+.fitbot-chatSuggestion-container {
+  height: 3.2em;
+  display: flex;
+  flex-direction: column-reverse;
+  position: relative;
+  overflow: hidden;
+}
+
+.fitbot-chatSuggestion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 5px;
+  background-color: var(--primary);
+  color: white;
+  border: 2px var(--primary) solid;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+  transition: opacity 0.5s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+.fading-out {
+  opacity: 0;
+}
+.fitbot-chatSuggestion:hover {
+  background-color: white; /* New background color on hover */
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.fitbot-chatSuggestion:active {
+  transform: scale(0.9); /* Scale down on click */
+}
+
+.fitbot-addCommentBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  height: 1.5em;
+  width: 100%;
+  border-radius: 20px;
+  border: 2px var(--primary) solid;
+}
+
+.fitbot-addCommentInput {
+  height: 90%;
+  width: 90%;
+  margin-left: 10px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-radius: 20px;
+}
+
+.fitbot-addCommentPost {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 10%;
+  background-color: var(--primary);
+  color: white;
+  border: 2px var(--primary) solid;
+  border-radius: 20px;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+  transform: scale(1.1);
+}
+
+.fitbot-addCommentPost:hover {
+  background-color: white; /* New background color on hover */
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.fitbot-addCommentPost:active {
+  transform: scale(0.9); /* Scale down on click */
 }
