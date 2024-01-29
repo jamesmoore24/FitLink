@@ -81,7 +81,6 @@ router.post("/workout/post", (req, res) => {
 
 router.post("/workout/delete", (req, res) => {
   Workout.deleteOne({ _id: req.body.workout_id }).then((workout) => {
-    console.log(workout);
     res.send(workout);
   });
   Exercise.deleteMany({ parent: req.body.workout_id }).then((workout) =>
@@ -99,7 +98,6 @@ router.post("/workout/delete", (req, res) => {
 });
 
 router.post("/workout/change-visibility", (req, res) => {
-  console.log("HERE");
   Workout.findById(req.body.id).then((workout) => {
     workout.posted = !workout.posted;
     workout.save().then((workout) => res.send(workout));
@@ -147,7 +145,6 @@ router.post("/exercise/create", (req, res) => {
 
 router.post("/exercise/delete", (req, res) => {
   Exercise.deleteOne({ _id: req.body.exerciseId }).then((exercise) => {
-    console.log(exercise);
     res.send(exercise);
   });
 });
@@ -204,7 +201,6 @@ router.get("/like", (req, res) => {
 });
 
 router.post("/star", (req, res) => {
-  console.log(`HERE ${req.body.workoutId}`);
   if (req.body.isStarred) {
     const star = new Star({
       userId: req.user._id,
@@ -270,22 +266,18 @@ router.post("/image/upload", async (req, res) => {
 router.get("/user/info", (req, res) => {
   User.findById(req.query.creator_id).then((user) => {
     res.send(user);
-    console.log(user);
   });
 });
 
 router.get("/user/profile/:userId", (req, res) => {
   const userId = req.params.userId;
-  console.log(`USER PARAMS ${req.params.userId}`);
   User.findById(userId).then((user) => res.send(user));
 });
 
 router.post("/user/update", (req, res) => {
-  console.log(req.user._id);
   User.findById(req.user._id).then((user) => {
     user.name = req.body.name;
     user.bio = req.body.bio;
-    console.log(user);
     user.save().then((user) => res.send(user));
   });
 });
@@ -376,8 +368,6 @@ router.post("/user/follow", (req, res) => {
           // Check if the user is already in the other user's friends list
           if (userToFollow.friends.includes(userId)) {
             // this should be in the user's "request"
-            console.log(user.requests);
-            console.log(userToFollow._id);
             user.friends.push(userToFollow._id);
             user.requests = user.requests.filter(
               (requestId) => requestId !== userToFollow._id.toString()
