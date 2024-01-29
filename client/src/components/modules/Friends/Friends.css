@@ -4,6 +4,7 @@
   justify-content: space-around;
   min-width: 40vw;
   max-width: 40vw;
+  max-height: 100%;
   border-radius: 20px;
   box-sizing: border-box;
   margin-bottom: 20px;
@@ -34,13 +35,12 @@
   font-size: 20px;
   padding: 10px;
   border-radius: 20px;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition: background-color 0.3s;
 }
 
 .friends-textInput-container:hover,
 .friends-textInput-container:focus-within {
   background-color: var(--medgrey);
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .friends-textInput {
@@ -57,4 +57,61 @@
 .friends-searchImage {
   height: 1.5em;
   width: 1.5em;
+}
+
+.friends-tab-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.friends-icon-container {
+  width: 5em;
+  height: 2em;
+  font-size: var(--l);
+  padding-bottom: 5px;
+}
+
+.friends-bottom-border {
+  width: 3em;
+  height: 0; /* Initial height is zero */
+  border-bottom: 0px solid white; /* Initial color (white) */
+  transition: border-bottom 0.3s, border-color 0.5s; /* Transition for height and border-color */
+}
+
+.friends-icon-container:hover {
+  cursor: pointer;
+}
+
+.friends-icon-container:hover .friends-bottom-border {
+  border-bottom: 3px solid var(--primary);
+  border-color: var(--primary); /* Color when expanded (orange) */
+}
+
+.friends-icon-imageContainer {
+  width: 28px;
+  height: 28px;
+}
+
+.friends-label-container {
+  font-size: 10px;
+  width: 3em;
+  border-radius: 20px;
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  color: black;
+  background-color: var(--grey);
+  opacity: 0;
+  transition: opacity 0.5s; /* Add a transition for opacity */
+}
+
+.friends-icon-container:hover .friends-label-container {
+  opacity: 1; /* Set opacity to 1 when .icon-container is hovered */
+  cursor: pointer;
+}
+
+.friends-no-underline {
+  text-decoration: none; /* Remove underline */
+  /* Additional styling if needed */
 }

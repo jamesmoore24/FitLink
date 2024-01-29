@@ -3,7 +3,13 @@ import { get, post } from "../../../utilities";
 
 import Menu from "./Menu";
 import FriendSection from "./FriendSection";
+import FitBot from "./FitBot";
+
 import Search from "../../../public/search.png";
+import Friend from "../../../public/friend.png";
+import FriendFilled from "../../../public/friend_filled.png";
+import Conversation from "../../../public/conversation.png";
+import ConversationFilled from "../../../public/conversation_filled.png";
 
 import "./Friends.css";
 
@@ -14,6 +20,7 @@ import "./Friends.css";
  */
 const Friends = (props) => {
   const [selected, setSelected] = useState("friends");
+  const [friendSelected, setFriendSelected] = useState(true);
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);
   const [explore, setExplore] = useState([]);
@@ -126,7 +133,7 @@ const Friends = (props) => {
   const filteredRequests = filterByName(requests, false);
   const filteredExplore = filterByName(explore, false);
 
-  const renderSection = () => {
+  const renderFriendSection = () => {
     switch (selected) {
       case "friends":
         return filteredFriends.map((friend) => (
@@ -160,26 +167,60 @@ const Friends = (props) => {
         return null;
     }
   };
-
   return (
     <div className="friends-container">
-      <Menu
-        selected={selected}
-        setSelected={setSelected}
-        friendRequestsCount={requests.length}
-        friendsCount={friends.length}
-        exploreCount={explore.length}
-      />
-      <div className="friends-textInput-container">
-        <img src={Search} className="friends-searchImage" />
-        <input
-          className="friends-textInput"
-          placeholder="Enter a name..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
+      <div className="friends-tab-container u-flex">
+        <div
+          className="friends-icon-container u-flexColumn u-flex-justifyCenter u-flex-alignCenter"
+          onClick={() => {
+            setFriendSelected(true);
+          }}
+        >
+          <img
+            src={friendSelected ? FriendFilled : Friend}
+            className="friends-icon-imageContainer"
+          />
+          <div className="friends-bottom-border" />
+          <div className="friends-label-container">Friends</div>
+        </div>
+        <div
+          className="friends-icon-container u-flexColumn u-flex-justifyCenter u-flex-alignCenter"
+          onClick={() => {
+            setFriendSelected(false);
+          }}
+        >
+          <img
+            src={friendSelected ? Conversation : ConversationFilled}
+            className="friends-icon-imageContainer"
+          />
+          <div className="friends-bottom-border" />
+          <div className="friends-label-container">Chat</div>
+        </div>
       </div>
-      {renderSection()}
+
+      {friendSelected ? (
+        <>
+          <Menu
+            selected={selected}
+            setSelected={setSelected}
+            friendRequestsCount={requests.length}
+            friendsCount={friends.length}
+            exploreCount={explore.length}
+          />
+          <div className="friends-textInput-container">
+            <img src={Search} className="friends-searchImage" />
+            <input
+              className="friends-textInput"
+              placeholder="Enter a name..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          </div>
+          {renderFriendSection()}
+        </>
+      ) : (
+        <FitBot />
+      )}
     </div>
   );
 };

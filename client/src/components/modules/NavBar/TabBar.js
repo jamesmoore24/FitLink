@@ -5,8 +5,6 @@ import "./TabBar.css";
 
 import Home from "../../../public/TabAssets/home.png";
 import HomeFilled from "../../../public/TabAssets/home_filled.png";
-import Friends from "../../../public/TabAssets/friends.png";
-import FriendsFilled from "../../../public/TabAssets/friends_filled.png";
 import Profile from "../../../public/TabAssets/user.png";
 import ProfileFilled from "../../../public/TabAssets/user_filled.png";
 import Plus from "../../../public/TabAssets/plus.png";
