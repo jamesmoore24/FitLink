@@ -5,6 +5,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
+  background-color: var(--grey);
 }
 
 @media only screen and (max-aspect-ratio: 9/8) {
@@ -21,6 +22,7 @@
 .fitbot-chat-empty-text {
   align-self: center;
   font-size: var(--m);
+  margin: 10px;
 }
 
 .fitbot-chat-messages {

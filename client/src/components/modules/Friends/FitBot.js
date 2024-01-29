@@ -103,7 +103,9 @@ const ChatComponent = () => {
             <div ref={messagesEndRef} /> {/* Invisible element at the end of the messages */}
           </div>
         ) : (
-          <div className="fitbot-chat-empty-text">Try asking a fitness-related question!</div>
+          <div className="fitbot-chat-container">
+            <div className="fitbot-chat-empty-text">Try asking a fitness-related question!</div>
+          </div>
         )}
       </div>
       <div className="fitbot-chatSuggestion-container">
