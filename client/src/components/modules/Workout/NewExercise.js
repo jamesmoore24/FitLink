@@ -40,9 +40,57 @@ const NewExercise = (props) => {
   const [exerciseList, setExerciseList] = useState([
     "Bench Press",
     "Push Up",
-    "Tricep Pushdown",
     "Chin Up",
+    "Deadlift",
+    "Squat",
+    "Lunges",
+    "Reverse Lunge",
+    "Forward Lunge",
+    "Shoulder Press",
+    "Bicep Curl",
+    "Tricep Dip",
+    "Weighted Dip",
+    "Leg Press",
+    "Lat Pulldown",
+    "Plank",
+    "Leg Extension",
+    "Leg Curl",
+    "Chest Fly",
+    "Tricep Extension",
+    "Tricep Pushdown",
+    "Bicep Hammer Curl",
+    "Calf Raise",
+    "Front Squat",
+    "Back Squat",
+    "Sit Up",
+    "Crunch",
+    "Russian Twist",
+    "Leg Raise",
     "Pull Up",
+    "Dumbbell Row",
+    "Barbell Row",
+    "Face Pull",
+    "Lateral Raise",
+    "Overhead Press",
+    "Dumbbell Press",
+    "Incline Bench Press",
+    "Decline Bench Press",
+    "Pec Deck",
+    "Cable Cross",
+    "Dumbbell Fly",
+    "Skull Crusher",
+    "Dumbbell Pullover",
+    "Hyperextension",
+    "Good Morning",
+    "Box Jump",
+    "Burpee",
+    "Kettlebell Swing",
+    "Thruster",
+    "Power Clean",
+    "Hang Clean",
+    "Clean And Jerk",
+    "Snatch",
+    "Turkish Get Up",
   ]);
 
   function uppercaseWords(str) {
@@ -144,7 +192,7 @@ const NewExercise = (props) => {
       props.setNotificationOn(true);
       props.setNotificationText("Exercise saved!");
       setErrorText("");
-    } else if (!name) {
+    } else if (!selectedName) {
       setErrorText("Please enter the name of the exercise.");
     } else {
       setErrorText("Please enter valid numeric values before saving.");
@@ -153,6 +201,7 @@ const NewExercise = (props) => {
 
   const deleteSet = () => {
     setSets(sets.filter((set, ix) => ix !== setNumber));
+    setErrorText("");
   };
 
   if (!props.selectedExerciseId) {
