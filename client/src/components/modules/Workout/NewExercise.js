@@ -273,7 +273,8 @@ const NewExercise = (props) => {
             <div className="newExercise-input-container">
               <input
                 className="newExercise-exerciseInput-addExercise"
-                value={selectedName === null ? "Edit me..." : selectedName} //this might error because of null
+                placeholder="Edit me..."
+                value={selectedName === null ? "" : selectedName} //this might error because of null
                 onChange={(e) => setSelectedName(e.target.value)}
               />
               <img

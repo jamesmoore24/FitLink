@@ -129,7 +129,7 @@ const PostTop = (props) => {
 
         {pbCount > 0 && (
           <div className="postTop-personalBestText">
-            {pbCount} Personal Best{pbCount === 1 ? "" : s}
+            {pbCount} Personal Record{pbCount === 1 ? "" : "s"}
           </div>
         )}
       </div>

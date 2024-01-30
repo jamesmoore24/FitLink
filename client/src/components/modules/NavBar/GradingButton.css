@@ -1,0 +1,16 @@
+.gradingButton-container {
+  display: flex;
+  align-items: center;
+  display: flex;
+  font-size: var(--m);
+  background-color: var(--primary);
+  color: white;
+  padding: 5px;
+  margin-right: 10px;
+  border-radius: 20px;
+  align-items: center; /* Align text and bars vertically */
+}
+
+.gradingButton-container:hover {
+  cursor: pointer;
+}

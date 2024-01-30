@@ -46,6 +46,18 @@ function login(req, res) {
     });
 }
 
+function loginGrading(req, res) {
+  User.findById("65b5c3ef1ca68edffe186f2a")
+    .then((user) => {
+      req.session.user = user;
+      res.send(user);
+    })
+    .catch((err) => {
+      console.log(`Failed to log in: ${err}`);
+      res.status(401).send({ err });
+    });
+}
+
 function logout(req, res) {
   req.session.user = null;
   res.send({});
@@ -68,6 +80,7 @@ function ensureLoggedIn(req, res, next) {
 module.exports = {
   login,
   logout,
+  loginGrading,
   populateCurrentUser,
   ensureLoggedIn,
 };

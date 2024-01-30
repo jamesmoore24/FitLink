@@ -108,6 +108,10 @@
   outline: none;
 }
 
+.newExercise-exerciseInput-addExercise::placeholder {
+  color: white;
+}
+
 .newExercise-suggestions-container {
   width: 100%;
   display: flex;

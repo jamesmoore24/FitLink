@@ -24,6 +24,7 @@ const LoginButton = (props) => {
         {props.userId ? (
           <button
             onClick={() => {
+              //THIS MIGHT ERROR
               googleLogout();
               props.handleLogout();
             }}

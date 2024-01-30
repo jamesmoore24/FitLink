@@ -29,6 +29,7 @@ const socketManager = require("./server-socket");
 const ragManager = require("./rag");
 
 router.post("/login", auth.login);
+router.post("/login/grading", auth.loginGrading);
 router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
   if (!req.user) {

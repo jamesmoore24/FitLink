@@ -24,6 +24,8 @@ const App = () => {
   const [userId, setUserId] = useState(undefined);
   const [notificationOn, setNotificationOn] = useState(false);
   const [notificationText, setNotificationText] = useState("");
+  const [googleLogin, setGoogleLogin] = useState(false);
+  const [gradingLogin, setGradingLogin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,13 +51,21 @@ const App = () => {
   }, [notificationOn]);
 
   const handleLogin = (credentialResponse) => {
-    navigate("/feed");
     const userToken = credentialResponse.credential;
     const decodedCredential = jwt_decode(userToken);
     console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
+      navigate("/feed");
       post("/api/initsocket", { socketid: socket.id });
+    });
+  };
+
+  const handleGradingLogin = () => {
+    console.log("Trying to sign into grading profile");
+    post("/api/login/grading").then((user) => {
+      setUserId(user._id);
+      navigate("/feed");
     });
   };
 
@@ -68,7 +78,12 @@ const App = () => {
   return (
     <>
       <div className="app-container">
-        <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        <NavBar
+          handleLogin={handleLogin}
+          handleLogout={handleLogout}
+          handleGradingLogin={handleGradingLogin}
+          userId={userId}
+        />
         <div className={`app-popUpNotification ${notificationOn ? "show" : ""}`}>
           {notificationText}
           <div className="notification-bar"></div>

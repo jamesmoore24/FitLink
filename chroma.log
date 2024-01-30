@@ -2000,3 +2000,13 @@ ValueError:
 [32mINFO[0m:     [30-01-2024 14:44:28] ::1:56665 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
 [32mINFO[0m:     [30-01-2024 14:44:29] ::1:56665 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
 [32mINFO[0m:     [30-01-2024 14:44:29] ::1:56666 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 16:49:33] ::1:60535 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 16:49:33] ::1:60536 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 16:49:33] ::1:60535 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 16:49:33] ::1:60535 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 16:49:33] ::1:60536 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 16:59:29] ::1:62677 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 16:59:29] ::1:62678 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 16:59:29] ::1:62677 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 16:59:30] ::1:62677 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 16:59:30] ::1:62678 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
