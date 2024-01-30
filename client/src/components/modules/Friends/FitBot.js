@@ -13,6 +13,41 @@ const ChatComponent = (props) => {
   const [fadingOutIndex, setFadingOutIndex] = useState(null);
   const messagesEndRef = useRef(null);
   const [runnable, setRunnable] = useState(false);
+  const [suggestions, setSuggestions] = useState([
+    "What are some exercises you'd recommend to a beginner?",
+    "What are the best ways to increase endurance?",
+    "How many times should I be lifting a week to build muscle?",
+    "What are the essential stretches to do before starting a workout?",
+    "How can I improve my balance and coordination through exercise?",
+    "What is the most effective way to lose weight through cardio exercises?",
+    "Can you suggest some low-impact exercises suitable for people with joint pain?",
+    "What are the key nutritional considerations for someone starting a fitness routine?",
+    "How often should I incorporate rest days into my exercise routine?",
+    "What are some effective core strengthening exercises for beginners?",
+    "How can I safely increase the intensity of my workouts over time?",
+    "What are some tips for maintaining motivation and consistency in a workout plan?",
+    "Can you recommend any beginner-friendly yoga poses for stress relief?",
+    "What type of cardio exercises are best for heart health?",
+    "How can I effectively target and strengthen my lower back muscles?",
+    "What are some good exercises to improve posture?",
+    "Could you recommend a beginner's guide to weightlifting?",
+    "How long does it typically take to see results from a regular exercise routine?",
+    "What are some safe exercises for pregnant women?",
+    "Are there specific exercises that help with anxiety and stress reduction?",
+    "How can I build a simple but effective home workout routine?",
+    "What’s the best way to warm up before intense physical activity?",
+    "How important is stretching after workouts, and what stretches do you recommend?",
+    "Can you suggest a weekly exercise plan for someone with a busy schedule?",
+    "What exercises are most effective for toning arms and legs?",
+    "How can I increase my flexibility and range of motion?",
+    "What are some common mistakes beginners make in their workout routines?",
+    "Are there specific exercises that can help improve sleep quality?",
+    "How can I track my fitness progress effectively?",
+    "What’s the role of hydration in physical fitness?",
+    "How do I choose the right type of running shoes?",
+    "What are the benefits of high-intensity interval training (HIIT)?",
+    "How can I prevent injury when starting a new exercise program?",
+  ]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -34,26 +69,13 @@ const ChatComponent = (props) => {
         });
     }, 1000); // 2000 milliseconds = 2 seconds
 
+    setSuggestions(shuffleArray(suggestions));
     return () => clearInterval(intervalId); // Clean up interval on component unmount
   }, []);
 
   useEffect(() => {
     scrollToBottom();
   }, [props.messages]); // Runs whenever the props.messages array changes
-
-  const [suggestions, setSuggestions] = useState([
-    "Hello",
-    "How can I help you?",
-    "What is your query?",
-    "Please type your question",
-  ]);
-
-  const addCorpus = () => {
-    console.log("Setting corpus");
-    post("api/document", { content: "Jimmy likes apples" }).then((newDoc) => {
-      console.log("Corpus should be updated");
-    });
-  };
 
   const handleSend = () => {
     if (postText.trim()) {
@@ -103,6 +125,14 @@ const ChatComponent = (props) => {
       </div>
     </div>
   );
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
 
   const removeSuggestion = (indexToRemove) => {
     // Mark the suggestion as fading out

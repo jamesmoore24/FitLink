@@ -103,7 +103,7 @@
 .chat-bubble.user {
   background-color: #007bff; /* Blue for user messages */
   color: white;
-  max-width: 95%;
+  max-width: 60%;
   border-radius: 20px 20px 0 20px;
   align-self: flex-end; /* Default alignment for messages */
 }
@@ -140,7 +140,7 @@
 
 /* Your existing styles */
 .fitbot-chatSuggestion-container {
-  height: calc(4.5em + 15px);
+  height: calc(6em + 7px);
   font-size: 12px;
   display: flex;
   flex-direction: column-reverse;
@@ -155,7 +155,7 @@
   font-size: 12px;
   box-sizing: border-box;
   margin-top: 5px;
-  height: 1.5em;
+  height: 2em;
   background-color: var(--primary);
   color: white;
   border: 2px var(--primary) solid;
