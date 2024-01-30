@@ -207,10 +207,12 @@ router.get("/exercises/user/pr", (req, res) => {
 
 router.post("/exercises/user/pr/update", (req, res) => {
   console.log(req.body);
-  Exercise.findById(req.body.id).then((exercise) => {
-    exercise.pr = req.body.pr;
-    exercise.save().then(res.send(exercise));
-  });
+  Exercise.findById(req.body.id)
+    .then((exercise) => {
+      exercise.pr = req.body.pr;
+      exercise.save().then(res.send(exercise));
+    })
+    .catch((err) => {});
 });
 
 router.post("/exercise/create", (req, res) => {
