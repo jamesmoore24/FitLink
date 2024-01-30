@@ -12,26 +12,29 @@ const ChatComponent = (props) => {
   const [postText, setPostText] = useState("");
   const [fadingOutIndex, setFadingOutIndex] = useState(null);
   const messagesEndRef = useRef(null);
-
-  const [loading, setLoading] = useState(true);
   const [runnable, setRunnable] = useState(false);
-  const [response, setResponse] = useState("");
-  const [corpus, setCorpus] = useState([]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    get("/api/isrunnable").then((res) => {
-      if (res.isrunnable) {
-        setRunnable(true);
-        get("/api/document").then((corpus) => {
-          setCorpus(corpus);
+    const intervalId = setInterval(() => {
+      console.log("Calling");
+      get("/api/isrunnable")
+        .then((res) => {
+          if (res.isrunnable) {
+            setRunnable(true);
+            clearInterval(intervalId); // Stop checking once it's runnable
+          }
+        })
+        .catch((error) => {
+          console.error("Error checking isrunnable: ", error);
+          // Optionally handle errors, such as by retrying less frequently
         });
-      }
-      setLoading(false);
-    });
+    }, 1000); // 2000 milliseconds = 2 seconds
+
+    return () => clearInterval(intervalId); // Clean up interval on component unmount
   }, []);
 
   useEffect(() => {
@@ -55,7 +58,8 @@ const ChatComponent = (props) => {
   const handleSend = () => {
     if (postText.trim()) {
       const newMessage = { id: Date.now(), text: postText, sender: "user" };
-      props.setMessages([...props.messages, newMessage]);
+      const newPlaceholderMessage = { id: Date.now(), text: "Loading response...", sender: "bot" };
+      props.setMessages([...props.messages, newMessage, newPlaceholderMessage]);
       sendMessageToBot(postText);
       setPostText("");
     }
@@ -65,7 +69,6 @@ const ChatComponent = (props) => {
     // Placeholder for sending message to RAG-based AI
     // This is where you would integrate with the AI service.
     // For now, we'll just mock a bot response.
-    console.log(`Querying ${q}`);
     post("/api/query", { query: q })
       .then((res) => {
         const botResponse = {
@@ -74,6 +77,7 @@ const ChatComponent = (props) => {
           sender: "bot",
           imgSrc: FitBot,
         };
+        props.setMessages((prevMessages) => prevMessages.slice(0, -1));
         props.setMessages((prevMessages) => [...prevMessages, botResponse]);
       })
       .catch(() => {
@@ -116,10 +120,8 @@ const ChatComponent = (props) => {
     }, 500); // The timeout duration should match your CSS transition-duration
   };
 
-  if (loading) {
-    return <p>Loading chromadb</p>;
-  } else if (!loading && !runnable) {
-    return <p>Error connecting to chromadb</p>;
+  if (!runnable) {
+    return <div className="fitbot-spinner-container"></div>;
   }
   return (
     <>
@@ -155,7 +157,6 @@ const ChatComponent = (props) => {
           value={postText} // Bind the input value to the state variable
           onChange={(e) => {
             setPostText(e.target.value);
-            console.log(postText);
           }} // Handle input changes
         />
         <button className="fitbot-addCommentPost" onClick={handleSend}>
