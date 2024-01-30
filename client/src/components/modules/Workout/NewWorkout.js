@@ -19,6 +19,7 @@ const NewWorkout = (props) => {
   const [exercises, setExercises] = useState([]);
   const [selectedExerciseId, setSelectedExerciseId] = useState(undefined);
   const [errorText, setErrorText] = useState("");
+  const [newPR, setNewPR] = useState(false);
 
   useEffect(() => {
     //get the current workout
@@ -38,7 +39,7 @@ const NewWorkout = (props) => {
     get("/api/exercises", { parent: currentWorkoutId }).then((exercises) => {
       setExercises(exercises);
     });
-  }, [currentWorkoutId]);
+  }, [currentWorkoutId, newPR]);
 
   const createExercise = () => {
     if (currentWorkoutId) {
@@ -147,6 +148,8 @@ const NewWorkout = (props) => {
         setExercises={setExercises}
         setNotificationOn={props.setNotificationOn}
         setNotificationText={props.setNotificationText}
+        setNewPR={setNewPR}
+        newPR={newPR}
       />
     </>
   );

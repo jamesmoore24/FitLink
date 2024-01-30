@@ -19,6 +19,7 @@ import "./NewExercise.css";
  * @param {string} setNotificationOn
  * @param {string} setNotificationText
  * @param {[ExerciseObject]} exercises
+ * @param {() => {}} setNewPR
  * @param {() => {}} deleteSet
  * @param {() => {}} setExercises
  */
@@ -36,8 +37,6 @@ const NewExercise = (props) => {
   const [errorText, setErrorText] = useState("");
   const [xMarkSrc, setXMarkSrc] = useState(XMark);
   const [addingNewExercise, setAddingNewExercise] = useState(false);
-
-  const [newPR, setNewPR] = useState(false);
   const [pr, setPR] = useState(0);
 
   const [exerciseList, setExerciseList] = useState([
@@ -117,6 +116,7 @@ const NewExercise = (props) => {
     });
   }, []);
 
+  // update the PR for each name change
   useEffect(() => {
     getPR(selectedName, sets);
   }, [selectedName]);
@@ -128,8 +128,8 @@ const NewExercise = (props) => {
         id: props.selectedExerciseId,
       })
         .then((exercise) => {
-          getPR(exercise.name, exercise.sets);
-          setSelectedName(exercise.name.length > 0 ? exercise.name : null);
+          props.setNewPR(exercise.pr);
+          setSelectedName(exercise.name.length > 0 ? exercise.name : null); //this will cause the getPR()
           setAddingNewExercise(false);
           setSets(exercise.sets);
           setSetNumber(exercise.sets.length);
@@ -144,14 +144,15 @@ const NewExercise = (props) => {
 
   //this gets triggered anytime the sets object updates
   useEffect(() => {
-    getPR(selectedName, sets);
     if (props.selectedExerciseId && sets) {
       post("/api/exercise/update", {
         id: props.selectedExerciseId,
-        name: selectedName,
+        name: name,
         sets: sets,
-        pr: newPR,
+        pr: props.newPR,
       }).then((exercise) => {
+        //call this after the exercise updates
+        getPR(name, sets);
         props.setExercises(
           props.exercises.map((ex) => {
             if (ex._id === props.selectedExerciseId) {
@@ -178,22 +179,23 @@ const NewExercise = (props) => {
         });
       });
 
-      let maxWeightCur = 0;
+      let maxWeightCur = -1;
       sets.forEach((set) => {
         if (set.weight > maxWeightCur) {
           maxWeightCur = set.weight;
         }
       });
 
+      //set the local PR and then update the actual pr for the exercise for update in section
       let maxWeight = Math.max(maxWeightPrev, maxWeightCur);
-      console.log(maxWeightPrev);
       setPR(maxWeight);
-      setNewPR(maxWeight === maxWeightCur);
       if (props.selectedExerciseId) {
         post("/api/exercises/user/pr/update", {
           id: props.selectedExerciseId,
           pr: maxWeight === maxWeightCur,
-        }).then((exercise) => {});
+        }).then((exercise) => {
+          props.setNewPR(maxWeight === maxWeightCur);
+        });
       }
     });
   };
@@ -255,94 +257,97 @@ const NewExercise = (props) => {
   }
   return (
     <div className="newExercise-container">
-      <div
-        className={`newExercise-search-container ${selectedName === null ? "hover-effect" : ""}`}
-      >
-        <div className="newExercise-searchText-container">
-          {selectedName === null && !addingNewExercise && (
-            <img src={Search} className="newExercise-search-image" />
-          )}
-          {selectedName === null && !addingNewExercise ? (
-            <input
-              className="newExercise-exerciseInput"
-              placeholder="Search for an exercise..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          ) : addingNewExercise ? (
-            <div className="newExercise-input-container">
+      <div className="newExercise-searchSuggestion-container">
+        <div
+          className={`newExercise-search-container ${selectedName === null ? "hover-effect" : ""}`}
+        >
+          <div className="newExercise-searchText-container">
+            {selectedName === null && !addingNewExercise && (
+              <img src={Search} className="newExercise-search-image" />
+            )}
+            {selectedName === null && !addingNewExercise ? (
               <input
-                className="newExercise-exerciseInput-addExercise"
-                placeholder="Edit me..."
-                value={selectedName === null ? "" : selectedName} //this might error because of null
-                onChange={(e) => setSelectedName(e.target.value)}
+                className="newExercise-exerciseInput"
+                placeholder="Search for an exercise..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
-              <img
-                className="newExercise-delete-icon"
-                src={xMarkSrc}
-                onMouseEnter={() => setXMarkSrc(XMarkHover)}
-                onMouseLeave={() => setXMarkSrc(XMark)}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSearch("");
-                  setSelectedName(null);
-                  setAddingNewExercise(false);
-                }}
-              />
-            </div>
-          ) : (
-            <div className="newExercise-exerciseRecommendation">
-              {selectedName}
-              <img
-                className="newExercise-delete-icon"
-                src={xMarkSrc}
-                onMouseEnter={() => setXMarkSrc(XMarkHover)}
-                onMouseLeave={() => setXMarkSrc(XMark)}
-                onClick={(e) => {
-                  setSelectedName(null);
-                  setSearch("");
-                  setAddingNewExercise(false);
-                }}
-              />
-            </div>
-          )}
+            ) : addingNewExercise ? (
+              <div className="newExercise-input-container">
+                <input
+                  className="newExercise-exerciseInput-addExercise"
+                  placeholder="Edit me..."
+                  value={selectedName === null ? "" : selectedName} //this might error because of null
+                  onChange={(e) => setSelectedName(e.target.value)}
+                />
+                <img
+                  className="newExercise-delete-icon"
+                  src={xMarkSrc}
+                  onMouseEnter={() => setXMarkSrc(XMarkHover)}
+                  onMouseLeave={() => setXMarkSrc(XMark)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSearch("");
+                    setSelectedName(null);
+                    setAddingNewExercise(false);
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="newExercise-exerciseRecommendation">
+                {selectedName}
+                <img
+                  className="newExercise-delete-icon"
+                  src={xMarkSrc}
+                  onMouseEnter={() => setXMarkSrc(XMarkHover)}
+                  onMouseLeave={() => setXMarkSrc(XMark)}
+                  onClick={(e) => {
+                    setSelectedName(null);
+                    setSearch("");
+                    setAddingNewExercise(false);
+                  }}
+                />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="newExercise-suggestions-container">
-        <div className="newExercise-suggestions-text">Select one: </div>
-        {selectedName === null &&
-          exerciseList
-            .filter((exercise) => exercise.toLowerCase().includes(search.toLowerCase()))
-            .map((exercise) => {
-              return (
+        <div className="newExercise-suggestions-container">
+          <div className="newExercise-suggestions-text">Select one: </div>
+          {selectedName === null &&
+            exerciseList
+              .filter((exercise) => exercise.toLowerCase().includes(search.toLowerCase()))
+              .map((exercise) => {
+                return (
+                  <div
+                    className="newExercise-exerciseRecommendation"
+                    onClick={() => {
+                      setSelectedName(exercise);
+                    }}
+                  >
+                    {exercise}
+                  </div>
+                );
+              })
+              .concat(
                 <div
                   className="newExercise-exerciseRecommendation"
                   onClick={() => {
-                    setSelectedName(exercise);
+                    setName("Edit here");
+                    setAddingNewExercise(true);
                   }}
                 >
-                  {exercise}
+                  + Add a new exercise
                 </div>
-              );
-            })
-            .concat(
-              <div
-                className="newExercise-exerciseRecommendation"
-                onClick={() => {
-                  setName("Edit here");
-                  setAddingNewExercise(true);
-                }}
-              >
-                + Add a new exercise
-              </div>
-            )}
+              )}
+        </div>
       </div>
+
       <div className="newExercise-setNumber-container">
         {setNumber === sets.length ? "New" : "Editing"} set #{setNumber + 1}
         <div className="newExercise-trashPR-container">
           {selectedName !== null && (
             <div className="newExercise-PR-container">
-              {newPR ? "New " : ""}PR: {pr} lbs
+              {props.newPR ? "New " : ""}PR: {pr} lbs
             </div>
           )}
           {setNumber !== sets.length && (
