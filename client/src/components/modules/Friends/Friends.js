@@ -20,7 +20,7 @@ import "./Friends.css";
  */
 const Friends = (props) => {
   const [selected, setSelected] = useState("friends");
-  const [friendSelected, setFriendSelected] = useState(false);
+  const [friendSelected, setFriendSelected] = useState(true);
   const [user, setUser] = useState(undefined);
   const [messages, setMessages] = useState([]);
   const [friends, setFriends] = useState([]);

@@ -33,40 +33,97 @@
 .newExercise-search-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background-color: var(--grey);
-  height: 3em;
   width: 100%;
   box-sizing: border-box;
-  font-size: 20px;
-  padding: 10px;
+  height: 1.5em;
+  padding-top: 5px;
+  padding-bottom: 5px;
   border-radius: 20px;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.newExercise-search-container:hover,
-.newExercise-search-container:focus-within {
+.newExercise-search-container.hover-effect:hover {
   background-color: var(--medgrey);
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .newExercise-search-image {
+  height: 1em;
+  width: 1em;
+}
+
+.newExercise-searchText-container {
+  display: flex;
+  align-items: center;
+}
+
+.newExercise-input-container {
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: var(--m);
+  background-color: var(--primary);
+  border: 2px var(--primary) solid;
+  border-radius: 20px;
+  margin-left: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.newExercise-input-container:hover {
+  background-color: white; /* New background color on hover */
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.newExercise-input-container:hover .newExercise-exerciseInput-addExercise {
+  color: var(--primary); /* Change text color of input on hover */
+}
+
+.newExercise-input-container:active {
+  transform: scale(0.9); /* Scale down on click */
 }
 
 .newExercise-exerciseInput {
   background-color: transparent;
   border: none;
   outline: none;
-  padding-left: 10px;
-  font-size: 20px;
+  font-size: var(--m);
   height: 100%;
-  width: 80%;
   border-radius: 20px;
+}
+
+.newExercise-exerciseInput-addExercise {
+  color: white;
+  font-size: var(--m);
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.newExercise-suggestions-container {
+  width: 100%;
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  align-items: center;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent line breaks */
+}
+
+.newExercise-suggestions-text {
+  font-size: var(--m);
 }
 
 .newExercise-exerciseRecommendation {
   height: 100%;
-  width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,9 +131,11 @@
   font-size: var(--m);
   background-color: var(--primary);
   color: white;
-  margin: 5px;
   border: 2px var(--primary) solid;
   border-radius: 20px;
+  margin-left: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
@@ -84,7 +143,6 @@
 .newExercise-exerciseRecommendation:hover {
   background-color: white; /* New background color on hover */
   cursor: pointer;
-  transform: scale(1.1);
   color: var(--primary);
 }
 
@@ -92,11 +150,22 @@
   transform: scale(0.9); /* Scale down on click */
 }
 
+.newExercise-delete-icon {
+  height: 1em;
+  width: 1em;
+  margin-left: 5px;
+  transition: 0.3s transform ease;
+}
+
+.newExercise-delete-icon:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
 .newExercise-setNumber-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 2em;
   width: 100%;
 }
 
@@ -120,7 +189,6 @@
 
 .newExercise-setInfo-container {
   width: 100%;
-  height: auto;
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
@@ -131,7 +199,6 @@
   flex-direction: column;
   justify-content: space-around;
   width: 30%;
-  height: 10em;
   background-color: var(--grey);
   border-radius: 20px;
   transition: background-color 0.3s, box-shadow 0.3s;
@@ -148,18 +215,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 2em;
 }
 
 .newExercise-setInfoIndividual-titleText {
-  max-height: 1em;
   margin-bottom: 8px;
   box-sizing: border-box;
   text-align: center;
 }
 
 .newExercise-setInfoIndividual-subText {
-  min-height: 1.5em;
   font-size: var(--m);
   color: grey;
   text-align: center;
@@ -182,8 +246,8 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  min-height: 25%;
   width: 100%;
+  height: calc(3.5em + var(--l));
 }
 
 .newExercise-previousSets-text {
@@ -196,7 +260,6 @@
 .newExercise-previousSets-sets {
   display: flex;
   align-items: center;
-  height: 70%;
   width: 100%;
   overflow: auto;
 }

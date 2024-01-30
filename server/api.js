@@ -136,6 +136,10 @@ router.get("/exercise", (req, res) => {
   Exercise.findById(req.query.id).then((exercise) => res.send(exercise));
 });
 
+router.get("/exercises/user", (req, res) => {
+  Exercise.find({ creator_id: req.user._id }).then((exercises) => res.send(exercises));
+});
+
 router.post("/exercise/create", (req, res) => {
   const newExercise = new Exercise({
     creator_id: req.body.creator_id,
