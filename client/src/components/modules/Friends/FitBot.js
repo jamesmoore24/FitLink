@@ -13,9 +13,26 @@ const ChatComponent = (props) => {
   const [fadingOutIndex, setFadingOutIndex] = useState(null);
   const messagesEndRef = useRef(null);
 
+  const [loading, setLoading] = useState(true);
+  const [runnable, setRunnable] = useState(false);
+  const [response, setResponse] = useState("");
+  const [corpus, setCorpus] = useState([]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    get("/api/isrunnable").then((res) => {
+      if (res.isrunnable) {
+        setRunnable(true);
+        get("/api/document").then((corpus) => {
+          setCorpus(corpus);
+        });
+      }
+      setLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
@@ -27,6 +44,13 @@ const ChatComponent = (props) => {
     "What is your query?",
     "Please type your question",
   ]);
+
+  const addCorpus = () => {
+    console.log("Setting corpus");
+    post("api/document", { content: "Jimmy likes apples" }).then((newDoc) => {
+      console.log("Corpus should be updated");
+    });
+  };
 
   const handleSend = () => {
     if (postText.trim()) {
@@ -92,6 +116,11 @@ const ChatComponent = (props) => {
     }, 500); // The timeout duration should match your CSS transition-duration
   };
 
+  if (loading) {
+    return <p>Loading chromadb</p>;
+  } else if (!loading && !runnable) {
+    return <p>Error connecting to chromadb</p>;
+  }
   return (
     <>
       <div className="fitbot-chat-container">

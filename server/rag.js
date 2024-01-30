@@ -54,9 +54,9 @@ const chatCompletion = async (query, context) => {
       {
         role: "system",
         content:
-          "Your role is to answer questions for a user. You are given the following context to help you answer questions: \n" +
+          "Your role is to be a professional personal trainer which answer questions for a client. You are given the following context to help you answer questions: \n" +
           `${context}. \n` +
-          "Please do not mention that you were given any context in your response.",
+          "Please do not mention that you were given any context in your response and be very professional.",
       },
       { role: "user", content: `${query}` },
     ],
@@ -122,9 +122,9 @@ const initCollection = async () => {
 };
 
 // This is an async function => we don't know that the collection is
-// initialized before someone else runs functions that depend on the 
+// initialized before someone else runs functions that depend on the
 // collection, so we could get null pointer errors when collection = null
-// before initCollection() has finished. That's probably okay, but if we 
+// before initCollection() has finished. That's probably okay, but if we
 // see errors, it's worth keeping in mind.
 initCollection();
 

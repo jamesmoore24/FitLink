@@ -28,22 +28,9 @@ const Friends = (props) => {
   const [explore, setExplore] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   //AI STUFF
-  const [corpus, setCorpus] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [runnable, setRunnable] = useState(false);
-  const [response, setResponse] = useState("");
 
   useEffect(() => {
     fetchData();
-    get("/api/isrunnable").then((res) => {
-      if (res.isrunnable) {
-        setRunnable(true);
-        get("/api/document").then((corpus) => {
-          setCorpus(corpus);
-        });
-      }
-      setLoading(false);
-    });
   }, []); // Assuming `get` is a function that correctly makes a GET request and handles the query parameters.
 
   // Define the function to fetch data
@@ -85,13 +72,6 @@ const Friends = (props) => {
       console.error("Error fetching data: ", error);
       // Handle errors as needed
     }
-  };
-
-  const addCorpus = () => {
-    console.log("Setting corpus");
-    post("api/document", { content: "Jimmy likes apples" }).then((newDoc) => {
-      console.log("Corpus should be updated");
-    });
   };
 
   const handleFollowClick = (userId, actionType) => {
@@ -183,9 +163,7 @@ const Friends = (props) => {
         return null;
     }
   };
-  if (!runnable) {
-    return <p>Not connected to chroma DB</p>;
-  }
+
   return (
     <div className="friends-container">
       <div className="friends-tab-container u-flex">

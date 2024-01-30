@@ -1805,3 +1805,34 @@ ValueError:
 [32mINFO[0m:     [29-01-2024 18:45:06] ::1:65383 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
 [32mINFO[0m:     [29-01-2024 18:45:06] ::1:65384 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
 [32mINFO[0m:     [29-01-2024 18:45:36] ::1:49188 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/query HTTP/1.1" 200
+[32mINFO[0m:     [29-01-2024 18:52:03] ::1:49741 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/query HTTP/1.1" 200
+[32mINFO[0m:     [29-01-2024 18:55:00] ::1:50007 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [29-01-2024 18:55:00] ::1:50008 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [29-01-2024 18:55:00] ::1:50007 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [29-01-2024 18:55:01] ::1:50007 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [29-01-2024 18:55:01] ::1:50008 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [29-01-2024 19:00:29] Shutting down
+[32mINFO[0m:     [29-01-2024 19:00:29] Waiting for application shutdown.
+[32mINFO[0m:     [29-01-2024 19:00:29] Application shutdown complete.
+[32mINFO[0m:     [29-01-2024 19:00:29] Finished server process [[36m20135[0m]
+[32mINFO[0m:     [29-01-2024 19:00:32] Set chroma_server_nofile to 65535
+[32mINFO[0m:     [29-01-2024 19:00:32] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [29-01-2024 19:00:32] Starting component System
+[36mDEBUG[0m:    [29-01-2024 19:00:32] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [29-01-2024 19:00:32] Starting component SimpleAssignmentPolicy
+[36mDEBUG[0m:    [29-01-2024 19:00:32] Starting component SqliteDB
+[36mDEBUG[0m:    [29-01-2024 19:00:32] Starting component Posthog
+[36mDEBUG[0m:    [29-01-2024 19:00:32] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [29-01-2024 19:00:32] Starting component SegmentAPI
+[32mINFO[0m:     [29-01-2024 19:00:32] Started server process [[36m20966[0m]
+[32mINFO[0m:     [29-01-2024 19:00:32] Waiting for application startup.
+[32mINFO[0m:     [29-01-2024 19:00:32] Application startup complete.
+[32mINFO[0m:     [29-01-2024 19:00:32] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [29-01-2024 19:01:05] ::1:51760 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [29-01-2024 19:01:05] ::1:51761 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[36mDEBUG[0m:    [29-01-2024 19:01:05] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [29-01-2024 19:01:05] ::1:51760 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [29-01-2024 19:01:06] ::1:51760 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [29-01-2024 19:01:06] ::1:51761 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[33mWARNING[0m:  [29-01-2024 19:02:16] Number of requested results 2 is greater than number of elements in index 1, updating n_results = 1
+[32mINFO[0m:     [29-01-2024 19:02:16] ::1:51829 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/query HTTP/1.1" 200
