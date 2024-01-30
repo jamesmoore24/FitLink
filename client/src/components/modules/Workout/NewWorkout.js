@@ -102,6 +102,7 @@ const NewWorkout = (props) => {
                   exerciseId={exercise._id}
                   exerciseName={exercise.name}
                   exerciseSets={exercise.sets}
+                  pr={exercise.pr}
                   selectedExerciseId={selectedExerciseId}
                   setSelectedExerciseId={setSelectedExerciseId}
                   deleteExercise={deleteExercise}

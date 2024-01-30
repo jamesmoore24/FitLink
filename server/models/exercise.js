@@ -16,6 +16,8 @@ const ExerciseSchema = new mongoose.Schema({
     type: [setSchema],
     default: [],
   },
+  posted: { type: Boolean, default: false },
+  pr: { type: Boolean, default: false },
 });
 
 // compile model from schema

@@ -68,17 +68,75 @@ router.post("/workout/create", (req, res) => {
 
 router.post("/workout/save", (req, res) => {
   Workout.findById(req.body.id).then((workout) => {
+    if (!workout) {
+      return res.status(404).send("Workout not found");
+    }
+
     workout.posted = false;
     workout.current = false;
-    workout.save(res.send(workout));
+
+    workout
+      .save()
+      .then(() => {
+        Exercise.find({ parent: workout._id }).then((exercises) => {
+          if (!exercises || exercises.length === 0) {
+            return res.status(404).send("Exercises not found");
+          }
+
+          Promise.all(
+            exercises.map((exercise) => {
+              exercise.posted = true;
+              return exercise.save();
+            })
+          )
+            .then(() => {
+              res.send(workout);
+            })
+            .catch((err) => {
+              res.status(500).send(err.message);
+            });
+        });
+      })
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
   });
 });
 
 router.post("/workout/post", (req, res) => {
   Workout.findById(req.body.id).then((workout) => {
+    if (!workout) {
+      return res.status(404).send("Workout not found");
+    }
+
     workout.posted = true;
     workout.current = false;
-    workout.save(res.send(workout));
+
+    workout
+      .save()
+      .then(() => {
+        Exercise.find({ parent: workout._id }).then((exercises) => {
+          if (!exercises || exercises.length === 0) {
+            return res.status(404).send("Exercises not found");
+          }
+
+          Promise.all(
+            exercises.map((exercise) => {
+              exercise.posted = true;
+              return exercise.save();
+            })
+          )
+            .then(() => {
+              res.send(workout);
+            })
+            .catch((err) => {
+              res.status(500).send(err.message);
+            });
+        });
+      })
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
   });
 });
 
@@ -140,6 +198,20 @@ router.get("/exercises/user", (req, res) => {
   Exercise.find({ creator_id: req.user._id }).then((exercises) => res.send(exercises));
 });
 
+router.get("/exercises/user/pr", (req, res) => {
+  Exercise.find({ creator_id: req.user._id, posted: true, name: req.query.name }).then(
+    (exercises) => res.send(exercises)
+  );
+});
+
+router.post("/exercises/user/pr/update", (req, res) => {
+  console.log(req.body);
+  Exercise.findById(req.body.id).then((exercise) => {
+    exercise.pr = req.body.pr;
+    exercise.save().then(res.send(exercise));
+  });
+});
+
 router.post("/exercise/create", (req, res) => {
   const newExercise = new Exercise({
     creator_id: req.body.creator_id,
@@ -160,6 +232,7 @@ router.post("/exercise/update", (req, res) => {
   Exercise.findById(req.body.id).then((exercise) => {
     exercise.name = req.body.name;
     exercise.sets = req.body.sets;
+    exercise.pr = req.body.pr;
     exercise.save().then(res.send(exercise));
   });
 });

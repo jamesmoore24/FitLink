@@ -15,6 +15,7 @@ import SetSquare from "./SetSquare";
  * @param {string} exerciseId
  * @param {string} exerciseName
  * @param {string} exerciseSets
+ * @param {boolean} pr
  * @param {string} selectedExerciseId
  * @param {() => {}} setSelectedExerciseId
  * @param {() => {}} updateExercise
@@ -57,6 +58,7 @@ const ExerciseSection = (props) => {
         )}
         <div className="exerciseSection-text-container">
           {props.index + 1}. {props.exerciseName}
+          {props.pr && <div className="exerciseSection-pr">PR</div>}
         </div>
         <div className="exerciseSection-set-container">
           {props.exerciseSets.map((set, ix) => {

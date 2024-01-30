@@ -74,3 +74,13 @@
   overflow: auto;
   white-space: nowrap;
 }
+
+.exerciseSection-pr {
+  background-color: red;
+  color: white;
+  font-size: var(--m);
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 5px;
+  border-radius: 20px;
+}

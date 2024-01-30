@@ -1936,3 +1936,67 @@ ValueError:
 [32mINFO[0m:     [29-01-2024 19:30:59] ::1:56121 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/query HTTP/1.1" 200
 [33mWARNING[0m:  [29-01-2024 19:44:03] Number of requested results 2 is greater than number of elements in index 1, updating n_results = 1
 [32mINFO[0m:     [29-01-2024 19:44:03] ::1:56537 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/query HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:46:51] Set chroma_server_nofile to 65535
+[32mINFO[0m:     [30-01-2024 13:46:52] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [30-01-2024 13:46:52] Starting component System
+[36mDEBUG[0m:    [30-01-2024 13:46:52] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [30-01-2024 13:46:52] Starting component SimpleAssignmentPolicy
+[36mDEBUG[0m:    [30-01-2024 13:46:52] Starting component SqliteDB
+[36mDEBUG[0m:    [30-01-2024 13:46:52] Starting component Posthog
+[36mDEBUG[0m:    [30-01-2024 13:46:52] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [30-01-2024 13:46:52] Starting component SegmentAPI
+[32mINFO[0m:     [30-01-2024 13:46:52] Started server process [[36m42769[0m]
+[32mINFO[0m:     [30-01-2024 13:46:52] Waiting for application startup.
+[32mINFO[0m:     [30-01-2024 13:46:52] Application startup complete.
+[32mINFO[0m:     [30-01-2024 13:46:52] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [30-01-2024 13:55:00] ::1:51358 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:55:00] ::1:51359 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[36mDEBUG[0m:    [30-01-2024 13:55:00] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [30-01-2024 13:55:00] ::1:51358 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:55:01] ::1:51358 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 13:55:01] ::1:51359 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:55:56] ::1:51377 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:55:56] ::1:51378 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:55:56] ::1:51377 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:55:57] ::1:51377 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 13:55:57] ::1:51378 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:57:50] ::1:51413 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:57:50] ::1:51414 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:57:50] ::1:51413 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 13:57:51] ::1:51413 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 13:57:51] ::1:51414 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:01:11] ::1:51632 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:01:11] ::1:51633 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:01:11] ::1:51632 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:01:12] ::1:51632 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 14:01:12] ::1:51633 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:03:25] ::1:51662 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:03:25] ::1:51663 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:03:25] ::1:51662 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:03:25] ::1:51662 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 14:03:25] ::1:51663 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:24:57] ::1:54688 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:24:57] ::1:54689 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:24:57] ::1:54688 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:25:06] ::1:54720 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 14:25:06] ::1:54721 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:31:00] ::1:55149 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:31:00] ::1:55150 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:31:00] ::1:55149 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:31:00] ::1:55149 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 14:31:00] ::1:55150 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:42:46] ::1:56452 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:42:46] ::1:56453 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:42:46] ::1:56452 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:42:46] ::1:56452 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 14:42:46] ::1:56453 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:44:01] ::1:56578 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:44:01] ::1:56579 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:44:01] ::1:56578 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:44:02] ::1:56578 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 14:44:02] ::1:56579 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:44:28] ::1:56665 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:44:28] ::1:56666 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:44:28] ::1:56665 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 14:44:29] ::1:56665 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 14:44:29] ::1:56666 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200

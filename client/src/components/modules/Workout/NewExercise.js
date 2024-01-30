@@ -26,7 +26,6 @@ const NewExercise = (props) => {
   const [name, setName] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedName, setSelectedName] = useState(null);
-
   const [reps, setReps] = useState("");
   const [rpe, setRPE] = useState("");
   const [weight, setWeight] = useState("");
@@ -37,6 +36,10 @@ const NewExercise = (props) => {
   const [errorText, setErrorText] = useState("");
   const [xMarkSrc, setXMarkSrc] = useState(XMark);
   const [addingNewExercise, setAddingNewExercise] = useState(false);
+
+  const [newPR, setNewPR] = useState(false);
+  const [pr, setPR] = useState(0);
+
   const [exerciseList, setExerciseList] = useState([
     "Bench Press",
     "Push Up",
@@ -112,7 +115,11 @@ const NewExercise = (props) => {
         setExerciseList((prevExerciseList) => [...new Set([...prevExerciseList, ...newExercises])]);
       }
     });
-  }, []); // Make sure to include dependencies if there are any
+  }, []);
+
+  useEffect(() => {
+    getPR(selectedName, sets);
+  }, [selectedName]);
 
   //everytime the selected exercise changes, get information about exercise and store in variables
   useEffect(() => {
@@ -121,6 +128,7 @@ const NewExercise = (props) => {
         id: props.selectedExerciseId,
       })
         .then((exercise) => {
+          getPR(exercise.name, exercise.sets);
           setSelectedName(exercise.name.length > 0 ? exercise.name : null);
           setAddingNewExercise(false);
           setSets(exercise.sets);
@@ -136,22 +144,59 @@ const NewExercise = (props) => {
 
   //this gets triggered anytime the sets object updates
   useEffect(() => {
+    getPR(selectedName, sets);
     if (props.selectedExerciseId && sets) {
-      post("/api/exercise/update", { id: props.selectedExerciseId, name: name, sets: sets }).then(
-        (exercise) => {
-          props.setExercises(
-            props.exercises.map((ex) => {
-              if (ex._id === props.selectedExerciseId) {
-                return exercise;
-              } else {
-                return ex;
-              }
-            })
-          );
-        }
-      );
+      post("/api/exercise/update", {
+        id: props.selectedExerciseId,
+        name: selectedName,
+        sets: sets,
+        pr: newPR,
+      }).then((exercise) => {
+        props.setExercises(
+          props.exercises.map((ex) => {
+            if (ex._id === props.selectedExerciseId) {
+              return exercise;
+            } else {
+              return ex;
+            }
+          })
+        );
+      });
     }
   }, [setChange]);
+
+  const getPR = (name, sets) => {
+    console.log(name);
+    get("/api/exercises/user/pr", { name: name }).then((exercises) => {
+      let maxWeightPrev = 0;
+
+      exercises.forEach((exercise) => {
+        exercise.sets.forEach((set) => {
+          if (set.weight > maxWeightPrev) {
+            maxWeightPrev = set.weight;
+          }
+        });
+      });
+
+      let maxWeightCur = 0;
+      sets.forEach((set) => {
+        if (set.weight > maxWeightCur) {
+          maxWeightCur = set.weight;
+        }
+      });
+
+      let maxWeight = Math.max(maxWeightPrev, maxWeightCur);
+      console.log(maxWeightPrev);
+      setPR(maxWeight);
+      setNewPR(maxWeight === maxWeightCur);
+      if (props.selectedExerciseId) {
+        post("/api/exercises/user/pr/update", {
+          id: props.selectedExerciseId,
+          pr: maxWeight === maxWeightCur,
+        }).then((exercise) => {});
+      }
+    });
+  };
 
   const updateSet = () => {
     const repsParsed = Math.round(parseInt(reps));
@@ -201,6 +246,7 @@ const NewExercise = (props) => {
 
   const deleteSet = () => {
     setSets(sets.filter((set, ix) => ix !== setNumber));
+    setSetChange(!setChange);
     setErrorText("");
   };
 
@@ -292,17 +338,24 @@ const NewExercise = (props) => {
       </div>
       <div className="newExercise-setNumber-container">
         {setNumber === sets.length ? "New" : "Editing"} set #{setNumber + 1}
-        {setNumber !== sets.length && (
-          <img
-            src={trashCanSrc}
-            className="newExercise-setDelete"
-            onMouseEnter={() => {
-              setTrashCanSrc(TrashCanHalfFilled);
-            }}
-            onMouseLeave={() => setTrashCanSrc(TrashCan)}
-            onClick={deleteSet}
-          />
-        )}
+        <div className="newExercise-trashPR-container">
+          {selectedName !== null && (
+            <div className="newExercise-PR-container">
+              {newPR ? "New " : ""}PR: {pr} lbs
+            </div>
+          )}
+          {setNumber !== sets.length && (
+            <img
+              src={trashCanSrc}
+              className="newExercise-setDelete"
+              onMouseEnter={() => {
+                setTrashCanSrc(TrashCanHalfFilled);
+              }}
+              onMouseLeave={() => setTrashCanSrc(TrashCan)}
+              onClick={deleteSet}
+            />
+          )}
+        </div>
       </div>
       <div className="newExercise-setInfo-container">
         <div className="newExercise-setInfoIndividual-container">

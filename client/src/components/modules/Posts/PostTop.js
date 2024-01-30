@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import "./PostTop.css";
-import { post } from "../../../utilities";
+import { get, post } from "../../../utilities";
 
 import Visible from "../../../public/visibile.png";
 import NotVisible from "../../../public/not_visible.png";
@@ -20,6 +20,7 @@ import TrashCanHalfFilled from "../../../public/trashcan_half_filled.png";
  * @param {string} creator_pfp
  * @param {boolean} posted
  * @param {string} userId
+ * @param {[ExerciseObjs]} exercises
  * @param {Date} timestamp
  * @param {Boolean} isStarred
  * @param {(PostObject) => {}} setIsStarred
@@ -29,6 +30,14 @@ import TrashCanHalfFilled from "../../../public/trashcan_half_filled.png";
  */
 const PostTop = (props) => {
   const [trashCanSrc, setTrashCanSrc] = useState(TrashCan);
+  const [pbCount, setPBCount] = useState(0);
+
+  useEffect(() => {
+    get("/api/exercises", { parent: props.workout_id }).then((exercises) => {
+      let exercisesWithPR = exercises.filter((exercise) => exercise.pr === true);
+      setPBCount(exercisesWithPR.length);
+    });
+  }, []);
 
   const date = new Date(props.timestamp);
   const hours = date.getHours();
@@ -118,7 +127,11 @@ const PostTop = (props) => {
           )}
         </div>
 
-        <div className="postTop-personalBestText">3 Personal Bests</div>
+        {pbCount > 0 && (
+          <div className="postTop-personalBestText">
+            {pbCount} Personal Best{pbCount === 1 ? "" : s}
+          </div>
+        )}
       </div>
     </div>
   );
