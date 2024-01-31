@@ -80,9 +80,7 @@ const PostTop = (props) => {
 
         <div className="postTop-profileNameFollowTime-container">
           <div className="postTop-profileName">{props.creator_name}</div>
-          <div className="postTop-profileDescription">
-            Workout at {formattedTime} @ the Z center
-          </div>
+          <div className="postTop-profileDescription">Workout at {formattedTime}</div>
         </div>
       </div>
       <div className="postTop-personalBest-container">
