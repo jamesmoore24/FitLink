@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { get, post } from "../../utilities";
 
@@ -27,8 +27,10 @@ const Profile = (props) => {
   const [profilePictureError, setProfilePictureError] = useState("");
   const [changedProfilePicture, setChangedProfilePicture] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [workoutView, setWorkoutView] = useState("all");
 
+  const [underlineStyle, setUnderlineStyle] = useState({});
+  const menuRef = useRef(null);
   const { userId } = useParams(); // This extracts userId from the URL
 
   useEffect(() => {
@@ -44,6 +46,35 @@ const Profile = (props) => {
       setProfilePicture(user.profile_picture);
     });
   }, [userId]);
+
+  useEffect(() => {
+    if (menuRef.current) {
+      const activeItem = menuRef.current.querySelector(".profile-menu-item.active");
+      if (activeItem) {
+        setUnderlineStyle({
+          width: activeItem.offsetWidth,
+          left: activeItem.offsetLeft,
+        });
+      }
+    }
+
+    if (workoutView === "all") {
+      get(`/api/workouts/profile/${userId}`).then((workoutObjs) => {
+        let reversedWorkoutObjs = workoutObjs.reverse();
+        setWorkouts(reversedWorkoutObjs);
+      });
+    } else if (workoutView === "drafts") {
+      get(`/api/workouts/profile/drafts/${userId}`).then((workoutObjs) => {
+        let reversedWorkoutObjs = workoutObjs.reverse();
+        setWorkouts(reversedWorkoutObjs);
+      });
+    } else {
+      get(`/api/workouts/profile/starred/${userId}`).then((workoutObjs) => {
+        let reversedWorkoutObjs = workoutObjs.reverse();
+        setWorkouts(reversedWorkoutObjs);
+      });
+    }
+  }, [workoutView]);
 
   const updateUser = () => {
     post("/api/user/update", { name: name, bio: bio }).then((user) => {
@@ -77,8 +108,6 @@ const Profile = (props) => {
         changedProfilePicture={changedProfilePicture}
       />
     ));
-  } else {
-    workoutsList = <div className="feed-text-top">No personal saved or posted workouts yet!</div>;
   }
 
   const handleImageChange = (event) => {
@@ -242,6 +271,34 @@ const Profile = (props) => {
 
       <div className="profile-right-container" onClick={() => console.log(props.userId)}>
         <ActivityTracker userId={props.userId} />
+        {userId === props.userId ? (
+          <div className="profile-menu-container">
+            <div className="profile-menu" ref={menuRef}>
+              <div
+                className={`profile-menu-item ${workoutView === "all" ? "active" : ""}`}
+                onClick={() => setWorkoutView("all")}
+              >
+                All
+              </div>
+              <div
+                className={`profile-menu-item ${workoutView === "drafts" ? "active" : ""}`}
+                onClick={() => setWorkoutView("drafts")}
+              >
+                Drafts
+              </div>
+              <div
+                className={`profile-menu-item ${workoutView === "starred" ? "active" : ""}`}
+                onClick={() => setWorkoutView("starred")}
+              >
+                Starred
+              </div>
+              <div className="profile-menu-underline" style={underlineStyle}></div>
+            </div>
+          </div>
+        ) : (
+          <div className="profile-menu-container">All Posts</div>
+        )}
+
         {workoutsList}
       </div>
     </div>

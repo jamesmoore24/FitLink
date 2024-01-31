@@ -124,7 +124,7 @@
 .stats-menu {
   display: flex;
   justify-content: space-around;
-  background-color: #f0f0f0;
+  background-color: var(--grey);
   width: 100%;
   box-sizing: border-box;
   font-size: var(--m);

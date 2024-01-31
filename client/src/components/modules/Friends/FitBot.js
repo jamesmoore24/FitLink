@@ -12,7 +12,7 @@ const ChatComponent = (props) => {
   const [postText, setPostText] = useState("");
   const [fadingOutIndex, setFadingOutIndex] = useState(null);
   const messagesEndRef = useRef(null);
-  const [runnable, setRunnable] = useState(false);
+  const [runnable, setRunnable] = useState(true);
   const [suggestions, setSuggestions] = useState([
     "What are some exercises you'd recommend to a beginner?",
     "What are the best ways to increase endurance?",
@@ -54,23 +54,7 @@ const ChatComponent = (props) => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      console.log("Calling");
-      get("/api/isrunnable")
-        .then((res) => {
-          if (res.isrunnable) {
-            setRunnable(true);
-            clearInterval(intervalId); // Stop checking once it's runnable
-          }
-        })
-        .catch((error) => {
-          console.error("Error checking isrunnable: ", error);
-          // Optionally handle errors, such as by retrying less frequently
-        });
-    }, 1000); // 2000 milliseconds = 2 seconds
-
     setSuggestions(shuffleArray(suggestions));
-    return () => clearInterval(intervalId); // Clean up interval on component unmount
   }, []);
 
   useEffect(() => {
@@ -95,18 +79,16 @@ const ChatComponent = (props) => {
       .then((res) => {
         const botResponse = {
           id: Date.now(),
-          text: res.queryresponse,
+          text: res.response,
           sender: "bot",
           imgSrc: FitBot,
         };
         props.setMessages((prevMessages) => prevMessages.slice(0, -1));
         props.setMessages((prevMessages) => [...prevMessages, botResponse]);
       })
-      .catch(() => {
-        setResponse("error during query. check your server logs!");
-        setTimeout(() => {
-          setResponse("");
-        }, 2000);
+      .catch((err) => {
+        console.log(err);
+        setTimeout(() => {}, 2000);
       });
   };
 

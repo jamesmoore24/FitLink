@@ -18,6 +18,15 @@ const Like = require("./models/like");
 const Star = require("./models/star");
 const Document = require("./models/document");
 
+const { OpenAI } = require("openai");
+const ANYSCALE_API_KEY = process.env.ANYSCALE_API_KEY;
+const MODEL = "meta-llama/Llama-2-13b-chat-hf";
+
+const anyscale = new OpenAI({
+  baseURL: "https://api.endpoints.anyscale.com/v1",
+  apiKey: ANYSCALE_API_KEY,
+});
+
 // import authentication library
 const auth = require("./auth");
 
@@ -26,7 +35,6 @@ const router = express.Router();
 
 //initialize socket
 const socketManager = require("./server-socket");
-const ragManager = require("./rag");
 
 router.post("/login", auth.login);
 router.post("/login/grading", auth.loginGrading);
@@ -173,6 +181,28 @@ router.get("/workouts/feed", (req, res) => {
 router.get("/workouts/profile/:userId", (req, res) => {
   const userId = req.params.userId;
   Workout.find({ creator_id: userId, current: false }).then((workouts) => res.send(workouts));
+});
+
+router.get("/workouts/profile/drafts/:userId", (req, res) => {
+  const userId = req.params.userId;
+  Workout.find({ creator_id: userId, current: false, posted: false }).then((workouts) =>
+    res.send(workouts)
+  );
+});
+
+router.get("/workouts/profile/starred/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const stars = await Star.find({ userId: userId });
+
+    // Using Promise.all to wait for all the Workout.findbyId operations to complete
+    const workoutList = await Promise.all(stars.map((star) => Workout.findById(star.workoutId)));
+
+    res.send(workoutList);
+  } catch (error) {
+    // Sending a 500 Internal Server Error response in case of an error
+    res.status(500).send(error);
+  }
 });
 
 router.get("/exercises/year", (req, res) => {
@@ -485,82 +515,33 @@ router.post("/user/follow", (req, res) => {
     });
 });
 
-//RAG
-
-router.get("/isrunnable", (req, res) => {
-  res.send({ isrunnable: ragManager.isRunnable() });
-});
-
-router.post("/document", (req, res) => {
-  const newDocument = new Document({
-    content: req.body.content,
-  });
-
-  const addDocument = async (document) => {
-    try {
-      await document.save();
-      await ragManager.addDocument(document);
-      res.send(document);
-    } catch (error) {
-      console.log("error:", error);
-      res.status(500);
-      res.send({});
-    }
-  };
-
-  addDocument(newDocument);
-});
-
-router.get("/document", (req, res) => {
-  Document.find({}).then((documents) => res.send(documents));
-});
-
-router.post("/updateDocument", (req, res) => {
-  const updateDocument = async (id) => {
-    const document = await Document.findById(id);
-    if (!document) res.send({});
-    try {
-      document.content = req.body.content;
-      await document.save();
-      await ragManager.updateDocument(document);
-      res.send({});
-    } catch (error) {
-      console.log("error:", error);
-      res.status(500);
-      res.send({});
-    }
-  };
-  updateDocument(req.body._id);
-});
-
-router.post("/deleteDocument", (req, res) => {
-  const deleteDocument = async (id) => {
-    const document = await Document.findById(id);
-    if (!document) res.send({});
-    try {
-      await ragManager.deleteDocument(id);
-      await document.remove();
-      res.send({});
-    } catch {
-      // if deleting from the vector db failed (e.g., it doesn't exist)
-      await document.remove();
-      res.send({});
-    }
-  };
-  deleteDocument(req.body._id);
-});
-
 router.post("/query", (req, res) => {
   const makeQuery = async () => {
     try {
-      const queryresponse = await ragManager.retrievalAugmentedGeneration(req.body.query);
-      res.send({ queryresponse });
+      const prompt = {
+        model: MODEL,
+        messages: [
+          {
+            role: "system",
+            content:
+              "Your role is to be a professional personal trainer named FitBot which answer questions for a client.\n" +
+              "Please do not mention that you were given any context in your response and be very professional.",
+          },
+          { role: "user", content: `${req.body.query}` },
+        ],
+        // temperature controls the variance in the llms responses
+        // higher temperature = more variance
+        temperature: 0.7,
+      };
+      const completion = await anyscale.chat.completions.create(prompt);
+      console.log(completion.choices[0].message.content);
+      res.send({ response: completion.choices[0].message.content });
     } catch (error) {
-      console.log("error:", error);
-      res.status(500);
-      res.send({});
+      console.error("Error:", error);
+      res.status(500).send({});
     }
   };
+
   makeQuery();
 });
 

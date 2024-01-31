@@ -248,3 +248,57 @@ input[type="file"] {
   overflow: hidden; /* Hide the scrollbar */
   resize: none; /* Disable manual resize */
 }
+
+.profile-menu-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40vw;
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 24px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile-menu {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--grey);
+  width: 50%;
+  box-sizing: border-box;
+  font-size: var(--m);
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.profile-menu-item {
+  cursor: pointer;
+  padding: 5px;
+  color: grey;
+  transition: color 0.3s;
+  position: relative; /* Added for notification positioning */
+}
+
+.profile-menu-item.active {
+  color: black;
+}
+
+.profile-menu-underline {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: black;
+  transition: left 0.3s, width 0.3s;
+}
+
+.profile-setsDisplay-container {
+  display: flex;
+}
+
+.profile-text-empty {
+  color: var(--darkgrey);
+  align-self: center;
+}
