@@ -32,6 +32,7 @@
   justify-content: space-between;
   font-size: var(--s);
   overflow: auto;
+  padding-top: 10px;
 }
 
 .activityTracker-topText-container {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { get, post } from "../../../utilities";
 
 import "./Comment.css";
@@ -17,6 +17,7 @@ import ProfilePicture from "../../../public/example_profile.jpg";
  */
 const Comment = (props) => {
   const [profilePicture, setProfilePicture] = useState("");
+  const navigate = useNavigate();
   //need to use map or something to render all of the squares
 
   useEffect(() => {
@@ -65,6 +66,9 @@ const Comment = (props) => {
           className="comment-profilePicture"
           src={profilePicture}
           style={{ backgroundImage: `url(${profilePicture})` }}
+          onClick={() => {
+            navigate(`/profile/${props.creator_id}`);
+          }}
         />
       </div>
       <div className="comment-nameAndComment-container">

@@ -25,6 +25,10 @@
   background-repeat: no-repeat;
 }
 
+.comment-profilePicture:hover {
+  cursor: pointer;
+}
+
 .comment-nameAndComment-container {
   display: flex;
   flex-direction: column;

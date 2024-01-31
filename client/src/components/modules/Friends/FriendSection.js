@@ -44,7 +44,10 @@ const FriendSection = ({ friend, followBack, followStatus, onFollowClick }) => {
       <div className="friend-followBack">{followBackText}</div>
       <button
         onClick={onFollowClick}
-        style={{ backgroundColor: buttonColor }}
+        style={{
+          backgroundColor: buttonColor,
+          color: followStatus === "following" ? "#000000" : "#FFFFFF",
+        }}
         className="friend-followButton"
       >
         {buttonText}
