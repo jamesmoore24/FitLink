@@ -2025,3 +2025,125 @@ ValueError:
 [32mINFO[0m:     [30-01-2024 17:37:12] ::1:49613 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
 [32mINFO[0m:     [30-01-2024 17:37:13] ::1:49613 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
 [32mINFO[0m:     [30-01-2024 17:37:13] ::1:49614 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 18:35:16] ::1:50108 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 18:35:16] ::1:50109 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 18:35:16] ::1:50108 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 18:35:17] ::1:50108 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/add HTTP/1.1" 201
+[32mINFO[0m:     [30-01-2024 18:35:17] ::1:50109 - "GET /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/count HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 20:13:50] ::1:53403 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 20:13:50] ::1:53404 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 20:13:50] ::1:53403 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 21:33:41] ::1:61808 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [30-01-2024 21:33:41] ::1:61809 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/get HTTP/1.1" 200
+[31mERROR[0m:    [30-01-2024 21:33:41] 
+                You must provide either ids, where, or where_document to delete. If
+                you want to delete all data in a collection you can delete the
+                collection itself using the delete_collection method. Or alternatively,
+                you can get() all the relevant ids and then delete them.
+                
+Traceback (most recent call last):
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/anyio/streams/memory.py", line 97, in receive
+    return self.receive_nowait()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/anyio/streams/memory.py", line 92, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 159, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/anyio/streams/memory.py", line 112, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 80, in catch_exceptions_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 189, in __call__
+    with collapse_excgroups():
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/_utils.py", line 91, in collapse_excgroups
+    raise exc
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 94, in check_http_version_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/routing.py", line 762, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/routing.py", line 782, in app
+    await route.handle(scope, receive, send)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/routing.py", line 297, in handle
+    await self.app(scope, receive, send)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/routing.py", line 77, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/routing.py", line 72, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/fastapi/routing.py", line 299, in app
+    raise e
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/starlette/concurrency.py", line 40, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2134, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 851, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/chromadb/auth/fastapi.py", line 234, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 568, in delete
+    return self._api._delete(
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesmoore/Desktop/FitLink/server/venv/lib/python3.11/site-packages/chromadb/api/segment.py", line 599, in _delete
+    raise ValueError(
+ValueError: 
+                You must provide either ids, where, or where_document to delete. If
+                you want to delete all data in a collection you can delete the
+                collection itself using the delete_collection method. Or alternatively,
+                you can get() all the relevant ids and then delete them.
+                
+[32mINFO[0m:     [30-01-2024 21:33:41] ::1:61808 - "POST /api/v1/collections/36a6429a-a4d8-4649-bea9-c14231496aa8/delete HTTP/1.1" 500

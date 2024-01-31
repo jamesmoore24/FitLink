@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { get, post } from "../../../utilities";
 
+import { useParams } from "react-router-dom";
+
 import "./ActivityTracker.css";
 
 /**
@@ -10,16 +12,11 @@ const ActivityTracker = (props) => {
   const [exercises, setExercises] = useState([]);
   const [setData, setSetData] = useState([]);
   const [topText, setTopText] = useState([]);
-  //Obtain the date for today and subtract one year in javascript
-  //get all of the exercises for a particular user
-  //parse the data and take the amount of sets done for each exercise and sum them
-  //calculate a maximum and scale all of the other set #'s for each day respectively
-  //Iterate through the normalized set number array (1-10) and render a square with the color that matches the normalized number
-  //somehow make the squares wrap from bottom to top once the container reaches a certain max heightlz
+  const { userId } = useParams();
 
   useEffect(() => {
     setTopText(getMonthSwitches());
-    get("/api/exercises/year", { creator_id: props.userId }).then((exercises) => {
+    get("/api/exercises/year", { creator_id: userId }).then((exercises) => {
       let reversedExercises = exercises.reverse();
       setExercises(reversedExercises);
     });

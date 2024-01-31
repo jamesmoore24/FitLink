@@ -342,66 +342,69 @@ const NewExercise = (props) => {
         </div>
       </div>
 
-      <div className="newExercise-setNumber-container">
-        {setNumber === sets.length ? "New" : "Editing"} set #{setNumber + 1}
-        <div className="newExercise-trashPR-container">
-          {selectedName !== null && (
-            <div className="newExercise-PR-container">
-              {props.newPR ? "New " : ""}PR: {pr} lbs
+      <div className="newExercise-entry-container">
+        <div className="newExercise-setNumber-container">
+          {setNumber === sets.length ? "New" : "Editing"} set #{setNumber + 1}
+          <div className="newExercise-trashPR-container">
+            {selectedName !== null && (
+              <div className="newExercise-PR-container">
+                {props.newPR ? "New " : ""}PR: {pr} lbs
+              </div>
+            )}
+            {setNumber !== sets.length && (
+              <img
+                src={trashCanSrc}
+                className="newExercise-setDelete"
+                onMouseEnter={() => {
+                  setTrashCanSrc(TrashCanHalfFilled);
+                }}
+                onMouseLeave={() => setTrashCanSrc(TrashCan)}
+                onClick={deleteSet}
+              />
+            )}
+          </div>
+        </div>
+        <div className="newExercise-setInfo-container">
+          <div className="newExercise-setInfoIndividual-container">
+            <div className="newExercise-setInfoIndividual-text-container">
+              <div className="newExercise-setInfoIndividual-titleText">Reps</div>
+              <div className="newExercise-setInfoIndividual-subText"></div>
             </div>
-          )}
-          {setNumber !== sets.length && (
-            <img
-              src={trashCanSrc}
-              className="newExercise-setDelete"
-              onMouseEnter={() => {
-                setTrashCanSrc(TrashCanHalfFilled);
-              }}
-              onMouseLeave={() => setTrashCanSrc(TrashCan)}
-              onClick={deleteSet}
+            <input
+              className="newExercise-setInfoIndividual-input"
+              placeholder="?"
+              value={reps}
+              onChange={(e) => setReps(e.target.value)}
             />
-          )}
-        </div>
-      </div>
-      <div className="newExercise-setInfo-container">
-        <div className="newExercise-setInfoIndividual-container">
-          <div className="newExercise-setInfoIndividual-text-container">
-            <div className="newExercise-setInfoIndividual-titleText">Reps</div>
-            <div className="newExercise-setInfoIndividual-subText"></div>
           </div>
-          <input
-            className="newExercise-setInfoIndividual-input"
-            placeholder="?"
-            value={reps}
-            onChange={(e) => setReps(e.target.value)}
-          />
-        </div>
-        <div className="newExercise-setInfoIndividual-container">
-          <div className="newExercise-setInfoIndividual-text-container">
-            <div className="newExercise-setInfoIndividual-titleText">Weight</div>
-            <div className="newExercise-setInfoIndividual-subText">(lbs)</div>
+          <div className="newExercise-setInfoIndividual-container">
+            <div className="newExercise-setInfoIndividual-text-container">
+              <div className="newExercise-setInfoIndividual-titleText">Weight</div>
+              <div className="newExercise-setInfoIndividual-subText">(lbs)</div>
+            </div>
+            <input
+              className="newExercise-setInfoIndividual-input"
+              placeholder="?"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+            />
           </div>
-          <input
-            className="newExercise-setInfoIndividual-input"
-            placeholder="?"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-          />
-        </div>
-        <div className="newExercise-setInfoIndividual-container">
-          <div className="newExercise-setInfoIndividual-text-container">
-            <div className="newExercise-setInfoIndividual-titleText">Difficulty</div>
-            <div className="newExercise-setInfoIndividual-subText">(1-10)</div>
-          </div>
+          <div className="newExercise-setInfoIndividual-container">
+            <div className="newExercise-setInfoIndividual-text-container">
+              <div className="newExercise-setInfoIndividual-titleText">Difficulty</div>
+              <div className="newExercise-setInfoIndividual-subText">(1-10)</div>
+            </div>
 
-          <input
-            className="newExercise-setInfoIndividual-input"
-            placeholder="?"
-            value={rpe}
-            onChange={(e) => setRPE(e.target.value)}
-          />
+            <input
+              className="newExercise-setInfoIndividual-input"
+              placeholder="?"
+              value={rpe}
+              onChange={(e) => setRPE(e.target.value)}
+            />
+          </div>
         </div>
       </div>
+
       <div className="newExercise-previousSets-container">
         <div className="newExercise-previousSets-text">
           {sets.length === 0 ? "No previous sets" : "Previous sets:"}

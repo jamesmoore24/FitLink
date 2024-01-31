@@ -93,6 +93,15 @@
   z-index: 2;
 }
 
+.set-square-date {
+  position: absolute; /* or 'relative' depending on your layout */
+  top: 0;
+  left: 0;
+  padding: 2px 5px; /* Adjust as needed */
+  font-size: 0.5em; /* Adjust as needed */
+  /* Other styles like background-color, color, etc. */
+}
+
 @media only screen and (max-aspect-ratio: 9/8) {
   .setSquare-container {
     display: flex;

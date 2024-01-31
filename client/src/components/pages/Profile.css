@@ -46,6 +46,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 50%;
 }
 
 .profile-edit-container {
@@ -54,7 +55,7 @@
   align-items: center;
   justify-content: center;
   top: 0;
-  right: 0;
+  left: 0;
   height: 3em;
   width: 3em;
   margin: var(--l);
@@ -85,7 +86,7 @@
   align-items: center;
   justify-content: center;
   top: 0;
-  right: 0;
+  left: 0;
   height: 3em;
   width: 3em;
   font-size: var(--m);
@@ -105,8 +106,8 @@
 }
 
 .profile-pfp {
-  width: 15em;
-  height: 15em;
+  width: 10em;
+  height: 10em;
   border-radius: 50%;
   background-size: cover;
   background-position: top;
@@ -157,25 +158,29 @@ input[type="file"] {
   transform: scale(0.95); /* Scale down on click */
 }
 
-.profile-allTextInput-container .profile-textInputTitle-container {
+.profile-allTextInput-container {
   display: flex;
   flex-direction: column;
+  width: 50%;
 }
 
 .profile-textInputTitle-container {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  width: 100%;
+}
+
+.profile-textInputTitle-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-personalInfo-container {
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   min-width: 40vw;
   max-width: 40vw;
-  min-height: 100%;
   border-radius: 20px;
   box-sizing: border-box;
   padding: var(--l);
@@ -187,12 +192,13 @@ input[type="file"] {
   font-size: var(--m);
 }
 
-.profile-textInput-container {
+.profile-textInput-container,
+.profile-textInput-container-post {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
   background-color: var(--grey);
-  height: 3em;
-  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
   font-size: 20px;
   padding: 10px;
@@ -200,8 +206,29 @@ input[type="file"] {
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+/* Unique properties for .profile-textInput-container-post */
+.profile-textInput-container-post {
+  max-height: 100%;
+  overflow-wrap: break-word;
+}
+
+.bio-display {
+  word-wrap: break-word; /* ensures long words do not overflow */
+  white-space: pre-wrap; /* maintains spaces and line breaks */
+  width: 100%; /* ensures it takes the full width */
+  padding-left: 10px;
+  font-size: 20px;
+  /* additional styling as needed */
+}
+
 .profile-textInput-container.editable:hover,
 .profile-textInput-container.editable:focus-within {
+  background-color: var(--medgrey);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.profile-textInput-container-post.editable:hover,
+.profile-textInput-container-post.editable:focus-within {
   background-color: var(--medgrey);
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -216,7 +243,8 @@ input[type="file"] {
   outline: none;
   padding-left: 10px;
   font-size: 20px;
-  height: 100%;
   width: 80%;
   border-radius: 20px;
+  overflow: hidden; /* Hide the scrollbar */
+  resize: none; /* Disable manual resize */
 }

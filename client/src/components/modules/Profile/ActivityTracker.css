@@ -21,7 +21,7 @@
 .activityTracker-title {
   text-align: left;
   font-weight: 600;
-  font-size: var(--l);
+  font-size: 1em;
 }
 
 .activityTracker-graphText-container {

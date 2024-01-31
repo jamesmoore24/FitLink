@@ -199,6 +199,10 @@ router.get("/exercises/user", (req, res) => {
   Exercise.find({ creator_id: req.user._id }).then((exercises) => res.send(exercises));
 });
 
+router.get("/exercises/user/any", (req, res) => {
+  Exercise.find({ creator_id: req.query.id }).then((exercises) => res.send(exercises));
+});
+
 router.get("/exercises/user/pr", (req, res) => {
   Exercise.find({ creator_id: req.user._id, posted: true, name: req.query.name }).then(
     (exercises) => res.send(exercises)
@@ -212,7 +216,7 @@ router.post("/exercises/user/pr/update", (req, res) => {
       exercise.pr = req.body.pr;
       exercise.save().then(res.send(exercise));
     })
-    .catch((err) => {});
+    .catch((err) => {}); //this will catch the error if deleting an exercise that isn't selected anymore
 });
 
 router.post("/exercise/create", (req, res) => {

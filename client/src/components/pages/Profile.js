@@ -4,6 +4,7 @@ import { get, post } from "../../utilities";
 
 import Post from "../modules/Posts/Post";
 import ActivityTracker from "../modules/Profile/ActivityTracker";
+import Stats from "../modules/Profile/Stats";
 
 import "../../utilities.css";
 import "./Profile.css";
@@ -217,23 +218,30 @@ const Profile = (props) => {
             <div className="profile-textInputTitle-container">
               <div className="profile-personalInfo-text">Bio</div>
               <div
-                className={`profile-textInput-container ${isEditing ? "editable" : "non-editable"}`}
+                className={`profile-textInput-container-post ${
+                  isEditing ? "editable" : "non-editable"
+                }`}
               >
-                <input
-                  className="profile-textInput"
-                  placeholder="Add your name..."
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  readOnly={!isEditing}
-                />
+                {isEditing ? (
+                  <input
+                    className="profile-textInput"
+                    placeholder={isEditing ? "Add your bio..." : ""}
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                    readOnly={!isEditing}
+                  />
+                ) : (
+                  <div className="bio-display">{bio.length > 0 ? bio : "None"}</div>
+                )}
               </div>
             </div>
           </div>
         </div>
+        <Stats />
       </div>
 
       <div className="profile-right-container" onClick={() => console.log(props.userId)}>
-        {props.userId === userId && <ActivityTracker userId={props.userId} />}
+        <ActivityTracker userId={props.userId} />
         {workoutsList}
       </div>
     </div>

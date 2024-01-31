@@ -13,6 +13,7 @@ import "./SetSquare.css";
  * @param {string} setNumber
  * @param {() => {}} setSetNumber
  * @param {() => {}} deleteSet
+ * @param {string} date
  * @param {string} viewStyle //either "create" or "view"
  */
 const SetSquare = (props) => {
@@ -68,6 +69,7 @@ const SetSquare = (props) => {
       <div className={props.viewStyle === "create" ? "setSquare-text-create" : "setSquare-text"}>
         {props.weight}
       </div>
+      {props.date && <div className="set-square-date">{props.date}</div>}
     </div>
   );
 };
