@@ -57,7 +57,12 @@ const Profile = (props) => {
       }
     }
 
-    if (workoutView === "all") {
+    if (userId !== props.userId) {
+      get(`/api/workouts/profile/public/${userId}`).then((workoutObjs) => {
+        let reversedWorkoutObjs = workoutObjs.reverse();
+        setWorkouts(reversedWorkoutObjs);
+      });
+    } else if (workoutView === "all") {
       get(`/api/workouts/profile/${userId}`).then((workoutObjs) => {
         let reversedWorkoutObjs = workoutObjs.reverse();
         setWorkouts(reversedWorkoutObjs);

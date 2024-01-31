@@ -187,6 +187,13 @@ router.get("/workouts/profile/:userId", (req, res) => {
   Workout.find({ creator_id: userId, current: false }).then((workouts) => res.send(workouts));
 });
 
+router.get("/workouts/profile/public/:userId", (req, res) => {
+  const userId = req.params.userId;
+  Workout.find({ creator_id: userId, current: false, posted: true }).then((workouts) =>
+    res.send(workouts)
+  );
+});
+
 router.get("/workouts/profile/drafts/:userId", (req, res) => {
   const userId = req.params.userId;
   Workout.find({ creator_id: userId, current: false, posted: false }).then((workouts) =>

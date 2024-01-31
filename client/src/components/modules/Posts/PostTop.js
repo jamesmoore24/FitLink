@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import "./PostTop.css";
 import { get, post } from "../../../utilities";
 
@@ -31,6 +31,7 @@ import TrashCanHalfFilled from "../../../public/trashcan_half_filled.png";
 const PostTop = (props) => {
   const [trashCanSrc, setTrashCanSrc] = useState(TrashCan);
   const [pbCount, setPBCount] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     get("/api/exercises", { parent: props.workout_id }).then((exercises) => {
@@ -71,6 +72,9 @@ const PostTop = (props) => {
             className="postTop-profilePicture"
             src={props.creator_pfp}
             style={{ backgroundImage: `url(${props.creator_pfp})` }}
+            onClick={() => {
+              navigate(`/profile/${props.creator_id}`);
+            }}
           />
         </div>
 

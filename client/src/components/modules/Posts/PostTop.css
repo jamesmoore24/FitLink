@@ -26,6 +26,10 @@
   background-repeat: no-repeat;
 }
 
+.postTop-profilePicture:hover {
+  cursor: pointer;
+}
+
 .postTop-profilePictureAndDescription {
   display: flex;
 }
