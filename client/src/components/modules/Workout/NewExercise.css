@@ -248,12 +248,12 @@
 .newExercise-setInfoIndividual-text-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
+  height: 3em;
 }
 
 .newExercise-setInfoIndividual-titleText {
-  margin-bottom: 8px;
   box-sizing: border-box;
   text-align: center;
 }
