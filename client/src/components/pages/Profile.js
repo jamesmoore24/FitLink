@@ -276,7 +276,7 @@ const Profile = (props) => {
                 className={`profile-menu-item ${workoutView === "drafts" ? "active" : ""}`}
                 onClick={() => setWorkoutView("drafts")}
               >
-                Drafts
+                Private
               </div>
               <div
                 className={`profile-menu-item ${workoutView === "starred" ? "active" : ""}`}

@@ -20,8 +20,6 @@ const ActivityTracker = (props) => {
       let reversedExercises = exercises.reverse();
       setExercises(reversedExercises);
     });
-
-    //get("/api/nukedb").then((data) => console.log("Database objects deleted"));
   }, []);
 
   useEffect(() => {

@@ -24,8 +24,8 @@ const Info = (props) => {
         <li>
           <h3>Starting a Workout</h3>
           <p>
-            Click the "plus" icon to automatically start a workout. Your progress is saved even if
-            you switch tabs.
+            Click the "plus" icon to automatically start a workout. Your current progress is saved
+            even if you switch tabs or log out!
           </p>
         </li>
         <li>
@@ -70,9 +70,9 @@ const Info = (props) => {
         <li>
           <h3>Completing Your Workout</h3>
           <p>
-            Finish by saving your workout as a draft or posting it on FitLink for others to see. You
-            can change the visibility of your post later by toggling its visibility either in the
-            Feed or in your Profile.
+            Finish by posting privately for your eyes only or posting it on FitLink for others to
+            see. You can change the visibility of your post later by toggling its visibility either
+            in the Feed or in your Profile.
           </p>
         </li>
         <li>

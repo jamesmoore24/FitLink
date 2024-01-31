@@ -65,7 +65,7 @@ const NewWorkout = (props) => {
         navigate(`/profile/${props.userId}`);
         setErrorText("");
         props.setNotificationOn(true);
-        props.setNotificationText("Workout saved to drafts!");
+        props.setNotificationText("Workout posted privately!");
       });
     } else if (exercises.length == 0) {
       setErrorText("You must save an exercise first.");
@@ -128,7 +128,7 @@ const NewWorkout = (props) => {
                 saveWorkout();
               }}
             >
-              Save to Drafts
+              Post Privately
             </button>
             <button
               className="newWorkout-postBoxButton"
@@ -136,7 +136,7 @@ const NewWorkout = (props) => {
                 postWorkout();
               }}
             >
-              Post Workout
+              Post Publicly
             </button>
           </div>
         </div>

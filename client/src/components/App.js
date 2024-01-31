@@ -51,7 +51,6 @@ const App = () => {
   const handleLogin = (credentialResponse) => {
     const userToken = credentialResponse.credential;
     const decodedCredential = jwt_decode(userToken);
-    console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
       navigate("/feed");
@@ -60,7 +59,6 @@ const App = () => {
   };
 
   const handleGradingLogin = () => {
-    console.log("Trying to sign into grading profile");
     post("/api/login/grading").then((user) => {
       setUserId(user._id);
       navigate("/feed");

@@ -77,8 +77,6 @@ const Post = (props) => {
 
     if (props.creator_id) {
       get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
-        console.log(`HERE ${user.profile_picture}`);
-        console.log(props.creator_id);
         setProfilePicture(user.profile_picture);
       });
     }

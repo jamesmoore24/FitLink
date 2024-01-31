@@ -153,18 +153,10 @@ router.post("/workout/delete", (req, res) => {
   Workout.deleteOne({ _id: req.body.workout_id }).then((workout) => {
     res.send(workout);
   });
-  Exercise.deleteMany({ parent: req.body.workout_id }).then((workout) =>
-    console.log("Recursive exercises deleted")
-  );
-  Comment.deleteMany({ parent: req.body.workout_id }).then((workout) =>
-    console.log("Recursive comment delete")
-  );
-  Like.deleteMany({ workoutId: req.body.workout_id }).then((workout) =>
-    console.log("Recursive like delete")
-  );
-  Star.deleteMany({ workoutId: req.body.workout_id }).then((workout) =>
-    console.log("Recursive star delete")
-  );
+  Exercise.deleteMany({ parent: req.body.workout_id }).then((workout) => {});
+  Comment.deleteMany({ parent: req.body.workout_id }).then((workout) => {});
+  Like.deleteMany({ workoutId: req.body.workout_id }).then((workout) => {});
+  Star.deleteMany({ workoutId: req.body.workout_id }).then((workout) => {});
 });
 
 router.post("/workout/change-visibility", (req, res) => {
@@ -252,7 +244,6 @@ router.get("/exercises/user/pr", (req, res) => {
 });
 
 router.post("/exercises/user/pr/update", (req, res) => {
-  console.log(req.body);
   Exercise.findById(req.body.id)
     .then((exercise) => {
       exercise.pr = req.body.pr;
@@ -314,12 +305,12 @@ router.post("/like", (req, res) => {
       userId: req.user._id,
       workoutId: req.body.workoutId,
     });
-    like.save().then((like) => console.log("like saved"));
+    like.save().then((like) => {});
   } else {
     Like.deleteOne({
       userId: req.user._id,
       workoutId: req.body.workoutId,
-    }).then(() => console.log("like deleted"));
+    }).then(() => {});
   }
 });
 
@@ -335,12 +326,12 @@ router.post("/star", (req, res) => {
       userId: req.user._id,
       workoutId: req.body.workoutId,
     });
-    star.save().then((star) => console.log("Star saved"));
+    star.save().then((star) => {});
   } else {
     Star.deleteOne({
       userId: req.user._id,
       workoutId: req.body.workoutId,
-    }).then(() => console.log("Star deleted"));
+    }).then(() => {});
   }
 });
 
@@ -546,7 +537,6 @@ router.post("/query", (req, res) => {
         temperature: 0.7,
       };
       const completion = await anyscale.chat.completions.create(prompt);
-      console.log(completion.choices[0].message.content);
       res.send({ response: completion.choices[0].message.content });
     } catch (error) {
       console.error("Error:", error);

@@ -167,7 +167,6 @@ const NewExercise = (props) => {
   }, [setChange]);
 
   const getPR = (name, sets) => {
-    console.log(name);
     get("/api/exercises/user/pr", { name: name }).then((exercises) => {
       let maxWeightPrev = 0;
 
@@ -316,9 +315,10 @@ const NewExercise = (props) => {
           {selectedName === null &&
             exerciseList
               .filter((exercise) => exercise.toLowerCase().includes(search.toLowerCase()))
-              .map((exercise) => {
+              .map((exercise, ix) => {
                 return (
                   <div
+                    key={ix}
                     className="newExercise-exerciseRecommendation"
                     onClick={() => {
                       setSelectedName(exercise);

@@ -132,9 +132,9 @@ const Friends = (props) => {
   const renderFriendSection = () => {
     switch (selected) {
       case "friends":
-        return filteredFriends.map((friend) => (
+        return filteredFriends.map((friend, ix) => (
           <FriendSection
-            key={friend._id}
+            key={ix}
             friend={friend.friend}
             followBack={friend.followBack}
             followStatus={"following"}
@@ -142,18 +142,18 @@ const Friends = (props) => {
           />
         ));
       case "explore":
-        return filteredExplore.map((user) => (
+        return filteredExplore.map((user, ix) => (
           <FriendSection
-            key={user._id}
+            key={ix}
             friend={user}
             followStatus={"follow"}
             onFollowClick={() => handleFollowClick(user._id, "follow")}
           />
         ));
       case "requests":
-        return filteredRequests.map((request) => (
+        return filteredRequests.map((request, ix) => (
           <FriendSection
-            key={request._id}
+            key={ix}
             friend={request}
             followStatus={"followBack"}
             onFollowClick={() => handleFollowClick(request._id, "follow")}

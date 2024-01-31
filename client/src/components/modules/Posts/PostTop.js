@@ -53,15 +53,12 @@ const PostTop = (props) => {
   const toggleStar = () => {
     props.setIsStarred(!props.isStarred);
     post("/api/star/", { workoutId: props.workout_id, isStarred: !props.isStarred }).then(
-      (star) => {
-        console.log("Star logged.");
-      }
+      (star) => {}
     );
   };
 
   const toggleVisibility = () => {
     post("/api/workout/change-visibility", { id: props.workout_id }).then((post) => {
-      console.log("Visibility changed");
       props.setVisibility(!props.visibility);
     });
   };
