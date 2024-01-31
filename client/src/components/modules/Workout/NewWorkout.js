@@ -123,7 +123,7 @@ const NewWorkout = (props) => {
           <div className="newWorkout-postError">{errorText}</div>
           <div className="newWorkout-postBox">
             <button
-              className="newWorkout-postBoxButton"
+              className="newWorkout-postBoxButton-save"
               onClick={() => {
                 saveWorkout();
               }}

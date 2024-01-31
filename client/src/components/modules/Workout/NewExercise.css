@@ -131,7 +131,7 @@
 .newExercise-suggestions-container {
   width: 100%;
   display: flex;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-bottom: 10px;
   align-items: center;
   overflow-x: auto; /* Enable horizontal scrolling */
@@ -275,6 +275,7 @@
   text-align: center;
   word-wrap: break-word;
   height: 70%;
+  margin-bottom: 20px;
 }
 
 .newExercise-previousSets-container {
