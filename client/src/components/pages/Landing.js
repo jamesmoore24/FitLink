@@ -21,18 +21,14 @@ const Landing = (props) => {
   const words = [
     "working-out",
     "benching",
-    "running",
-    "connecting",
     "deadlifting",
-    "biking",
     "squatting",
     "exercising",
     "lunging",
     "powerlifting",
-    "rowing",
-    "cardio",
+    "snatching",
   ];
-  const duration = 3000;
+  const duration = 4000;
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -70,8 +66,8 @@ const Landing = (props) => {
         <div className="text-container-glass">
           <img src={LaptopImage} className="laptop-example-container" />
           <h3>
-            FitLink makes it easy to track workouts, connect with other gymgoers and achieve your
-            personal fitness goals in a fun and intuitive way.{" "}
+            FitLink makes it easy to track your workouts, connect with friends, share your progress,
+            and achieve your goals faster.
           </h3>
         </div>
       </div>
