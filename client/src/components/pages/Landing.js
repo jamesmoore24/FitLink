@@ -66,8 +66,8 @@ const Landing = (props) => {
         <div className="text-container-glass">
           <img src={LaptopImage} className="laptop-example-container" />
           <h3>
-            FitLink makes it easy to track your workouts, connect with friends, share your progress,
-            and achieve your goals faster.
+            Ditch the spreadsheet. FitLink makes it easy to track your workouts, connect with
+            friends, share your progress, and achieve your goals faster than ever before.
           </h3>
         </div>
       </div>
