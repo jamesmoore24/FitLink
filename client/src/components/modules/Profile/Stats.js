@@ -140,9 +140,10 @@ const Stats = () => {
                 {selectedName === null &&
                   exerciseList
                     .filter((exercise) => exercise.toLowerCase().includes(search.toLowerCase()))
-                    .map((exercise) => {
+                    .map((exercise, ix) => {
                       return (
                         <div
+                          key={ix}
                           className="stats-exerciseRecommendation"
                           onClick={() => {
                             setSelectedName(exercise);
