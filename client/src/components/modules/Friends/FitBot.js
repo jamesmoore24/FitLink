@@ -139,8 +139,8 @@ const ChatComponent = (props) => {
       <div className="fitbot-chat-container">
         {props.messages.length > 0 ? (
           <div className="fitbot-chat-messages">
-            {props.messages.map((message) => (
-              <ChatBubble key={message.id} text={message.text} isUser={message.sender === "user"} />
+            {props.messages.map((message, ix) => (
+              <ChatBubble key={ix} text={message.text} isUser={message.sender === "user"} />
             ))}
             <div ref={messagesEndRef} /> {/* Invisible element at the end of the messages */}
           </div>
