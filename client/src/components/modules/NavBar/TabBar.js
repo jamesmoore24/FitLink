@@ -9,6 +9,8 @@ import Profile from "../../../public/TabAssets/user.png";
 import ProfileFilled from "../../../public/TabAssets/user_filled.png";
 import Plus from "../../../public/TabAssets/plus.png";
 import PlusFilled from "../../../public/TabAssets/plus_filled.png";
+import Info from "../../../public/TabAssets/information.png";
+import InfoFilled from "../../../public/TabAssets/information_filled.png";
 
 /**
  * The navigation bar at the top of all pages. Takes no props.
@@ -62,6 +64,17 @@ const TabBar = ({ userId, handleLogin, handleLogout }) => {
               <div className="bottom-border" />
             </div>
             <div className="label-container ">Profile</div>
+          </Link>
+
+          <Link to={`/info`} className="icon-square-container u-flexColumn no-underline">
+            <div className="icon-container u-flexColumn u-flex-justifyCenter u-flex-alignCenter">
+              <img
+                src={selectedTab === `/info` ? InfoFilled : Info}
+                className="icon-imageContainer"
+              />
+              <div className="bottom-border" />
+            </div>
+            <div className="label-container ">Info</div>
           </Link>
         </div>
       )}

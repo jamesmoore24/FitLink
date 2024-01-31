@@ -14,12 +14,10 @@ const NavBar = ({ userId, handleLogin, handleLogout, handleGradingLogin }) => {
     <div className="NavBar-container">
       <Logo />
       {userId && <TabBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />}
-      <div className={`NavBar-login-container ${userId ? "logged-in" : ""}`}>
-        {!userId && (
-          <GradingButton handleGradingLogin={handleGradingLogin} handleLogout={handleLogout} />
-        )}
-        <LoginButton handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-      </div>
+      {!userId && (
+        <GradingButton handleGradingLogin={handleGradingLogin} handleLogout={handleLogout} />
+      )}
+      <LoginButton handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
     </div>
   );
 };

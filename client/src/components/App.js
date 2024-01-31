@@ -9,6 +9,7 @@ import Landing from "./pages/Landing.js";
 import Feed from "./pages/Feed.js";
 import Workout from "./pages/Workout.js";
 import Profile from "./pages/Profile.js";
+import Info from "./pages/Info.js";
 
 import "../utilities.css";
 import "./App.css";
@@ -124,6 +125,7 @@ const App = () => {
               />
             }
           />
+          <Route path="/info" element={<Info userId={userId} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

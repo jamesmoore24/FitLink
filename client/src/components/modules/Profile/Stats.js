@@ -114,7 +114,7 @@ const Stats = () => {
                   {selectedName === null ? (
                     <input
                       className="newExercise-exerciseInput"
-                      placeholder="Search for an exercise..."
+                      placeholder="Enter an exercise..."
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                     />

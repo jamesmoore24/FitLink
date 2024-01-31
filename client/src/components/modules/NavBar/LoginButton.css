@@ -3,7 +3,6 @@
   justify-content: end;
   align-items: center;
   min-width: 5em;
-  min-width: 9em;
   display: flex;
   align-items: center; /* Align text and bars vertically */
 }
