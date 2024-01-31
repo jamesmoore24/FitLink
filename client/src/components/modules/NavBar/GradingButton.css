@@ -8,9 +8,18 @@
   padding: 5px;
   margin-right: 10px;
   border-radius: 20px;
+  border: 2px var(--primary) solid;
   align-items: center; /* Align text and bars vertically */
+  transition: transform 0.3s, background-color 0.3s;
 }
 
 .gradingButton-container:hover {
+  transform: scale(1.05);
+  color: var(--primary);
+  background-color: white;
   cursor: pointer;
+}
+
+.gradingButton-container:active {
+  transform: scale(0.95);
 }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { get, post } from "../../../utilities";
 import "./FitBot.css";
 
@@ -143,7 +142,7 @@ const ChatComponent = (props) => {
             {props.messages.map((message) => (
               <ChatBubble key={message.id} text={message.text} isUser={message.sender === "user"} />
             ))}
-            <div ref={props.messagesEndRef} /> {/* Invisible element at the end of the messages */}
+            <div ref={messagesEndRef} /> {/* Invisible element at the end of the messages */}
           </div>
         ) : (
           <div className="fitbot-chat-container">

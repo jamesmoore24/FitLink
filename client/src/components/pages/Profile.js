@@ -288,7 +288,7 @@ const Profile = (props) => {
             </div>
           </div>
         ) : (
-          <div className="profile-menu-container">All Posts</div>
+          <div className="profile-menu-container">All Public Posts</div>
         )}
 
         {workoutsList}
