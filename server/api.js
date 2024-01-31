@@ -178,6 +178,18 @@ router.get("/workouts/feed", (req, res) => {
   Workout.find({ posted: true }).then((workouts) => res.send(workouts));
 });
 
+router.get("/workouts/feed/friends", (req, res) => {
+  User.findById(req.user._id).then((user) => {
+    Workout.find({ creator_id: { $in: user.friends }, posted: true })
+      .then((workouts) => {
+        res.send(workouts);
+      })
+      .catch((error) => {
+        res.status(500).send(error);
+      });
+  });
+});
+
 router.get("/workouts/profile/:userId", (req, res) => {
   const userId = req.params.userId;
   Workout.find({ creator_id: userId, current: false }).then((workouts) => res.send(workouts));
@@ -524,7 +536,7 @@ router.post("/query", (req, res) => {
           {
             role: "system",
             content:
-              "Your role is to be a professional personal trainer named FitBot which answer questions for a client.\n" +
+              `Your role is to be a professional personal trainer named FitBot which answer questions for ${req.user.name}.\n` +
               "Please do not mention that you were given any context in your response and be very professional.",
           },
           { role: "user", content: `${req.body.query}` },

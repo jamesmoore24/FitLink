@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect, useRef } from "react";
 import Post from "../modules/Posts/Post";
-import ActivityTracker from "../modules/Profile/ActivityTracker";
 import Friends from "../modules/Friends/Friends";
 import { get, post } from "../../utilities";
 
@@ -18,6 +16,9 @@ import "./Feed.css";
  */
 const Feed = (props) => {
   const [workouts, setWorkouts] = useState([]);
+  const [underlineStyle, setUnderlineStyle] = useState({});
+  const menuRef = useRef(null);
+  const [workoutView, setWorkoutView] = useState("explore");
 
   useEffect(() => {
     get("/api/workouts/feed").then((workoutObjs) => {
@@ -25,6 +26,30 @@ const Feed = (props) => {
       setWorkouts(reversedWorkoutObjs);
     });
   }, []);
+
+  useEffect(() => {
+    if (menuRef.current) {
+      const activeItem = menuRef.current.querySelector(".profile-menu-item.active");
+      if (activeItem) {
+        setUnderlineStyle({
+          width: activeItem.offsetWidth,
+          left: activeItem.offsetLeft,
+        });
+      }
+    }
+
+    if (workoutView === "explore") {
+      get(`/api/workouts/feed/`).then((workoutObjs) => {
+        let reversedWorkoutObjs = workoutObjs.reverse();
+        setWorkouts(reversedWorkoutObjs);
+      });
+    } else {
+      get(`/api/workouts/feed/friends`).then((workoutObjs) => {
+        let reversedWorkoutObjs = workoutObjs.reverse();
+        setWorkouts(reversedWorkoutObjs);
+      });
+    }
+  }, [workoutView]);
 
   const deleteWorkout = (workout_id) => {
     post("/api/workout/delete", { workout_id: workout_id }).then((workout) => {
@@ -56,7 +81,27 @@ const Feed = (props) => {
   }
   return (
     <div className="feed-background-container">
-      <div className="feed-posts-container">{workoutsList}</div>
+      <div className="feed-postTitle-container">
+        <div className="profile-menu-container">
+          <div className="profile-menu" ref={menuRef}>
+            <div
+              className={`profile-menu-item ${workoutView === "explore" ? "active" : ""}`}
+              onClick={() => setWorkoutView("explore")}
+            >
+              Explore
+            </div>
+            <div
+              className={`profile-menu-item ${workoutView === "friends" ? "active" : ""}`}
+              onClick={() => setWorkoutView("friends")}
+            >
+              Friends
+            </div>
+            <div className="profile-menu-underline" style={underlineStyle}></div>
+          </div>
+        </div>
+        {workoutsList}
+      </div>
+
       <div className="feed-activityFriends-container">
         <Friends
           setNotificationOn={props.setNotificationOn}

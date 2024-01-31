@@ -14,7 +14,7 @@
   z-index: -1;
 }
 
-.feed-posts-container {
+.feed-postTitle-container {
   display: flex;
   min-width: 50%;
   max-height: 100%;
@@ -22,8 +22,8 @@
   padding-right: var(--l);
   flex-direction: column;
   align-items: end;
-  box-sizing: border-box;
   overflow: auto;
+  box-sizing: border-box;
 }
 
 .feed-activityFriends-container {

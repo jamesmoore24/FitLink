@@ -14,8 +14,8 @@
   top: 50%; /* center the video in the container */
   left: 50%;
   transform: translate(-50%, -50%); /* center the video in the container */
-  min-width: 90%;
-  min-height: 90%;
+  min-width: 100%;
+  min-height: 100%;
   width: auto;
   height: auto;
   object-fit: cover;
