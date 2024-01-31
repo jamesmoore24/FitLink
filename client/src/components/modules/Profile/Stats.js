@@ -98,9 +98,9 @@ const Stats = () => {
   return (
     <>
       <div className="stats-container">
-        <div className="stats-title-container">Stats</div>
         <div className="stats-nonText-container">
           <div className="stats-query-container">
+            <div className="stats-title-container">Stats</div>
             <div className="newExercise-searchSuggestion-container">
               <div
                 className={`newExercise-search-container ${
