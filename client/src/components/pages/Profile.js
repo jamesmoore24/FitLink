@@ -39,7 +39,6 @@ const Profile = (props) => {
       setWorkouts(reversedWorkoutObjs);
     });
 
-    //get("/api/nukedb").then((data) => console.log("Database objects deleted"));
     get(`/api/user/profile/${userId}`).then((user) => {
       setName(user.name);
       setBio(user.bio);
@@ -77,9 +76,7 @@ const Profile = (props) => {
   }, [workoutView]);
 
   const updateUser = () => {
-    post("/api/user/update", { name: name, bio: bio }).then((user) => {
-      console.log("User information updated in database");
-    });
+    post("/api/user/update", { name: name, bio: bio }).then((user) => {});
   };
 
   const deleteWorkout = (workout_id) => {
@@ -113,8 +110,6 @@ const Profile = (props) => {
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      console.log(selectedFile);
-      console.log(file);
       setSelectedFile(file);
       setProfilePictureError("");
       setChangedSelectedFile(true);
@@ -139,7 +134,6 @@ const Profile = (props) => {
       // Send this string to your API endpoint and await its response
       const user = await post("/api/image/upload", { file: imageData });
       setProfilePicture(user.profile_picture);
-      console.log(user.profilePicture);
       setProfilePictureError("");
       setChangedProfilePicture(!changedProfilePicture);
       setIsLoading(false);
@@ -181,9 +175,7 @@ const Profile = (props) => {
                           props.setNotificationOn(true);
                           props.setNotificationText("Profile saved!");
                         })
-                        .catch((error) => {
-                          console.log("ERROR UPLOADING");
-                        });
+                        .catch((error) => {});
                     } else {
                       updateUser();
                       props.setNotificationOn(true);
@@ -269,7 +261,7 @@ const Profile = (props) => {
         <Stats />
       </div>
 
-      <div className="profile-right-container" onClick={() => console.log(props.userId)}>
+      <div className="profile-right-container">
         <ActivityTracker userId={props.userId} />
         {userId === props.userId ? (
           <div className="profile-menu-container">

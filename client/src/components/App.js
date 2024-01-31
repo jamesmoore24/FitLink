@@ -25,8 +25,7 @@ const App = () => {
   const [userId, setUserId] = useState(undefined);
   const [notificationOn, setNotificationOn] = useState(false);
   const [notificationText, setNotificationText] = useState("");
-  const [googleLogin, setGoogleLogin] = useState(false);
-  const [gradingLogin, setGradingLogin] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,8 +35,6 @@ const App = () => {
         setUserId(user._id);
       }
     });
-
-    //get("/api/nukedb").then(() => console.log("DB NUKED"));
   }, []);
 
   useEffect(() => {
