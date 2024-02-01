@@ -27,6 +27,7 @@ const Post = (props) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState(""); // Step 1: State variable for input value
   const [profilePicture, setProfilePicture] = useState(undefined);
+  const [name, setName] = useState(undefined);
   const [isLiked, setIsLiked] = useState(false);
   const [isStarred, setIsStarred] = useState(false);
   const [exercises, setExercises] = useState([]);
@@ -78,6 +79,7 @@ const Post = (props) => {
     if (props.creator_id) {
       get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
         setProfilePicture(user.profile_picture);
+        setName(user.name);
       });
     }
   }, [props.changedProfilePicture]);
@@ -85,7 +87,7 @@ const Post = (props) => {
   return (
     <div className="post-container">
       <PostTop
-        creator_name={props.creator_name}
+        creator_name={name}
         creator_id={props.creator_id}
         creator_pfp={profilePicture}
         userId={props.userId}

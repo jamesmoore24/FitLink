@@ -62,8 +62,25 @@
     text-align: center; /* Aligns the text to the left */
     font-size: 100px;
     font-weight: 300;
-    width: 40vw;
+    min-width: 50vw;
     z-index: 2; /* To ensure text appears above the video */
+    border: 2px red solid;
+  }
+
+  .word-rotator {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    font-size: 100px;
+    font-weight: 900;
+    height: 1.5em; /* Set the height to the height of one line of text */
+    width: 100vw; /* Make sure the container takes the full width */
+    left: -100%; /* Start off-screen to the left */
+    opacity: 0; /* Start with 0 opacity */
+    animation: fly-in 1.25s ease forwards; /* Apply the animation */
+    transition: opacity 1.25s ease; /* Apply the fade-in transition */
+    color: white;
+    border: 2px red solid;
   }
 }
 .text-container {

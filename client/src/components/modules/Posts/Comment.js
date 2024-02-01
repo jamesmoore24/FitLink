@@ -17,6 +17,7 @@ import ProfilePicture from "../../../public/example_profile.jpg";
  */
 const Comment = (props) => {
   const [profilePicture, setProfilePicture] = useState("");
+  const [name, setName] = useState("");
   const navigate = useNavigate();
   //need to use map or something to render all of the squares
 
@@ -24,6 +25,7 @@ const Comment = (props) => {
     if (props.creator_id) {
       get("/api/user/info", { creator_id: props.creator_id }).then((user) => {
         setProfilePicture(user.profile_picture);
+        setName(user.name);
       });
     }
   }, [props.changedProfilePicture]);
