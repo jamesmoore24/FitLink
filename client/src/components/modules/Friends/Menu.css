@@ -37,6 +37,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   font-size: 0.75em;
   position: absolute;
   top: 50%; /* Center vertically relative to the parent */

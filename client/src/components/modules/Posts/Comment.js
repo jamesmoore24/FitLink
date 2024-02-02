@@ -75,7 +75,7 @@ const Comment = (props) => {
       </div>
       <div className="comment-nameAndComment-container">
         <div className="comment-nameTime-container">
-          <div className="comment-name">{props.creator_name}</div>
+          <div className="comment-name">{name}</div>
           <div className="comment-time">{timeSince(props.timestamp)}</div>
         </div>
 
