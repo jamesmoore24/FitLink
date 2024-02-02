@@ -64,7 +64,6 @@
     font-weight: 300;
     min-width: 50vw;
     z-index: 2; /* To ensure text appears above the video */
-    border: 2px red solid;
   }
 
   .word-rotator {
@@ -80,7 +79,6 @@
     animation: fly-in 1.25s ease forwards; /* Apply the animation */
     transition: opacity 1.25s ease; /* Apply the fade-in transition */
     color: white;
-    border: 2px red solid;
   }
 }
 .text-container {
