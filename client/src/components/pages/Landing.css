@@ -51,8 +51,9 @@
 }
 
 .laptop-example-container {
-  height: 350px;
-  width: 600px;
+  height: 35vh;
+  width: 65vh;
+  z-index: -1;
 }
 
 @media only screen and (max-aspect-ratio: 9/8) {
