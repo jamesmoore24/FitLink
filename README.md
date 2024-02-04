@@ -1,1 +1,1 @@
-![FitLink Logo](client/src/public/logo.png)
+![FitLink Logo](client/src/public/logo_readme.png)
