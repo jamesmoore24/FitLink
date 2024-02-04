@@ -213,7 +213,7 @@ const Friends = (props) => {
               onChange={handleSearchChange}
             />
           </div>
-          {renderFriendSection()}
+          <div className="friends-friendsList-container">{renderFriendSection()}</div>
         </>
       ) : (
         <FitBot messages={messages} setMessages={setMessages} user={user} />

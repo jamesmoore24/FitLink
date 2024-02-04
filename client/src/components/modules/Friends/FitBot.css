@@ -1,7 +1,7 @@
 .fitbot-chat-container {
   display: flex;
   flex-direction: column;
-  max-height: 50vh; /* Adjust the height as needed */
+  max-height: 55vh; /* Adjust the height as needed */
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;

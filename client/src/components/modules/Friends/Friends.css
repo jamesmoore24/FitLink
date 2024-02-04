@@ -115,3 +115,12 @@
   text-decoration: none; /* Remove underline */
   /* Additional styling if needed */
 }
+
+.friends-friendsList-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  max-height: 55vh;
+  overflow: auto;
+}
