@@ -22,15 +22,15 @@ const LoginButton = (props) => {
     <div className="loginButton-container">
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID} className="signup-button">
         {props.userId ? (
-          <button
+          <div
+            className="logoutButton-container"
             onClick={() => {
-              //THIS MIGHT ERROR
               googleLogout();
               props.handleLogout();
             }}
           >
             Logout
-          </button>
+          </div>
         ) : (
           <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
         )}

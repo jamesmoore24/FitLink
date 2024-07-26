@@ -6,3 +6,18 @@
   display: flex;
   align-items: center; /* Align text and bars vertically */
 }
+
+.logoutButton-container {
+  border-radius: 10px;
+  font-size: medium;
+  padding: 3px 10px;
+  border: 2px solid black;
+  cursor: pointer;
+  transition: border 0.3s, border-color 0.5s, transform 0.3s; /* Transition for height and border-color */
+}
+
+.logoutButton-container:hover {
+  transform: scale(1.05);
+  border: 2px solid var(--primary);
+  border-color: var(--primary);
+}
