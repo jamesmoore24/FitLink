@@ -40,14 +40,17 @@ const ActivityTracker = (props) => {
     dateToCompare.setHours(0, 0, 0, 0); // Set to start of day
     console.log(exercises);
 
-    for (let i = 0; i < 365; i++) {
-      dateToCompare.setDate(dateToCompare.getDate() + 1);
+    const today = new Date();
+    today.setHours(23, 59, 59, 999); // Set to end of today
+
+    for (let i = 0; i <= 366; i++) {
+      // Changed to <= to include today
       let endOfDay = new Date(dateToCompare);
       endOfDay.setHours(23, 59, 59, 999);
 
       let setSum = exercises.reduce((sum, exercise) => {
         let exerciseDate = new Date(exercise.timestamp);
-        if (exerciseDate > dateToCompare && exerciseDate <= endOfDay) {
+        if (exerciseDate >= dateToCompare && exerciseDate <= endOfDay) {
           return sum + exercise.sets.length;
         }
         return sum;
@@ -58,6 +61,9 @@ const ActivityTracker = (props) => {
         date: formattedDate,
         setSum: setSum,
       });
+
+      if (dateToCompare.getTime() === today.getTime()) break; // Stop if we've reached today
+      dateToCompare.setDate(dateToCompare.getDate() + 1);
     }
 
     const maxValue = Math.max(...resultArray.map((record) => record.setSum));
