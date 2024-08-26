@@ -16,56 +16,56 @@ const ActivityTracker = (props) => {
 
   useEffect(() => {
     setTopText(getMonthSwitches());
-    get("/api/exercises/year", { creator_id: userId }).then((exercises) => {
-      let reversedExercises = exercises.reverse();
-      setExercises(reversedExercises);
+    get(`/api/workouts/profile/${userId}`).then((workoutObjs) => {
+      let reversedWorkoutObjs = workoutObjs.reverse();
+      const exercisePromises = reversedWorkoutObjs.map((workout) =>
+        get("/api/exercises", { parent: workout._id }).then((exercises) =>
+          exercises.map((exercise) => ({
+            ...exercise,
+            timestamp: workout.timestamp,
+          }))
+        )
+      );
+      Promise.all(exercisePromises).then((exercisesArrays) => {
+        const flattenedExercises = exercisesArrays.flat();
+        setExercises(flattenedExercises);
+      });
     });
   }, []);
 
   useEffect(() => {
-    let index_exercises = 0;
     let resultArray = [];
     let dateToCompare = new Date();
-
     dateToCompare.setFullYear(dateToCompare.getFullYear() - 1);
+    dateToCompare.setHours(0, 0, 0, 0); // Set to start of day
+    console.log(exercises);
 
     for (let i = 0; i < 365; i++) {
-      let setSum = 0;
       dateToCompare.setDate(dateToCompare.getDate() + 1);
-
-      // Ensure the dateToCompare is at the end of the day for accurate comparison
       let endOfDay = new Date(dateToCompare);
       endOfDay.setHours(23, 59, 59, 999);
 
-      while (
-        index_exercises < exercises.length &&
-        new Date(exercises[index_exercises].timestamp) <= endOfDay
-      ) {
-        setSum += exercises[index_exercises].sets.length;
-        index_exercises++;
-      }
+      let setSum = exercises.reduce((sum, exercise) => {
+        let exerciseDate = new Date(exercise.timestamp);
+        if (exerciseDate > dateToCompare && exerciseDate <= endOfDay) {
+          return sum + exercise.sets.length;
+        }
+        return sum;
+      }, 0);
 
-      // Format the date as MM/DD
       let formattedDate = `${dateToCompare.getMonth() + 1}/${dateToCompare.getDate()}`;
-
-      // Create an object with properties date and setSum
-      let record = {
+      resultArray.push({
         date: formattedDate,
         setSum: setSum,
-      };
-
-      // Push the object to the result array
-      resultArray.push(record);
+      });
     }
 
     const maxValue = Math.max(...resultArray.map((record) => record.setSum));
 
-    const normalizedDataSet = resultArray.map((record) => {
-      return {
-        ...record, // Spread operator to copy existing properties
-        normalizedSets: 1 + (record.setSum * 9) / maxValue,
-      };
-    });
+    const normalizedDataSet = resultArray.map((record) => ({
+      ...record,
+      normalizedSets: record.setSum > 0 ? 1 + (record.setSum * 9) / maxValue : 0,
+    }));
     setSetData(normalizedDataSet);
   }, [exercises]);
 
@@ -84,7 +84,7 @@ const ActivityTracker = (props) => {
       "#ff4b26CC", // Near full color
       "#ff4b26E6", // Almost full color
     ];
-    return colors[Math.floor(value) - 1];
+    return colors[Math.floor(value) - 1] || colors[0];
   };
 
   function getMonthSwitches() {

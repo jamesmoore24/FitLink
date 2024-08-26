@@ -49,7 +49,34 @@ const PostTop = (props) => {
   const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
 
   // Format the time into a string with AM/PM
-  const formattedTime = `${formattedHours}:${minutes < 10 ? "0" : ""}${minutes}${period}`;
+  const currentDate = new Date();
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const month = monthNames[date.getMonth()];
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const isMoreThanOneYearOld =
+    currentDate.getFullYear() - year > 1 ||
+    (currentDate.getFullYear() - year === 1 && currentDate.getMonth() > date.getMonth()) ||
+    (currentDate.getFullYear() - year === 1 &&
+      currentDate.getMonth() === date.getMonth() &&
+      currentDate.getDate() >= date.getDate());
+
+  const formattedTime = `${month} ${day}${
+    isMoreThanOneYearOld ? `, ${year}` : ""
+  } at ${formattedHours}:${minutes < 10 ? "0" : ""}${minutes}${period}`;
 
   const toggleStar = () => {
     props.setIsStarred(!props.isStarred);
@@ -80,7 +107,7 @@ const PostTop = (props) => {
 
         <div className="postTop-profileNameFollowTime-container">
           <div className="postTop-profileName">{props.creator_name}</div>
-          <div className="postTop-profileDescription">Workout at {formattedTime}</div>
+          <div className="postTop-profileDescription">Workout on {formattedTime}</div>
         </div>
       </div>
       <div className="postTop-personalBest-container">
