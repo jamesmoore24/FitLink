@@ -8,7 +8,7 @@ import "./LoginButton.css";
  * The navigation bar at the top of all pages. Takes no props.
  */
 
-const GOOGLE_CLIENT_ID = "649629592071-7qdko7is45o1332qsj1s31kc04tcvmih.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "29560435725-h3meh6k60jm79h9sjej6akleddkhpgmu.apps.googleusercontent.com";
 
 /**
  * Page component to display when at the "/chat" route

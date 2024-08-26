@@ -60,6 +60,10 @@ const ChatComponent = (props) => {
     scrollToBottom();
   }, [props.messages]); // Runs whenever the props.messages array changes
 
+  const formatBoldText = (text) => {
+    return text.replace(/\*\*(.*?)\*\*/g, "<span class='bold-text'>$1</span>");
+  };
+
   const handleSend = () => {
     if (postText.trim()) {
       const newMessage = { id: Date.now(), text: postText, sender: "user" };
@@ -102,7 +106,10 @@ const ChatComponent = (props) => {
         <div className={`chat-bubble-username ${isUser ? "user" : "bot"}`}>
           {isUser ? props.user.name : "FitBot"}
         </div>
-        <div className={`chat-bubble ${isUser ? "user" : "bot"}`}>{text}</div>
+        <div
+          className={`chat-bubble ${isUser ? "user" : "bot"}`}
+          dangerouslySetInnerHTML={{ __html: formatBoldText(text) }}
+        />
       </div>
     </div>
   );

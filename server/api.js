@@ -20,11 +20,16 @@ const Document = require("./models/document");
 
 const { OpenAI } = require("openai");
 const ANYSCALE_API_KEY = process.env.ANYSCALE_API_KEY;
-const MODEL = "meta-llama/Llama-2-13b-chat-hf";
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const MODEL = "gpt-4o-mini";
 
 const anyscale = new OpenAI({
   baseURL: "https://api.endpoints.anyscale.com/v1",
   apiKey: ANYSCALE_API_KEY,
+});
+
+const openai = new OpenAI({
+  apiKey: OPENAI_API_KEY,
 });
 
 // import authentication library
@@ -535,7 +540,7 @@ router.post("/query", (req, res) => {
             role: "system",
             content:
               `Your role is to be a professional personal trainer named FitBot which answer questions for ${req.user.name}.\n` +
-              "Please do not mention that you were given any context in your response and be very professional.",
+              "Please do not mention that you were given any context in your response and be very professional. If you bold any text it should be wrapped in **",
           },
           { role: "user", content: `${req.body.query}` },
         ],
@@ -543,7 +548,7 @@ router.post("/query", (req, res) => {
         // higher temperature = more variance
         temperature: 0.7,
       };
-      const completion = await anyscale.chat.completions.create(prompt);
+      const completion = await openai.chat.completions.create(prompt);
       res.send({ response: completion.choices[0].message.content });
     } catch (error) {
       console.error("Error:", error);

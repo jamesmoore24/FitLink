@@ -17,6 +17,9 @@
     overflow: hidden;
   }
 }
+.bold-text {
+  font-weight: 1000 !important;
+}
 
 .fitbot-chat-empty-text {
   align-self: center;
