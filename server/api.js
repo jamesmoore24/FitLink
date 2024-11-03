@@ -19,14 +19,8 @@ const Star = require("./models/star");
 const Document = require("./models/document");
 
 const { OpenAI } = require("openai");
-const ANYSCALE_API_KEY = process.env.ANYSCALE_API_KEY;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const MODEL = "gpt-4o-mini";
-
-const anyscale = new OpenAI({
-  baseURL: "https://api.endpoints.anyscale.com/v1",
-  apiKey: ANYSCALE_API_KEY,
-});
 
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
