@@ -62,12 +62,12 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@fitlink.live '
             set -e
 
-            # Backend setup
-            echo "Setting up backend..."
-            cd /var/www/fitlink/backend
+            # server setup
+            echo "Setting up server..."
+            cd /var/www/fitlink/server
 
-            # Restart backend service with PM2
-            echo "Restarting backend service..."
+            # Restart server service with PM2
+            echo "Restarting server service..."
             pm2 restart fitlink-server || pm2 start npm --name "fitlink-server" -- run start
 
             # Reload Nginx
