@@ -39,6 +39,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
+      - name: Update known hosts
+        run: |
+          ssh-keygen -f "/home/runner/.ssh/known_hosts" -R "fitlink.live"
+          ssh-keyscan -H fitlink.live >> /home/runner/.ssh/known_hosts
+
       - name: Deploy Backend to Server
         run: |
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
