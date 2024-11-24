@@ -55,8 +55,7 @@ jobs:
 
       - name: Deploy to server
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --delete build_temp/frontend/ root@fitlink.live:/var/www/fitlink/frontend/
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --delete build_temp/backend/ root@fitlink.live:/var/www/fitlink/backend/
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --delete build_temp/ root@fitlink.live:/var/www/fitlink/
 
       - name: Run post-deployment commands
         run: |
