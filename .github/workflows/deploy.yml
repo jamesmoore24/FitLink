@@ -21,41 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build Frontend for Production
+        run: npm run build:prod
+
       - name: Create .env file
         run: |
-          echo "MONGO_SRV=${{ secrets.MONGO_SRV }}" >> .env
+          echo "MONGO_SRV=${{ secrets.MONGO_SRV }}" > .env
           echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
-
-      # Start Frontend Build (if necessary)
-      - name: Build React frontend
-        run: |
-          npm run build
-          echo "Frontend build completed"
-
-      - name: Prepare deployment files
-        run: |
-          mkdir -p build_temp/frontend
-          mkdir -p build_temp/backend
-
-          # Copy frontend source files (including package.json if separate)
-          cp -R client/* build_temp/frontend/
-
-          # Copy backend files
-          cp -R server build_temp/backend/
-          cp package.json build_temp/backend/
-          cp package-lock.json build_temp/backend/
-          cp .env build_temp/backend/
-
-      - name: Install Backend Dependencies
-        run: |
-          cd build_temp/backend
-          npm install --production
-
-      - name: Install Frontend Dependencies
-        run: |
-          cd build_temp/frontend
-          npm install
 
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
@@ -63,11 +36,21 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
-      - name: Deploy to server
+      - name: Deploy Backend to Server
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --delete build_temp/backend/ root@fitlink.live:/var/www/fitlink/backend/
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --delete build_temp/frontend/ root@fitlink.live:/var/www/fitlink/frontend/
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --delete .env root@fitlink.live:/var/www/fitlink/.env
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+            --delete server/ root@fitlink.live:/var/www/fitlink/backend/
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+            --delete package.json package-lock.json .env \
+            root@fitlink.live:/var/www/fitlink/backend/
+
+      - name: Deploy Frontend to Server
+        run: |
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+            --delete client/dist/ root@fitlink.live:/var/www/fitlink/frontend/
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+            --delete client/src/.gitkeep \
+            root@fitlink.live:/var/www/fitlink/frontend/src/.gitkeep
 
       - name: Run post-deployment commands
         run: |
@@ -82,15 +65,6 @@ jobs:
             # Restart backend service with PM2
             echo "Restarting backend service..."
             pm2 restart fitlink-server || pm2 start npm --name "fitlink-server" -- run start
-
-            # Frontend setup
-            echo "Setting up frontend..."
-            cd /var/www/fitlink/frontend
-            npm install
-
-            # Restart frontend service with PM2
-            echo "Restarting frontend service..."
-            pm2 restart fitlink-client || pm2 start npm --name "fitlink-client" -- run hotloader
 
             # Reload Nginx
             echo "Reloading Nginx..."
