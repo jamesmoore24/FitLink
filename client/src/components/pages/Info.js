@@ -15,7 +15,7 @@ const Info = (props) => {
   }
   return (
     <div className="info-background-container">
-      <h1>How to use FitLink:</h1>
+      <h1>How to use FitLink :)</h1>
       <h2>
         The future of working out is here. FitLink makes it easy to track your workouts, connect
         with friends, share your progress, and achieve your goals faster.
