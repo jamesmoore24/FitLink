@@ -6,8 +6,7 @@
   "scripts": {
     "hotloader": "webpack serve --config ./webpack.config.js --mode development --port 5050",
     "start": "nodemon --ignore client/",
-    "build": "webpack",
-    "build:prod": "webpack --config webpack.prod.js"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
