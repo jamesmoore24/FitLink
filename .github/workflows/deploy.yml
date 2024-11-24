@@ -46,6 +46,9 @@ jobs:
           cp package-lock.json build_temp/
           cp .env build_temp/
 
+          cd build_temp
+          npm install --production
+
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
