@@ -35,18 +35,17 @@ jobs:
 
       - name: Prepare deployment files
         run: |
-          # Create separate directories for frontend and backend
-          mkdir -p build_temp/frontend
-          mkdir -p build_temp/backend
+          mkdir -p build_temp
+          cp package.json build_temp/
+          cp package-lock.json build_temp/
+          cp .env build_temp/
 
           # Copy frontend files
+          mkdir -p build_temp/frontend
           cp -R client/dist/* build_temp/frontend/
 
           # Copy backend files
-          cp -R server build_temp/backend/
-          cp package.json build_temp/backend/
-          cp package-lock.json build_temp/backend/
-          cp .env build_temp/backend/
+          cp -R server build_temp/
 
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
