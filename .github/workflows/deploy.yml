@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+# Build node modules and then rsync to the server to the server directory
+# Make sure package-lock.json and package.json are in the server directory
+#
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -19,7 +23,7 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build Frontend for Production
         run: npm run build:prod
@@ -30,6 +34,9 @@ jobs:
           echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
 
+      - name: List files in current directory
+        run: ls -la
+
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
@@ -39,10 +46,10 @@ jobs:
       - name: Deploy Backend to Server
         run: |
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
-            --delete server/ root@fitlink.live:/var/www/fitlink/backend/
+            --delete server/ root@fitlink.live:/var/www/fitlink/server/
 
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
-            --delete package.json package-lock.json .env \
+            --delete package.json package-lock.json .env node_modules/ \
             root@fitlink.live:/var/www/fitlink/backend/
 
       - name: Deploy Frontend to Server
@@ -59,7 +66,6 @@ jobs:
             # Backend setup
             echo "Setting up backend..."
             cd /var/www/fitlink/backend
-            npm install --production
 
             # Restart backend service with PM2
             echo "Restarting backend service..."
