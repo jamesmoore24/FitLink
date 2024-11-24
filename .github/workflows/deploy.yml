@@ -45,8 +45,11 @@ jobs:
             --delete server/ root@fitlink.live:/var/www/fitlink/server/
 
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
-            --delete package.json package-lock.json .env node_modules/ \
-            root@fitlink.live:/var/www/fitlink/backend/
+            --delete package.json package-lock.json .env \
+            root@fitlink.live:/var/www/fitlink/server/
+
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+            --delete node_modules/ root@fitlink.live:/var/www/fitlink/server/node_modules/
 
       - name: Deploy Frontend to Server
         run: |
