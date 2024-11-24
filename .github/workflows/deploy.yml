@@ -46,11 +46,9 @@ jobs:
 
       - name: Deploy Frontend to Server
         run: |
+          echo "Deploying frontend..."
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
             --delete client/dist/ root@fitlink.live:/var/www/fitlink/frontend/
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
-            --delete client/src/.gitkeep \
-            root@fitlink.live:/var/www/fitlink/frontend/src/.gitkeep
 
       - name: Run post-deployment commands
         run: |
