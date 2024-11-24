@@ -41,7 +41,6 @@ jobs:
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
             --delete server/ root@fitlink.live:/var/www/fitlink/backend/
 
-          echo "Deploying backend secretes..."
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
             --delete package.json package-lock.json .env \
             root@fitlink.live:/var/www/fitlink/backend/
