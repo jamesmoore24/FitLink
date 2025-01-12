@@ -26,17 +26,20 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "MONGO_SRV=${{ secrets.MONGO_SRV }}" > .env
-          echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+          echo "MONGO_SRV=${{ vars.MONGO_SRV }}" > .env
+          echo "SESSION_SECRET=${{ vars.SESSION_SECRET }}" >> .env
+          echo "OPENAI_API_KEY=${{ vars.OPENAI_API_KEY }}" >> .env
 
       - name: List files in current directory
         run: ls -la
 
+      - name: List the .env file
+        run: cat .env
+
       - name: Install SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/aws.pem
+          echo "${{ vars.SSH_PRIVATE_KEY }}" > ~/.ssh/aws.pem
           chmod 600 ~/.ssh/aws.pem
           chmod 700 ~/.ssh
 
