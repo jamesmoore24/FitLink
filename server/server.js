@@ -105,8 +105,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-// hardcode port to 3000 for now
-const port = 3000;
+// hardcode port to 3001 for now
+const port = 3001;
 const server = http.Server(app);
 socketManager.init(server);
 
