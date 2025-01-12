@@ -34,32 +34,33 @@ jobs:
         run: ls -la
 
       - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/aws.pem
+          chmod 600 ~/.ssh/aws.pem
+          chmod 700 ~/.ssh
 
       - name: Update known hosts
         run: |
-          ssh-keygen -f "/home/runner/.ssh/known_hosts" -R "ec2-3-84-34-77.compute-1.amazonaws.com"
-          ssh-keyscan -H ec2-3-84-34-77.compute-1.amazonaws.com >> /home/runner/.ssh/known_hosts
+          ssh-keyscan -H ec2-3-84-34-77.compute-1.amazonaws.com >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy Backend to Server
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+          rsync -avz -e "ssh -i ~/.ssh/aws.pem -o StrictHostKeyChecking=no" \
             --delete server/ ec2-user@ec2-3-84-34-77.compute-1.amazonaws.com:/var/www/fitlink/server/
 
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+          rsync -avz -e "ssh -i ~/.ssh/aws.pem -o StrictHostKeyChecking=no" \
             --delete package.json package-lock.json .env \
             ec2-user@ec2-3-84-34-77.compute-1.amazonaws.com:/var/www/fitlink/server/
 
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+          rsync -avz -e "ssh -i ~/.ssh/aws.pem -o StrictHostKeyChecking=no" \
             --delete node_modules/ ec2-user@ec2-3-84-34-77.compute-1.amazonaws.com:/var/www/fitlink/server/node_modules/
 
       - name: Deploy Frontend to Server
         run: |
           echo "Deploying frontend..."
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+          rsync -avz -e "ssh -i ~/.ssh/aws.pem -o StrictHostKeyChecking=no" \
             --delete client/dist/ ec2-user@ec2-3-84-34-77.compute-1.amazonaws.com:/var/www/fitlink/frontend/
 
       - name: Run post-deployment commands
